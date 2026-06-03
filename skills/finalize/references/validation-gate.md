@@ -30,12 +30,14 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 - Readable and follows project conventions.
 - No unnecessary complexity or over-engineering.
 - No duplicated logic that should be abstracted or reused.
+- For JS/TS-related changes, static-intelligence evidence has been considered: no confirmed changed-code dead code, unresolved/duplicate exports, stale suppressions, or new clone/complexity hotspots remain unaddressed.
 - Interfaces and abstractions are clean and consistent.
 - Changes are minimal and focused (no unrelated edits).
 
 ### 4. Integration safety
 - Integrates cleanly with existing architecture.
 - No broken contracts between modules or APIs.
+- No module-graph, workspace dependency, client/server boundary, or framework entry-point regression was introduced by the diff.
 - No unintended side effects in unrelated parts of the system.
 - Build system / CI / tooling remains compatible.
 

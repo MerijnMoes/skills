@@ -86,13 +86,14 @@ Independently review the now-polished diff. These checks are read-only and indep
 - **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md` (OWASP Top 10:2025 floor + conditional API & LLM lenses). Inline-adversarial fallback as above.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens, private keys, or `.env` values. Any hit is a hard stop — never let secrets proceed toward a commit.
 - **Dependency & license audit** *(only if the diff changed dependency manifests/lockfiles)*: follow `references/dependency-audit.md` — check new/bumped dependencies for known vulnerabilities, license compatibility, and supply-chain hygiene. Skip with a note if no dependencies changed.
+- **Static intelligence** *(only if the diff changed JavaScript/TypeScript or related framework/module files)*: follow `references/static-intelligence.md` — check changed-code dead code, unresolved/duplicate exports, dependency graph hygiene, duplicate logic, complexity/hotspot risk, boundary signals, and stale feature-flag paths. This lane is tool-optional: use project-native evidence and manual checks by default; if a suitable static-analysis tool is already available, it may accelerate the read-only audit, but `/finalize` must not install tools, initialize config, enable telemetry, or apply tool-driven autofixes.
 - **Consistency & codebase fit:** per `references/codebase-fit.md`, check the change fits the existing architecture — reuses prior art, matches established patterns, doesn't duplicate existing functionality or introduce a competing pattern, and respects module boundaries. Flag divergences as findings.
 - **Spec conformance:** per `references/spec-conformance.md`, check the diff against the intent pinned in Phase 0 — missing or partial requirements, scope creep (behavior nobody asked for), and implemented-but-wrong. If no external spec was pinned, run the lighter internal-consistency check instead (half-built paths, dead branches, leftover scaffolding). A confirmed missing requirement is blocking; `/finalize` flags it but does not implement it.
 - **Structural regression:** per the diff-scoped lane in `references/refactoring.md`, check whether *this change* degraded structure — ad-hoc branching tangled into an unrelated flow, feature logic leaking into a general module, file bloat, a duplicated canonical helper, or a boundary leak. Diff-scoped only: flag degradation the change caused; do not flag or rewrite untouched neighboring code.
 
 Consolidate the lanes into one punch list. **Before marking anything blocking, run it through `references/finding-verification.md`** — require a concrete reachable trigger, downgrade known false-positive classes, and verify any framework/library claim against docs. Label each surviving finding with severity and confidence, and order by business impact. Fix anything blocking now (a fix re-opens Phase 6 verification for the touched code). Record non-blocking items in the final report.
 
-Gate: no blocking review, security, dependency, consistency, spec-conformance, or structural findings remain; no secrets in the diff. Blocking findings are verified (reproducible trigger), not speculative.
+Gate: no blocking review, security, dependency, static-intelligence, consistency, spec-conformance, or structural findings remain; no secrets in the diff. Blocking findings are verified (reproducible trigger), not speculative.
 
 ### Phase 5 — Update docs *(modifies docs)*
 
@@ -179,6 +180,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/code-review.md` | Phase 4 | Correctness/bug review of the diff (logic, edges, error paths, concurrency, resource leaks, API misuse) |
 | `references/security-review.md` | Phase 4 | Security audit — OWASP Top 10:2025 floor + conditional API & LLM lenses; composes dependency-audit & finding-verification |
 | `references/dependency-audit.md` | Phase 4 | Vulnerability, license & supply-chain audit for changed deps |
+| `references/static-intelligence.md` | Phase 4 (+7) | JS/TS changed-code graph, duplication, complexity, boundary & feature-flag risk; optional static-analysis accelerator without requiring install |
 | `references/finding-verification.md` | Phase 4 (+7) | Trigger test, known-false-positive exclusions & confidence/severity labels — keep the blocking list true |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
