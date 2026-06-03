@@ -11,6 +11,10 @@ Prove the change actually works by **running it**, not just by reading it or tru
    - **edge cases** — invalid input, empty states, error and permission-denied paths, boundary values;
    - **regressions** — quickly exercise adjacent features the change could plausibly affect.
    Observe actual behavior (output, UI, logs, side effects); don't infer it from the code.
+   - **auth / permission paths** *(when relevant)* — confirm unauthenticated, under-privileged, expired-session, and wrong-tenant paths behave safely.
+   - **upload / parser / redirect / outbound-fetch paths** *(when relevant)* — exercise malformed input, oversized files, blocked destinations, and unsafe redirect attempts.
+   - **observability** *(when relevant)* — confirm failures and high-value actions leave useful signals without leaking secrets or PII; see `observability-review.md`.
+   - **migration / rollout safety** *(when relevant)* — verify new code tolerates existing data shape and migrated data shape where the environment allows; see `migration-safety.md`.
 4. **Accessibility** *(UI changes only)* — a keyboard-only pass plus an automated checker (e.g. axe), verifying the rules in `frontend-a11y-i18n.md` actually hold, not just that the markup looks right.
 5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. Skip with a note for cold-path changes.
 

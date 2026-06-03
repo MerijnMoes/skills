@@ -17,6 +17,10 @@ affected it.
 - **README / getting-started**: Did setup steps, commands, env vars,
   configuration, or usage examples change? If the diff renamed a flag, added a
   required env var, or changed how you run the thing, the README must reflect it.
+- **Security / operator docs**: If auth/session behavior, secret handling,
+  webhook signing, deployment requirements, incident-relevant logging, or CI /
+  release trust assumptions changed, update the operator-facing docs that state
+  those rules.
 - **CLAUDE.md / AGENTS.md**: Did the change add a convention, a new command, a
   new architectural area, or invalidate something stated there? Keep it current —
   it is the project's standing instructions to future AI sessions, so drift here
@@ -33,6 +37,9 @@ affected it.
 - **Examples / sample code / fixtures** that exercise the changed behavior — if
   the new signature breaks an example, fix the example.
 - **Migration / upgrade notes** if the change is breaking: tell users what to do.
+- **Config examples / env templates**: If new env vars, feature flags, or
+  defaults were introduced, update `.env.example`, deployment docs, or config
+  reference material so operators do not guess.
 
 ## How to write the updates
 
@@ -74,6 +81,9 @@ in your summary that none exists.
 - [ ] Stale comments fixed; no new narration or task-reference comments added.
 - [ ] Examples / fixtures for changed behavior still run and are correct.
 - [ ] Migration notes added for breaking changes.
+- [ ] Security / operator docs updated iff auth, secrets, webhooks, CI/release,
+      or observability expectations changed.
+- [ ] Env templates / config examples updated iff new vars, flags, or defaults changed.
 - [ ] Changelog entry added (user-facing) — or noted that no changelog exists.
 - [ ] No new doc files created beyond what the change requires.
 - [ ] No doc now contradicts the code.

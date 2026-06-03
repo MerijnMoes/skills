@@ -1,6 +1,22 @@
 # Security review
 
-Independent security audit of the **diff only**, dispatched to a fresh-context subagent. The floor is the full **OWASP Top 10:2025**, always applied; two conditional lenses add API- and LLM-specific risks when the change has that surface. Read surrounding code to understand trust boundaries, but only flag issues the change introduces or exposes.
+Independent security audit of the **diff only**, dispatched to a fresh-context subagent. The floor is the full **OWASP Top 10:2025**, always applied; focused sub-lanes add API-, auth/session-, input/output-, workflow-, repo-hygiene-, migration-, observability-, configuration-, and LLM/agent-specific checks when the change has that surface. Read surrounding code to understand trust boundaries, but only flag issues the change introduces or exposes.
+
+## Surface routing
+
+Before finishing the security audit, load the focused references from `security-cheat-sheets.md` that match the diff:
+
+- `api-security-review.md` for endpoint / webhook / RPC changes
+- `agent-security-review.md` for LLM / agent / tool-calling changes
+- `auth-session-review.md` for auth, session, token, cookie, MFA, or authorization changes
+- `input-upload-output-review.md` for untrusted input, uploads, rendering, redirects, or outbound fetches
+- `workflow-security.md` for CI / GitHub Actions / release automation changes
+- `repo-hygiene.md` for supply-chain, release, action pinning, or repo-policy changes
+- `observability-review.md` for logging, tracing, audit, and alerting changes
+- `migration-safety.md` for migrations, backfills, or persistence-format changes
+- `configuration-review.md` for env vars, defaults, flags, or deployment config changes
+
+If a lane clearly does not apply, mark it `N/A` with a one-line reason and move on.
 
 ## Always — OWASP Top 10:2025
 
@@ -24,7 +40,7 @@ For each, check the concrete patterns and confirm the control is actually presen
 - **Insecure file handling** — unrestricted upload type/size, path traversal in filenames, serving user files from an executable path.
 - **Sensitive data exposure** — secrets/PII in responses, error bodies, or client-visible state beyond what's needed.
 
-## Conditional — API lens *(apply when the diff adds/changes HTTP API endpoints)*
+## Conditional — API lens *(apply when the diff adds/changes HTTP API endpoints; also load `api-security-review.md`)*
 
 Grounded in the **OWASP API Security Top 10 (2023)**:
 
@@ -37,7 +53,7 @@ Grounded in the **OWASP API Security Top 10 (2023)**:
 - **API7 Server Side Request Forgery** — also under A01; double-check API-initiated fetches.
 - **API8 Security Misconfiguration**; **API9 Improper Inventory Management** (undocumented/old endpoints exposed); **API10 Unsafe Consumption of APIs** (trusting upstream/third-party responses).
 
-## Conditional — LLM/GenAI lens *(apply when the diff calls an LLM or builds agent behavior)*
+## Conditional — LLM/GenAI lens *(apply when the diff calls an LLM or builds agent behavior; also load `agent-security-review.md`)*
 
 Grounded in the **OWASP Top 10 for LLM Applications (2025)**:
 
@@ -54,4 +70,4 @@ Committed secrets remain the dedicated Phase-4 lane (keys, tokens, credentials, 
 
 ## Output
 
-Consolidate into the Phase-4 punch list. Every finding must survive the `finding-verification.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.
+Consolidate all applicable security sub-lanes into the Phase-4 punch list. Every finding must survive the `finding-verification.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.

@@ -47,6 +47,7 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 - No secrets exposed, logged, or hardcoded.
 - File system and network access are safe and intentional.
 - Any dependencies introduced are safe and justified.
+- For relevant diffs, focused security lanes were considered: API, auth/session, input/upload/output, workflow/release, configuration, observability, migration safety, and agent/LLM behavior.
 
 ### 6. Performance
 - No unnecessary performance regressions.
@@ -71,6 +72,7 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 - Key decisions or transformations are explainable.
 - Failures can be debugged from available signals.
 - Important state changes are visible or trackable.
+- Security-sensitive and high-value actions do not disappear silently, and their signals do not leak secrets or unnecessary PII.
 
 ### 10. Minimality of change
 - The solution is the simplest correct approach.
@@ -83,6 +85,7 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 - **Data integrity** — silent truncation, encoding/charset corruption, precision/rounding loss, timezone/locale mishandling, partial writes that leave records half-updated, and schema/migration safety (is the migration reversible; does it lock or rewrite a large table; does old code still run against the new schema during rollout). Corrupted or lost data is often unrecoverable — weight it accordingly.
 - **Idempotency & concurrency** — race conditions and TOCTOU on shared state, operations that aren't safe to retry (double-charge, duplicate row, replayed webhook), missing locks/transactions across a read-modify-write, and double-submit / at-least-once delivery assumptions. Ask: what happens if this runs twice, or two of these run at once?
 - **Financial / quantitative correctness** *(only where the change touches money, billing, quotas, or other quantitative invariants)* — currency and unit consistency, rounding direction and accumulation error, off-by-one on quotas/limits, and sign/overflow on balances. A wrong number that looks plausible is worse than a crash.
+- **Configuration / rollout safety** — defaults are safe, missing config fails safely, feature flags have explicit fallback behavior, and deployment sequencing does not silently weaken security or correctness.
 
 ### 12. Final sanity check
 - If reviewing this in production, you would approve it.

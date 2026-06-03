@@ -83,7 +83,7 @@ Gate: structural issues are either fixed (with tests still green) or consciously
 Independently review the now-polished diff. These checks are read-only and independent, so run them in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list.
 
 - **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. On a host without subagents, follow that reference as an inline adversarial pass.
-- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md` (OWASP Top 10:2025 floor + conditional API & LLM lenses). Inline-adversarial fallback as above.
+- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md` (OWASP Top 10:2025 floor plus focused conditional lanes for API, auth/session, input/output, workflow/release, repo hygiene, migration safety, observability, configuration, and LLM/agent behavior). Inline-adversarial fallback as above.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens, private keys, or `.env` values. Any hit is a hard stop — never let secrets proceed toward a commit.
 - **Dependency & license audit** *(only if the diff changed dependency manifests/lockfiles)*: follow `references/dependency-audit.md` — check new/bumped dependencies for known vulnerabilities, license compatibility, and supply-chain hygiene. Skip with a note if no dependencies changed.
 - **Static intelligence** *(only if the diff changed JavaScript/TypeScript or related framework/module files)*: follow `references/static-intelligence.md` — check changed-code dead code, unresolved/duplicate exports, dependency graph hygiene, duplicate logic, complexity/hotspot risk, boundary signals, and stale feature-flag paths. This lane is tool-optional: use project-native evidence and manual checks by default; if a suitable static-analysis tool is already available, it may accelerate the read-only audit, but `/finalize` must not install tools, initialize config, enable telemetry, or apply tool-driven autofixes.
@@ -178,8 +178,18 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/spec-conformance.md` | Phase 0 (+4) | Pin the originating intent; check the diff for missing requirements, scope creep, wrong implementation |
 | `references/refactoring.md` | Phase 3 (+4) | Refactor priority model, behavior-preservation discipline & the diff-scoped structural-regression lane |
 | `references/code-review.md` | Phase 4 | Correctness/bug review of the diff (logic, edges, error paths, concurrency, resource leaks, API misuse) |
-| `references/security-review.md` | Phase 4 | Security audit — OWASP Top 10:2025 floor + conditional API & LLM lenses; composes dependency-audit & finding-verification |
+| `references/security-review.md` | Phase 4 | Security audit floor plus conditional focused lanes for API, auth/session, input/output, workflow/release, repo hygiene, migration, observability, configuration, and LLM/agent behavior |
+| `references/security-cheat-sheets.md` | Phase 4 | Router for focused security references based on diff surface |
+| `references/api-security-review.md` | Phase 4 | OWASP API Top 10-style review for endpoints, webhooks, and machine-facing interfaces |
+| `references/agent-security-review.md` | Phase 4 | LLM / agent / tool-calling security review grounded in OWASP LLM risks and AISVS-style verification |
+| `references/auth-session-review.md` | Phase 4 | Authentication, authorization, session, cookie, token, MFA, reset, and CSRF checks |
+| `references/input-upload-output-review.md` | Phase 4 | Untrusted input, upload, parsing, redirect, rendering, and outbound fetch safety |
+| `references/workflow-security.md` | Phase 4 | CI / GitHub Actions / release automation security review |
+| `references/repo-hygiene.md` | Phase 4 | Supply-chain posture, action pinning, repo policy, and governance-sensitive changes |
 | `references/dependency-audit.md` | Phase 4 | Vulnerability, license & supply-chain audit for changed deps |
+| `references/observability-review.md` | Phase 4 (+6 +7) | Logging, tracing, auditability, signal quality, and redaction checks |
+| `references/migration-safety.md` | Phase 4 (+6 +7) | Schema, migration, backfill, rollout, and persistent-data safety |
+| `references/configuration-review.md` | Phase 4 (+5 +7) | Safe defaults, env vars, feature flags, deployment config, and fail-safe behavior |
 | `references/static-intelligence.md` | Phase 4 (+7) | JS/TS changed-code graph, duplication, complexity, boundary & feature-flag risk; optional static-analysis accelerator without requiring install |
 | `references/finding-verification.md` | Phase 4 (+7) | Trigger test, known-false-positive exclusions & confidence/severity labels — keep the blocking list true |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
