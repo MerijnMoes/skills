@@ -9,9 +9,14 @@ right verdict?"** It should judge the results of `risk-mapping.md`,
 
 ## How to run the gate
 
+- Treat the `verification ledger` as the primary record of what was actually
+  exercised. Do not infer runtime coverage that the ledger does not show.
+- Produce a `decision packet` as the gate's output bundle: evidence summary,
+  surviving findings, verification coverage, residual unknowns, and verdict
+  rationale.
 - Explicitly check **every** item below and reason about each one briefly and clearly.
 - Flag any issue you find. Do **not** assume correctness without verification — lean on the evidence gathered in Phase 6 (lint/type-check, test results, observed app behavior).
-- Treat the change's diff against the base branch as the primary source of truth. Don't assume hidden files, unstated behavior, or repository context beyond what the diff and the gathered evidence show. If something is ambiguous because context is missing, flag it as a risk rather than guessing.
+- Treat the change's diff against the base branch as the primary source of truth. Use only repository context that was captured explicitly in the gathered evidence, especially the Phase-0 project context capsule. Do not speculate beyond the diff, captured context, and verification results. If something is ambiguous because relevant context is missing, flag it as a risk rather than guessing.
 - **Apply the finding-verification discipline.** Anything that would push the verdict to `NEEDS REVISION` or `BLOCKED` must survive `finding-verification.md` first — a concrete, reachable trigger, not a hunch. A finding you can't reproduce is a low-confidence note, not a blocker.
 - **Apply finding triage.** Use `finding-triage.md` so every finding has a next action: Fix, Investigate, Plan, or Decide.
 - **Label every finding** with a **severity** (Critical/High/Medium/Low) and your **confidence** (High/Medium/Low) that it's real. Calibrate severity by blast radius: **Critical** = data loss/corruption, a security breach, or a broken core flow with no workaround; **High** = a real defect on a common path, or a meaningful security/correctness gap; **Medium** = a narrower or lower-likelihood issue, or one with a reasonable workaround; **Low** = minor, cosmetic, or easily avoided. Low-confidence items can be surfaced but should not block on their own.

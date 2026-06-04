@@ -24,3 +24,10 @@ untouched neighbors.
 ## Output
 
 Consolidate into the Phase-4 punch list. Before anything blocks, run it through `finding-verification.md`: it needs a concrete, reachable trigger (a real input or sequence that reaches the bug), known false-positive classes are downgraded, and any framework/library claim is checked against docs. Label each surviving finding with **severity** and **confidence**, and order by business impact.
+
+Emit findings into the shared `finding set` artifact defined in
+`finding-set.md` rather than as loose prose.
+
+Keep the correctness-review-specific nuance here: every surviving finding still
+needs a concrete, reachable trigger plus severity, confidence, and business
+impact ordering.

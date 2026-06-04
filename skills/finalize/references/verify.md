@@ -83,6 +83,25 @@ If you skip a row because the environment cannot exercise it, say that
 explicitly and carry the gap into the validation gate rather than silently
 pretending it was covered.
 
+## Output
+
+Phase 6 must produce the shared `verification ledger`.
+
+Use `verification-ledger.md` as the canonical schema and minimum-coverage
+contract. For each verification activity, record the exact fields defined
+there:
+
+- activity name
+- command, flow, or probe that was run
+- observed result
+- risk or invariant exercised
+- coverage type: `direct` | `indirect`
+- status: `pass` | `fail` | `not-run`
+- notes on environment gaps or unexercised risks
+
+If a top risk from the Phase-0 risk map was not exercised, carry that gap
+forward explicitly into the validation gate.
+
 ## When a bug appears during verification
 
 Don't just note "saw a failure." Capture it in a replayable way:

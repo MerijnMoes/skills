@@ -28,100 +28,48 @@ The user should not need to reconstruct:
 - **Don't bury the user.** Include everything important, but compress repeated
   detail. The report is a decision artifact, not raw notes.
 
-## Required sections
+The final report is the human-readable projection of the `decision packet`. It
+should not invent a new structure at the end of the run; it should summarize the
+evidence pack, surviving findings, verification ledger, and residual unknowns in
+a decision-ready format.
 
-Use these headings or clearly equivalent ones.
+## Canonical layout
 
-## 1. Executive summary
+The canonical Phase 8 section layout lives in `skills/finalize/SKILL.md` under
+`### Phase 8 — Final report & retro`. Use that template as-is. This reference
+is guidance for filling that template well, not a second competing output
+contract.
 
-Two to four sentences:
+## Filling the template well
 
-- what the change delivers;
-- whether it is shippable;
-- why the verdict is what it is.
-
-This should read like the top of a strong PR description.
-
-## 2. What changed
-
-State:
-
-- **Scope** — feature/fix/refactor delivered by the diff.
-- **Touched surfaces** — major modules, user flows, APIs, schemas, config, docs.
-- **Intent/spec source** — issue, spec file, commit message, user statement, or
-  "no external spec; internal-consistency check only."
-- **Project context** — standing instructions, architecture/domain conventions,
-  and unknowns that materially affected the review.
-
-Avoid file-by-file churn unless the diff is tiny.
-
-## 3. Evidence ledger
-
-This is the heart of a trustworthy finalize output. For every lane that was
-relevant, say **what evidence exists**.
-
-Include only what applies:
-
-- **Static gates** — formatter, lint, typecheck, build.
-- **Tests** — suite result, high-value targeted probes, regression tests added
-  or improved, notable coverage gaps.
-- **Behavioral verification** — real flows exercised and their outcomes.
-- **Project-fit verification** — architecture boundaries, prior-art reuse,
-  domain rules, tooling/test norms, docs/release conventions checked.
-- **Browser/UI verification** — manual path, Playwright path, a11y checks.
-- **Security verification** — concrete exploit checks, auth/tenant checks,
-  secret scan, dependency/license audit.
-- **Data/migration/rollout verification** — backward compatibility, idempotency,
-  retry behavior, data-shape tolerance, config defaults.
-- **Performance** — before/after if measured, or explicit note that it was not a
-  hot-path change.
-- **Docs/config** — what docs, examples, env templates, or changelog entries
-  were updated or checked.
-
-If something could not be run, say that here plainly. Do not let absence of
-evidence read like positive evidence.
-
-## 4. Findings
-
-Split findings into:
-
-- **Blocking**
-- **Non-blocking / deferred**
-
-For every finding, include:
-
-- severity;
-- confidence;
-- action type: Fix, Investigate, Plan, or Decide;
-- reachability when relevant;
-- concrete trigger or violated spec line;
-- current status: fixed, deferred, or unresolved.
-
-Findings should be ordered by business impact, not by phase or file order.
-
-## 5. Residual risk / open questions
-
-This section is mandatory even when empty.
-
-Include:
-
-- things not fully proven due to environment limits;
-- tests or probes you would still want in a future pass;
-- deferred refactors with risk implications;
-- ambiguous product/spec questions;
-- rollout or operational assumptions that were not exercised.
-
-If there is truly no residual risk worth naming, say that explicitly.
-
-## 6. Recommended next step
-
-Tailor this to the verdict:
-
-- **READY TO SHIP** — suggest the commit/PR framing, reviewer attention points,
-  and any rollout note worth carrying into the PR body.
-- **NEEDS REVISION** — list the exact changes needed before rerunning
-  `/finalize`.
-- **BLOCKED** — state the hard stopper first, then the minimum path to unblock.
+- **Executive summary** — keep it to 2-4 sentences on what changed, whether it
+  is shippable, and why the verdict is what it is. It should read like the top
+  of a strong PR description.
+- **What changed** — summarize scope, major files or surfaces touched,
+  intent/spec source, and the project context that materially affected the
+  review. Avoid file-by-file churn unless the diff is tiny.
+- **Evidence** — treat this as the heart of the report. For every relevant
+  lane, say what evidence exists: static gates, tests, behavioral verification,
+  project fit, docs/config, and only the relevant perf/a11y/rollout/security
+  checks. If something could not be run, say that plainly. Do not let absence
+  of evidence read like positive evidence.
+- **Findings** — split blocking from non-blocking items. For every finding,
+  include severity, confidence, action type, concrete trigger or violated spec
+  line, and current status. Order findings by business impact, not by phase or
+  file order.
+- **What each phase did** — keep this terse. It is a handoff aid, not a second
+  narrative report.
+- **Residual risk / open questions** — this section is mandatory even when
+  empty. Include environment limits, probes you still want, deferred refactors
+  with risk implications, ambiguous product/spec questions, and rollout or
+  operational assumptions that were not exercised. If there is truly no
+  residual risk worth naming, say that explicitly.
+- **Recommended next step** — tailor it to the verdict. For `READY TO SHIP`,
+  suggest commit/PR framing, reviewer attention points, and any rollout note
+  worth carrying forward. For `NEEDS REVISION` or `BLOCKED`, state the exact
+  fixes required before rerunning `/finalize`.
+- **Retro** — keep it to a few lines on durable lessons or conventions worth
+  remembering, not a second report.
 
 ## PR-ready framing
 

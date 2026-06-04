@@ -6,29 +6,35 @@ Currently ships one skill:
 
 ## `finalize`
 
-A post-implementation **finalization pipeline**: you run it once a change is functionally complete, and it brings the change up to shippable standard, then gives a go/no-go verdict. It is a **self-contained orchestrator** — it carries its own guidance for every phase (project-context discovery, language best-practices, simplification, refactor assessment, code review, security review, focused bug-hunting, behavioral verification, spec-conformance, doc updates, the validation gate) and depends on no host-agent built-in commands. The independent audit checks (code review, security review) run in fresh-context subagents that follow the skill's own references; behavioral verification runs in the main agent.
+A post-implementation **finalization pipeline**: you run it once a change is
+functionally complete, and it brings the change up to shippable standard, then
+gives a go/no-go verdict. It remains a **self-contained orchestrator** and a
+single `finalize` entrypoint, but `v2` is internally artifact-driven: it builds an
+`Evidence Pack`, routes scrutiny by risk, normalizes audit output into a
+`Finding Set`, records runtime proof in a `Verification Ledger`, and produces a
+verdict-backed `Decision Packet`.
 
 **It never commits, pushes, or opens a PR** — it stops at a verdict and a summary, and leaves all git actions to you.
 
 ### The pipeline
 
 ```
-0  Scope & baseline    detect diff/languages, capture project context, risk-map, pin the spec/intent, confirm green start (commit first!)
+0  Scope & evidence    diff/context/intent/risk lane/runtime sketch/verifier inventory -> Evidence Pack
 1  Best-practices      apply language/framework idioms to the changed code
-2  Simplify            local clarity pass on the diff (behavior-obvious cleanups)
-3  Refactor            fix structural problems worth fixing now (test-gated)
-4  Audit               common-bugs quick sweep + code review + security review (own refs, subagent-run) + focused bug-hunt + secret scan + dependency audit + consistency + spec-conformance + structural regression
-5  Update docs         sync README/CLAUDE.md/API docs/changelog with the change
-6  Verify              lint + type-check + tests + run the app + targeted probes / Playwright (if already present) + a11y/perf where relevant
-7  Validation gate     12-point critical review (incl. business-risk lanes) → READY TO SHIP / NEEDS REVISION / BLOCKED
-8  Report              PR-ready summary + evidence ledger + findings + next-step suggestion (no git writes)
+2  Simplify            local clarity pass on the diff
+3  Refactor            fix structural problems worth fixing now
+4  Audit               multi-lane review -> candidate findings -> challenge -> Finding Set
+5  Update docs         sync README/CLAUDE.md/AGENTS.md/API/config/changelog/example/migration docs with the change
+6  Verify              static gates + tests + behavioral probes -> Verification Ledger
+7  Validation gate     evaluate evidence, surviving findings, and open risk -> Decision Packet + verdict
+8  Report              verdict-first handoff built from the decision packet
 ```
 
-Findings in the audit and gate phases are adversarially verified — each must survive a trigger test (a concrete, reproducible failure) before it can block, so the punch list stays trustworthy rather than noisy.
+Findings in the audit and gate phases are adversarially verified — confirmed blockers should survive a trigger test or equally concrete evidence, so the punch list stays trustworthy rather than noisy. The final verdict can still hold a change at `NEEDS REVISION` or `BLOCKED` when important risks remain unproven.
 
 The gate's checklist is a floor, not a ceiling: the skill is expected to generate risk-led bug hypotheses from the actual diff instead of only ticking boxes. Its final output is meant to be evidence-rich and reviewer-ready, so you can turn it into a strong PR or handoff without reconstructing the session.
 
-Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, React, Python, FastAPI, Django/DRF, PHP, Laravel, Vue, CSS, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: project context (architecture boundaries, team conventions, domain rules, tooling/test/doc norms), simplify (local clarity), refactoring (incl. structural-regression), universal-quality anti-patterns, a common-bugs quick sweep, code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification and triage, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
+Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, React, Python, FastAPI, Django/DRF, PHP, Laravel, Vue, CSS, SQL, PostgreSQL, Supabase, plus accessibility & i18n. Cross-cutting references cover project context (architecture boundaries, team conventions, domain rules, tooling/test/doc norms), simplify (local clarity), refactoring (incl. structural-regression), universal-quality anti-patterns, a common-bugs quick sweep, code review (correctness), security review (OWASP Top 10:2025 + conditional API/LLM/security routing), static intelligence, migration safety, observability review, configuration review, behavioral verification, codebase-fit, spec-conformance, finding-verification and triage, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
 
 ## Install
 

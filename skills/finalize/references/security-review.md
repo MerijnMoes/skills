@@ -4,19 +4,9 @@ Independent security audit of the **diff only**, dispatched to a fresh-context s
 
 ## Surface routing
 
-Before finishing the security audit, load the focused references from `security-cheat-sheets.md` that match the diff:
-
-- `api-security-review.md` for endpoint / webhook / RPC changes
-- `agent-security-review.md` for LLM / agent / tool-calling changes
-- `auth-session-review.md` for auth, session, token, cookie, MFA, or authorization changes
-- `input-upload-output-review.md` for untrusted input, uploads, rendering, redirects, or outbound fetches
-- `workflow-security.md` for CI / GitHub Actions / release automation changes
-- `repo-hygiene.md` for supply-chain, release, action pinning, or repo-policy changes
-- `observability-review.md` for logging, tracing, audit, and alerting changes
-- `migration-safety.md` for migrations, backfills, or persistence-format changes
-- `configuration-review.md` for env vars, defaults, flags, or deployment config changes
-
-If a lane clearly does not apply, mark it `N/A` with a one-line reason and move on.
+Use `security-cheat-sheets.md` as the canonical router for focused security
+references. Load only the references that match the diff surface; if a surface
+clearly does not apply, mark it `N/A` with a one-line reason and move on.
 
 ## Always — OWASP Top 10:2025
 
@@ -71,3 +61,10 @@ Committed secrets remain the dedicated Phase-4 lane (keys, tokens, credentials, 
 ## Output
 
 Consolidate all applicable security sub-lanes into the Phase-4 punch list. Every finding must survive the `finding-verification.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.
+
+Emit findings into the shared `finding set` artifact defined in
+`finding-set.md` rather than as loose prose.
+
+Keep the security-review-specific nuance here: every surviving finding still
+needs a concrete, reachable exploit path plus severity, confidence, and
+business-impact ordering.

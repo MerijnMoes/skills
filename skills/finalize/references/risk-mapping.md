@@ -16,7 +16,7 @@ The goal is not paperwork. The goal is to avoid two bad habits:
 - spending equal energy on low-risk and high-risk surfaces.
 
 This reference is a **router, not a taxonomy of all software**. The archetypes,
-examples, and probes below are deliberately broad starting points. If the diff
+examples, and prompts below are deliberately broad starting points. If the diff
 has a domain-specific risk that is not named here, add it. Do not force a change
 into the closest canned category if that hides the real failure modes.
 
@@ -34,6 +34,20 @@ If the best risk label is "pricing-rule correctness", "compiler pass
 soundness", "search ranking drift", "document rendering fidelity", "billing
 cutoff semantics", or something else not listed below, use that label. The map
 is allowed to be domain-specific.
+
+## Outputs for the evidence pack
+
+Phase 0 should carry these forward explicitly:
+
+- `risk lane` — `green`, `yellow`, or `red`
+- top 2-5 failure modes
+- domain and architecture invariants
+- side effects and trust boundaries
+- hotspot tags, such as auth, migration, concurrency, cache, external effects,
+  config/rollout, and public API
+
+The map is not complete until these are written in a way later phases can reuse
+without rediscovering them.
 
 ## 1. Classify the change
 
@@ -113,7 +127,7 @@ Use the risk map to decide:
 
 - which conditional audit lanes matter in Phase 4;
 - which bug hypotheses deserve probing in `bug-hunting.md`;
-- which focused tests/probes must actually be executed in Phase 6;
+- which risks must be exercised in Phase 6;
 - what residual risk still matters in Phase 7.
 
 The map should make the pass **narrower and smarter**, not broader and noisier.
@@ -176,19 +190,30 @@ Use these as pattern examples, not templates to copy blindly.
   - poison payload loops forever or disappears silently;
   - transient upstream failure leaves half-applied state.
 
-## Heuristics by archetype
+## Risk prompts by archetype
 
-- **UI / UX** — verify keyboard/accessibility, validation, loading/error states, refresh/navigation, stale state after mutation.
-- **API / contract** — verify malformed input, missing fields, auth failures, backward compatibility, response shape promises.
-- **Auth / privacy** — verify under-privileged, expired, cross-tenant, and wrong-resource paths explicitly.
-- **Persistence / state** — verify create/update/delete round-trips, partial failure behavior, cache invalidation, and derived-state sync.
-- **Schema / migration / rollout** — verify old/new shape tolerance, reversibility where relevant, and deploy ordering assumptions.
-- **Async / jobs / events** — verify retries, duplicates, ordering assumptions, crash/restart tolerance, poison-message handling.
-- **External integration** — verify timeout/error paths, retries, idempotency, rate limits, and schema drift assumptions.
-- **Config / feature flags** — verify safe defaults, missing-config behavior, flag off/on behavior, and cleanup of stale paths.
-- **Performance-sensitive** — verify the actual hotspot with measurement; don't guess.
-- **Domain-specific lane** — define the invariant and the failure mode in the
-  product's own terms first, then choose the cheapest probe that can falsify it.
+- **UI / UX** — look for keyboard/accessibility regressions, validation gaps,
+  loading/error-state mismatches, refresh/navigation surprises, and stale state
+  after mutation.
+- **API / contract** — look for malformed-input handling gaps, missing-field
+  assumptions, auth failures, backward-compatibility breaks, and response-shape
+  drift.
+- **Auth / privacy** — look for under-privileged, expired, cross-tenant, and
+  wrong-resource failure modes explicitly.
+- **Persistence / state** — look for create/update/delete round-trip failures,
+  partial-failure behavior, cache invalidation issues, and derived-state drift.
+- **Schema / migration / rollout** — look for old/new shape tolerance issues,
+  reversibility gaps where relevant, and deploy-ordering assumptions.
+- **Async / jobs / events** — look for retry, duplicate-delivery, ordering,
+  crash/restart, and poison-message failure modes.
+- **External integration** — look for timeout/error-path risks, retry and
+  idempotency assumptions, rate-limit exposure, and schema drift assumptions.
+- **Config / feature flags** — look for unsafe defaults, missing-config
+  behavior, flag off/on mismatches, and stale-path cleanup risks.
+- **Performance-sensitive** — identify the actual hotspot and the ways it could
+  regress; do not guess from diff size alone.
+- **Domain-specific lane** — define the invariant and failure mode in the
+  product's own terms first so later phases can choose the right probe.
 
 ## When to create a domain-specific lane
 
