@@ -58,6 +58,7 @@ Apply idiomatic, language- and framework-specific best practices to the changed 
 
 - Read `references/best-practices/_index.md` and load only the files matching the languages detected in Phase 0. Always also load `references/best-practices/general-oop.md` for any backend/business-logic change, `references/best-practices/frontend-a11y-i18n.md` for any user-facing UI/markup change, and `references/testing.md` if the diff adds or changes test code (so the tests themselves get brought up to standard, not just the production code).
 - Before changing anything, use the Phase-0 project context capsule and follow `references/codebase-fit.md`: study how the project already does this and reuse existing utilities/patterns, so the change conforms instead of introducing a parallel approach.
+- For cross-language design/code smells that often survive language-specific guides, consult `references/universal-quality.md` and apply only the safe, clearly-improving fixes.
 - Apply the rules to the diff. Prefer the smallest change that brings the code in line; do not rewrite working code wholesale.
 - When a best-practice rule conflicts with an established project convention, the convention wins — note the conflict instead of fighting it.
 
@@ -89,7 +90,7 @@ Independently review the now-polished diff. These checks are read-only and indep
 
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `/finalize` should not pretend every diff has the same risk profile.
 
-- **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. On a host without subagents, follow that reference as an inline adversarial pass.
+- **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass.
 - **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md` (OWASP Top 10:2025 floor plus focused conditional lanes for API, auth/session, input/output, workflow/release, repo hygiene, migration safety, observability, configuration, and LLM/agent behavior). Inline-adversarial fallback as above.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens, private keys, or `.env` values. Any hit is a hard stop — never let secrets proceed toward a commit.
 - **Dependency & license audit** *(only if the diff changed dependency manifests/lockfiles)*: follow `references/dependency-audit.md` — check new/bumped dependencies for known vulnerabilities, license compatibility, and supply-chain hygiene. Skip with a note if no dependencies changed.
@@ -197,11 +198,15 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/best-practices/general-oop.md` | Phase 1 | SOLID, DI, composition, layering for backend code |
 | `references/best-practices/javascript.md` | Phase 1 | JS hygiene + patterns.dev design/performance/rendering patterns |
 | `references/best-practices/typescript.md` | Phase 1 | TypeScript idioms & anti-patterns |
+| `references/best-practices/react.md` | Phase 1 | React hooks, effects, boundaries, data flows, and rendering discipline |
 | `references/best-practices/python.md` | Phase 1 | Python idioms & anti-patterns |
+| `references/best-practices/fastapi.md` | Phase 1 | FastAPI route/dependency, schema, async, and API-boundary discipline |
+| `references/best-practices/django.md` | Phase 1 | Django / DRF ORM, serializer, viewset, and security discipline |
 | `references/best-practices/python-details.md` | Phase 1 | Python tooling config + worked examples (loaded on demand from `python.md`) |
 | `references/best-practices/php.md` | Phase 1 | PHP idioms, PSR, typing, static analysis, security, performance, testing |
 | `references/best-practices/laravel.md` | Phase 1 | Laravel specifics (Eloquent/N+1, FormRequests, queues) — layers on `php.md` |
 | `references/best-practices/vue.md` | Phase 1 | Vue 3 / Composition API idioms |
+| `references/best-practices/css.md` | Phase 1 | CSS cascade, responsiveness, motion, and maintainability discipline |
 | `references/best-practices/sql.md` | Phase 1 | Cross-engine SQL query & index optimization |
 | `references/best-practices/postgresql.md` | Phase 1 | PostgreSQL + ORM (TypeORM/Prisma) patterns |
 | `references/best-practices/supabase.md` | Phase 1 | Supabase RLS/auth, roles, pooling (layers on postgresql/sql) |
@@ -210,10 +215,12 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/simplify.md` | Phase 2 | Local clarity: equivalence test, clarity ethos, local-simplification catalog |
 | `references/project-context.md` | Phase 0 (+1 +4 +6 +7 +8) | Capture repo-specific instructions, architecture boundaries, domain rules, tooling/test/doc conventions, and unknowns |
 | `references/codebase-fit.md` | Phase 1 (+4) | Reuse prior art, match patterns, respect boundaries — fit the change to the repo |
+| `references/universal-quality.md` | Phase 1 (+4) | Cross-language anti-patterns: abstraction leaks, flag bloat, stringly typed behavior, redundant writes, check-then-act races, shallow wrappers |
 | `references/spec-conformance.md` | Phase 0 (+4) | Pin the originating intent; check the diff for missing requirements, scope creep, wrong implementation |
 | `references/risk-mapping.md` | Phase 0 (+4 +6 +7) | Classify the change, define invariants/boundaries/side effects, and choose the highest-value risks to probe |
 | `references/refactoring.md` | Phase 3 (+4) | Refactor priority model, behavior-preservation discipline & the diff-scoped structural-regression lane |
 | `references/code-review.md` | Phase 4 | Correctness/bug review of the diff (logic, edges, error paths, concurrency, resource leaks, API misuse) |
+| `references/common-bugs-checklist.md` | Phase 4 | Fast sweep of recurring defect classes so boring-but-reachable bugs are not missed before deeper review |
 | `references/security-review.md` | Phase 4 | Security audit floor plus conditional focused lanes for API, auth/session, input/output, workflow/release, repo hygiene, migration, observability, configuration, and LLM/agent behavior |
 | `references/bug-hunting.md` | Phase 4 (+6 +7) | Risk-led bug-finding: invariants, edge sweeps, retries, concurrency, deterministic repro, fault probes, and Playwright/system-flow guidance when already available |
 | `references/security-cheat-sheets.md` | Phase 4 | Router for focused security references based on diff surface |

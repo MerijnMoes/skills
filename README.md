@@ -17,7 +17,7 @@ A post-implementation **finalization pipeline**: you run it once a change is fun
 1  Best-practices      apply language/framework idioms to the changed code
 2  Simplify            local clarity pass on the diff (behavior-obvious cleanups)
 3  Refactor            fix structural problems worth fixing now (test-gated)
-4  Audit               code review + security review (own refs, subagent-run) + focused bug-hunt + secret scan + dependency audit + consistency + spec-conformance + structural regression
+4  Audit               common-bugs quick sweep + code review + security review (own refs, subagent-run) + focused bug-hunt + secret scan + dependency audit + consistency + spec-conformance + structural regression
 5  Update docs         sync README/CLAUDE.md/API docs/changelog with the change
 6  Verify              lint + type-check + tests + run the app + targeted probes / Playwright (if already present) + a11y/perf where relevant
 7  Validation gate     12-point critical review (incl. business-risk lanes) → READY TO SHIP / NEEDS REVISION / BLOCKED
@@ -28,7 +28,7 @@ Findings in the audit and gate phases are adversarially verified — each must s
 
 The gate's checklist is a floor, not a ceiling: the skill is expected to generate risk-led bug hypotheses from the actual diff instead of only ticking boxes. Its final output is meant to be evidence-rich and reviewer-ready, so you can turn it into a strong PR or handoff without reconstructing the session.
 
-Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, Python, PHP, Laravel, Vue, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: project context (architecture boundaries, team conventions, domain rules, tooling/test/doc norms), simplify (local clarity), refactoring (incl. structural-regression), code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification and triage, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
+Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, React, Python, FastAPI, Django/DRF, PHP, Laravel, Vue, CSS, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: project context (architecture boundaries, team conventions, domain rules, tooling/test/doc norms), simplify (local clarity), refactoring (incl. structural-regression), universal-quality anti-patterns, a common-bugs quick sweep, code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification and triage, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
 
 ## Install
 

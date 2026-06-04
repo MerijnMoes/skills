@@ -3,9 +3,9 @@
 Assess and improve the tests that changed in this diff. Good coverage of bad
 tests is false confidence — a green suite that asserts the wrong things, or
 breaks on every refactor, costs more than it protects. This reference applies to
-the **changed/new tests** in the diff, not the whole suite. Project conventions
-in CLAUDE.md / the existing test style always win; where they differ, follow
-them and say so.
+the **changed/new tests** in the diff, not the whole suite. The Phase-0 project
+context capsule and the repo's established test style always win; where they
+differ, follow them and say so.
 
 If the diff needs tests it does not yet have, say so and add the **smallest
 useful test** that pins the behavior or bug. For risk-led bug hypotheses and

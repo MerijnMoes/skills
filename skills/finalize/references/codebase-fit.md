@@ -2,6 +2,9 @@
 
 Used proactively in `/finalize` Phase 1 (match what exists *before* adding new code) and evaluatively in Phase 4 (does the change belong?). It works with the Phase-0 project context capsule from `project-context.md`. A change can be individually correct yet wrong for *this* codebase — it duplicates an existing helper, introduces a second way to do something the project already does one way, ignores an established pattern, or crosses a module boundary. Consistency is what keeps a codebase legible as it grows, so fit matters as much as local correctness. Project conventions and documented domain rules always win.
 
+For a compact catalog of cross-language code smells that often accompany fit
+problems, also see `universal-quality.md`.
+
 ## Find prior art first
 - Before writing or approving anything new, look at how the project already solves this: existing utilities/helpers/services, a similar existing feature, the established pattern for this kind of work, the naming and error-handling style, how dependencies get wired. Grep for the concept and read a couple of neighbors.
 - Use a real search, not a hunch: search the whole repo, the same module, and adjacent tests with at least three keyword variants (domain term, technical operation, likely helper/pattern name). If a convention is still unclear, check recent git history for similar changes.

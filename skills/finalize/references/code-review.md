@@ -1,6 +1,12 @@
 # Code review (correctness)
 
-Independent correctness review of the **diff only**, dispatched to a fresh-context subagent. You are checking that the change does what it should and breaks nothing reachable — not style (Phases 1–2 own that) and not structure (`refactoring.md` owns that). Read surrounding code only to understand the change; never review untouched neighbors.
+Independent correctness review of the **diff only**, dispatched to a
+fresh-context subagent. You are checking that the change does what it should
+and breaks nothing reachable — not style (Phases 1-2 own that) and not
+structure (`refactoring.md` owns that). Start with a fast sweep from
+`common-bugs-checklist.md` and `universal-quality.md`, then do the deeper pass
+below. Read surrounding code only to understand the change; never review
+untouched neighbors.
 
 ## What to check
 

@@ -15,6 +15,8 @@ it does **not** execute the final verification plan (`verify.md`), and it does
 ## Core stance
 
 - The checklist is necessary, but **not exhaustive**.
+- A quick sweep from `common-bugs-checklist.md` catches boring defects fast; the
+  real value here is generating hypotheses that the checklist would never name.
 - Coverage is evidence, not proof.
 - A bug hypothesis is useful only if you can turn it into a **reachable
   scenario**, an invariant, or a deterministic reproduction.

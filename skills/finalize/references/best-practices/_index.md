@@ -9,10 +9,14 @@ Phase 1 of `/finalize` loads only the best-practices files relevant to what chan
 | Any backend / business-logic change (any language) | `general-oop.md` |
 | `.js`, `.jsx`, `.mjs`, `.cjs` | `javascript.md` |
 | `.ts`, `.tsx`, `.mts`, `.cts` | `typescript.md` + `javascript.md` (TS is JS — the patterns & perf rules apply) |
+| React project (`react` in deps, `.jsx`/`.tsx`, hooks, client components) | `react.md` + `typescript.md`/`javascript.md` as applicable |
 | `.py`, `pyproject.toml`, `requirements.txt` | `python.md` |
+| FastAPI project (`fastapi` in deps, `FastAPI()` app, routers, Pydantic API schemas) | `fastapi.md` + `python.md` |
+| Django / DRF project (`django` / `djangorestframework` in deps, models/views/serializers/viewsets/settings) | `django.md` + `python.md` |
 | `.php`, `composer.json` | `php.md` |
 | Laravel project (`laravel/framework` in `composer.json`, an `artisan` file, `app/Http/...`) | `laravel.md` + `php.md` |
 | `.vue`, or Vue in `package.json` deps | `vue.md` + `typescript.md` + `javascript.md` |
+| `.css`, `.scss`, `.sass`, `.less`, CSS modules, substantial component/template style blocks | `css.md` (+ `frontend-a11y-i18n.md` for user-facing UI) |
 | `.sql`, raw queries, query builders (any engine) | `sql.md` |
 | PostgreSQL entities/migrations, TypeORM/Prisma, RLS | `postgresql.md` (+ `sql.md` for query tuning) |
 | Supabase project (`@supabase/supabase-js` in deps, a `supabase/` dir, or `auth.uid()`/`auth.*` in SQL/migrations) | `supabase.md` (+ `postgresql.md` + `sql.md`) |
@@ -21,8 +25,11 @@ Phase 1 of `/finalize` loads only the best-practices files relevant to what chan
 ## Notes
 
 - **`general-oop.md` is the baseline** for any backend change regardless of language — load it alongside the language-specific file.
+- **`universal-quality.md` is the cross-language smell companion** for Phase 1. Use it for abstraction leaks, flag bloat, stringly typed behavior, redundant writes, and similar issues that are not owned by one language guide.
+- **Framework refs layer on the language refs.** `react.md` does not replace `javascript.md`/`typescript.md`; `fastapi.md` and `django.md` do not replace `python.md`.
 - **A UI change is also a language change.** A `.vue`/`.tsx`/template edit loads both its language file (e.g. `typescript.md`) and `frontend-a11y-i18n.md` — accessibility and i18n are quality dimensions of any user-facing change.
+- **Style diffs can have logic-level quality issues too.** Load `css.md` for maintainability, cascade, responsiveness, and motion discipline; keep `frontend-a11y-i18n.md` for accessibility and localization concerns.
 - **`python.md` points to `python-details.md`** for concrete tooling config (ruff/mypy/pytest) and worked code examples — read that only when you need the exact syntax.
 - A change can match several rows (e.g. a NestJS endpoint touching `.ts` + a Prisma migration → `general-oop.md` + `typescript.md` + `postgresql.md`). Load all that apply.
 - If the diff's language isn't covered here, apply `general-oop.md` plus the change's surrounding-code conventions, and note that no language-specific reference exists yet.
-- **Project conventions (CLAUDE.md / existing style) always win** over these generic rules. When they conflict, follow the project and note the deviation rather than overriding silently.
+- **The Phase-0 project context capsule and standing project instructions always win** over these generic rules. When they conflict, follow the project and note the deviation rather than overriding silently.
