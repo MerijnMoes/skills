@@ -7,6 +7,10 @@ the **changed/new tests** in the diff, not the whole suite. Project conventions
 in CLAUDE.md / the existing test style always win; where they differ, follow
 them and say so.
 
+If the diff needs tests it does not yet have, say so and add the **smallest
+useful test** that pins the behavior or bug. For risk-led bug hypotheses and
+deterministic repro ideas, also load `bug-hunting.md`.
+
 ## Test behavior, not implementation
 
 Assert on the public contract and observable outcomes — return values, emitted
@@ -60,6 +64,41 @@ Use coverage to find untested branches and edge cases worth a real assertion —
 then write a meaningful behavioral test for them. Never add vacuous tests, or
 weaken assertions, just to move the number past a threshold.
 
+## Pick the right test for the risk
+
+Use the cheapest test that can really catch the failure:
+
+- **Unit test** for pure logic, boundary handling, parsing, calculations, and
+  branch behavior.
+- **Integration test** when the risk lives in wiring, queries, transactions,
+  serialization, migrations, caching, or framework behavior.
+- **End-to-end / browser test** only when the user journey itself is the risk:
+  auth flows, multi-step UI, navigation, async loading, or browser/server
+  contract.
+- **Characterization / regression test** when fixing a bug or refactoring risky
+  existing behavior: first pin what happens now, then change it safely.
+- **Table-driven / parametrized test** when the same invariant must hold across
+  many boundary inputs.
+
+The right test mix is part of correctness. A giant E2E test for a tiny pure
+function is as mismatched as a unit test that mocks away the exact integration
+that tends to fail in production.
+
+## Invariants over examples
+
+Examples are good; invariants are better. Where possible, express what must
+always hold:
+
+- retrying should not double-apply;
+- totals and counts change by the exact expected amount;
+- parsed/serialized values round-trip without corruption;
+- sorting, pagination, offsets, versions, or timestamps preserve ordering rules;
+- forbidden users never receive allowed-user data.
+
+You do not need a special property-testing framework to do this well. A
+table-driven test, a loop over fixed fixtures, or a comparison against a simple
+oracle can often capture the invariant clearly.
+
 ## The test pyramid
 
 Favor many fast, isolated unit tests; fewer integration tests; a few slow
@@ -67,6 +106,22 @@ end-to-end tests. Unit tests must stay fast so the whole suite runs on every
 change — a suite too slow to run is a suite that doesn't get run. Reserve broad,
 slow, brittle end-to-end tests for the high-value flows that genuinely need
 them; don't reach for E2E what a unit test could pin precisely.
+
+## Browser / Playwright tests
+
+If Playwright is already in the project, use it deliberately:
+
+- keep the suite focused on high-value user journeys and regressions;
+- cover one meaningful negative path, not only the golden path;
+- assert on visible behavior, accessibility roles, network outcomes, or
+  persisted effects — not incidental markup noise;
+- prefer stable selectors/roles and explicit waits over brittle CSS chains and
+  `waitForTimeout`;
+- avoid giant snapshots and "test the whole app" scripts that fail for reasons
+  unrelated to the change.
+
+If the project does **not** already use Playwright, `/finalize` should not add
+it just to satisfy the skill.
 
 ## Anti-patterns
 
@@ -82,6 +137,9 @@ them; don't reach for E2E what a unit test could pin precisely.
 - Giant snapshot blobs nobody reviews — they catch any change, verify none.
 - Tests written purely to raise the coverage number.
 - Testing third-party/framework code, or trivial getters/setters with no logic.
+- Bug fixes without a regression test or clear reason why one could not be added.
+- Timing-sensitive async tests that depend on wall-clock sleeps instead of a
+  controllable clock or explicit synchronization.
 
 ## Quick checklist
 
@@ -93,3 +151,4 @@ them; don't reach for E2E what a unit test could pin precisely.
 - [ ] Edge cases and failure/error paths covered, not only the happy path.
 - [ ] No vacuous tests, no coverage-chasing, no logic in test bodies.
 - [ ] Unit tests fast; slow E2E reserved for flows that earn it.
+- [ ] Test type matches the risk; bug fixes get a regression test where practical.

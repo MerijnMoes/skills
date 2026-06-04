@@ -5,18 +5,30 @@ Prove the change actually works by **running it**, not just by reading it or tru
 ## Procedure
 
 1. **Static gates** — run the project's formatter, linter and type-checker (detected in Phase 0). These are cheap and catch more than a human read.
-2. **Test suite** — run the full suite; it must pass. Confirm new code paths are actually *covered* (an untested new path is a finding). Assess test *quality* against `testing.md` — behavior over implementation, deterministic, not over-mocked, not vacuous (asserts something real). A green-but-meaningless test is false confidence and is itself a finding.
+2. **Test suite** — run the full suite; it must pass. Confirm new code paths are actually *covered* (an untested new path is a finding). Assess test *quality* against `testing.md` — behavior over implementation, deterministic, not over-mocked, not vacuous (asserts something real). A green-but-meaningless test is false confidence and is itself a finding. For higher-risk diffs, use `bug-hunting.md` to choose a few focused probes or regression tests rather than trusting suite breadth alone.
 3. **Run the app / feature** — launch it and exercise the change for real:
    - the **golden path** the change was built for (use the intent pinned in Phase 0);
    - **edge cases** — invalid input, empty states, error and permission-denied paths, boundary values;
    - **regressions** — quickly exercise adjacent features the change could plausibly affect.
    Observe actual behavior (output, UI, logs, side effects); don't infer it from the code.
+   - **temporal/retry behavior** *(when relevant)* — retry, refresh/reload, back/forward navigation, duplicate submit, reconnect, or rerun the same action to confirm idempotency and stale-state handling.
+   - **persistence/round-trip behavior** *(when relevant)* — create something, reload/refetch it, and confirm the stored or serialized form still behaves correctly.
    - **auth / permission paths** *(when relevant)* — confirm unauthenticated, under-privileged, expired-session, and wrong-tenant paths behave safely.
    - **upload / parser / redirect / outbound-fetch paths** *(when relevant)* — exercise malformed input, oversized files, blocked destinations, and unsafe redirect attempts.
    - **observability** *(when relevant)* — confirm failures and high-value actions leave useful signals without leaking secrets or PII; see `observability-review.md`.
    - **migration / rollout safety** *(when relevant)* — verify new code tolerates existing data shape and migrated data shape where the environment allows; see `migration-safety.md`.
+   - **Playwright/browser automation** *(when already available)* — for UI/web changes, prefer at least one focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path over an ad hoc manual click-through.
 4. **Accessibility** *(UI changes only)* — a keyboard-only pass plus an automated checker (e.g. axe), verifying the rules in `frontend-a11y-i18n.md` actually hold, not just that the markup looks right.
 5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. Skip with a note for cold-path changes.
+
+## When a bug appears during verification
+
+Don't just note "saw a failure." Capture it in a replayable way:
+
+- record the exact command, route, fixture, input, or seed that triggered it;
+- minimize the reproducer if you can;
+- add or improve a regression test when practical;
+- rerun the focused probe after the fix, then the broader suite.
 
 ## When you cannot run it
 

@@ -10,7 +10,7 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 - **Apply the finding-verification discipline.** Anything that would push the verdict to `NEEDS REVISION` or `BLOCKED` must survive `finding-verification.md` first — a concrete, reachable trigger, not a hunch. A finding you can't reproduce is a low-confidence note, not a blocker.
 - **Label every finding** with a **severity** (Critical/High/Medium/Low) and your **confidence** (High/Medium/Low) that it's real. Calibrate severity by blast radius: **Critical** = data loss/corruption, a security breach, or a broken core flow with no workaround; **High** = a real defect on a common path, or a meaningful security/correctness gap; **Medium** = a narrower or lower-likelihood issue, or one with a reasonable workaround; **Low** = minor, cosmetic, or easily avoided. Low-confidence items can be surfaced but should not block on their own.
 - **Order findings by business impact, not code elegance.** A data-corruption path that ships matters more than an inelegant abstraction. Lead the verdict with what actually harms the user or the business.
-- This checklist is necessary but **not exhaustive** — after it, apply your own judgement and look for risks it doesn't name (the required final step below).
+- This checklist is necessary but **not exhaustive** — after it, apply your own judgement and look for risks it doesn't name (the required final step below). Treat the checklist as a structure for thought, not a substitute for a risk-led bug hunt.
 
 ## Checklist
 
@@ -23,6 +23,8 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 ### 2. Tests & regression safety
 - Existing tests still pass (or equivalent reasoning confirms no breakage).
 - New functionality is covered by appropriate tests.
+- The **test type matches the risk**: unit for logic, integration for wiring/state, E2E/browser only where the journey itself is the risk.
+- Bug fixes and high-risk edge cases have a replayable regression test or a clearly stated reason why one could not be added now.
 - No regression introduced in related components.
 - Critical paths verified with concrete examples.
 
@@ -96,6 +98,7 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 
 After the checklist, you must also:
 - Identify any risks, gaps, or failure modes **not** covered above.
+- Bring forward residual bug hypotheses from `bug-hunting.md`, especially around timing, retries, concurrency, stale state, and invariants that broad checklists often under-specify.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
 - **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `/finalize` does not implement the gap itself). Unrequested scope creep is at least a flagged item.
 - State the verdict explicitly, with a short justification:
