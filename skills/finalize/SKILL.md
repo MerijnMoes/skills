@@ -24,6 +24,7 @@ Read these before starting. They explain *why* the pipeline is shaped the way it
 - **Build the right change, not just a correct one.** Code can be clean, idiomatic, and correct yet not be *what was asked for* — a requirement left half-built, a misread of the spec, or behavior nobody requested. Conformance to the originating intent is its own check, distinct from quality; see `references/spec-conformance.md`.
 - **Use the checklist as a floor, not a ceiling.** `/finalize` has explicit gates so the pass is complete and repeatable, but no checklist is exhaustive. Generate bug hypotheses from the actual diff, the changed invariants, and the system boundaries; use the references to structure your thinking, not replace it.
 - **A finding blocks only if it survives challenge.** Before any issue gates the verdict, it must have a concrete, reachable trigger — not a theory or an aesthetic objection. Challenging your own findings keeps the punch list small and trustworthy, so the user doesn't have to re-verify it by hand; see `references/finding-verification.md`.
+- **Evidence beats narration.** The final report should make it easy for a reviewer to see what changed, what was verified, what remains risky, and why the verdict is justified. Prefer concrete evidence — commands run, flows exercised, files updated, triggers reproduced, docs checked — over generic reassurance.
 - **Check current library docs when unsure.** Training data drifts and APIs change. When the change uses a library or framework and you're not certain an API is current, non-deprecated, and used the way maintainers now recommend, consult docs rather than memory — if a documentation MCP such as **Context7** is available, resolve the library and query the specific topic. If none is available, say so and lower your confidence instead of guessing. Most relevant in Phases 1, 4, and 7.
 
 ## Setup
@@ -131,12 +132,33 @@ Gate: a verdict is produced. `BLOCKED` or `NEEDS REVISION` means the change is *
 
 Close out without taking git actions (per the no-automatic-writes principle).
 
+Follow `references/final-reporting.md` so the output is **decision-ready** for the user and **review-ready** for a PR. The report should be concise, but it must surface the evidence, findings, residual risk, and next action clearly enough that the user does not have to reconstruct what happened.
+
 Present a concise report:
 
 ```
 # Finalize report
 
 **Verdict:** READY TO SHIP | NEEDS REVISION | BLOCKED
+
+## Executive summary
+- <2-4 sentence plain-language summary of what changed and whether it is shippable>
+
+## What changed
+- Scope: <what feature/fix/refactor the diff delivers>
+- Files/surfaces touched: <major areas only>
+- Intent/spec source: <issue/spec/user statement/none>
+
+## Evidence
+- Static gates: <formatter/lint/typecheck status>
+- Tests: <suite status + notable targeted probes/regressions added/run>
+- Behavioral verification: <real flows exercised, manual or automated>
+- Docs/config: <what was updated or checked>
+- Perf/a11y/rollout/security: <only the relevant lanes and their evidence>
+
+## Findings
+- Blocking: <none, or list with severity/confidence/trigger/fix status>
+- Non-blocking: <deferred items, coverage gaps, low-confidence notes>
 
 ## What each phase did
 - Best-practices: <changes made, or "no change">
@@ -146,11 +168,12 @@ Present a concise report:
 - Docs: <...>
 - Verify: <lint/types/tests/app status>
 
-## Outstanding items
-- <non-blocking findings, deferred refactors, coverage gaps>
+## Residual risk / open questions
+- <what was not fully proven, not runnable, or intentionally deferred>
 
 ## Recommended next step
-- <e.g. suggested conventional-commit message; or what to fix before re-running /finalize>
+- <if READY TO SHIP: suggested PR/commit framing and any reviewer attention points>
+- <if NEEDS REVISION/BLOCKED: exact fixes required before re-running /finalize>
 ```
 
 Then a brief **retro**: note anything from this session worth remembering (a recurring mistake, a project convention discovered, a workflow preference). If it is durably useful, offer to save it to memory. Keep this to a few lines — it is a learning capture, not a second report.
@@ -199,3 +222,4 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
 | `references/performance-profiling.md` | Phase 6 | Measure-first profiling for hot-path changes |
 | `references/validation-gate.md` | Phase 7 | 12-section validation checklist (incl. business-risk lanes) + verdict |
+| `references/final-reporting.md` | Phase 8 | PR-ready reporting: executive summary, evidence ledger, findings, residual risk, reviewer handoff |

@@ -21,12 +21,12 @@ A post-implementation **finalization pipeline**: you run it once a change is fun
 5  Update docs         sync README/CLAUDE.md/API docs/changelog with the change
 6  Verify              lint + type-check + tests + run the app + targeted probes / Playwright (if already present) + a11y/perf where relevant
 7  Validation gate     12-point critical review (incl. business-risk lanes) → READY TO SHIP / NEEDS REVISION / BLOCKED
-8  Report              summary + next-step suggestion (no git writes)
+8  Report              PR-ready summary + evidence ledger + findings + next-step suggestion (no git writes)
 ```
 
 Findings in the audit and gate phases are adversarially verified — each must survive a trigger test (a concrete, reproducible failure) before it can block, so the punch list stays trustworthy rather than noisy.
 
-The gate's checklist is a floor, not a ceiling: the skill is expected to generate risk-led bug hypotheses from the actual diff instead of only ticking boxes.
+The gate's checklist is a floor, not a ceiling: the skill is expected to generate risk-led bug hypotheses from the actual diff instead of only ticking boxes. Its final output is meant to be evidence-rich and reviewer-ready, so you can turn it into a strong PR or handoff without reconstructing the session.
 
 Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, Python, PHP, Laravel, Vue, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: simplify (local clarity), refactoring (incl. structural-regression), code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
 
