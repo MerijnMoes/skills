@@ -1,10 +1,16 @@
 # Focused bug hunting
 
-Used in `/finalize` Phases 4, 6, and 7. The goal is to find **real bugs the
-checklists may miss** without turning finalize into an open-ended research
-project. Start from the actual diff and choose a **small number of
-high-leverage probes**. This is a risk-led complement to `code-review.md`,
+Used primarily in `/finalize` Phase 4, then carried into Phases 6 and 7. The
+goal is to find **real bugs the checklists may miss** without turning finalize
+into an open-ended research project. Start from the actual diff and generate a
+**small number of high-value bug hypotheses** plus the cheapest probes that
+could falsify them. This is a risk-led complement to `code-review.md`,
 `testing.md`, and `validation-gate.md` — not a replacement for them.
+
+Its job is to answer **"what could really be wrong, and what probe would expose
+it?"** It does **not** classify the whole change up front (`risk-mapping.md`),
+it does **not** execute the final verification plan (`verify.md`), and it does
+**not** decide the verdict (`validation-gate.md`).
 
 ## Core stance
 
@@ -58,7 +64,7 @@ Examples:
 
 Good invariants turn vague suspicion into crisp tests and sharper reviews.
 
-## 3. Pick the smallest high-value probe
+## 3. Propose the smallest high-value probe
 
 Choose one or more, depending on the risk:
 
@@ -80,7 +86,9 @@ Choose one or more, depending on the risk:
 - **Focused browser flow** — for web/UI changes, exercise the highest-value user
   journey and one meaningful negative path.
 
-The aim is not "more tests." The aim is **the right test for the specific risk**.
+The aim is not "more tests." The aim is **the right candidate probe for the
+specific risk**. `verify.md` decides which of these probes are actually executed
+in Phase 6.
 
 ## 4. Make the probe deterministic
 

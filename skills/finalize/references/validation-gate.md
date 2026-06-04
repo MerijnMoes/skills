@@ -2,6 +2,11 @@
 
 Phase 7 of `/finalize`. You are critically evaluating a completed code change before it is considered shippable. This is the final sign-off — apply real engineering scrutiny, not a rubber stamp.
 
+Its job is to answer **"given the evidence and the remaining gaps, what is the
+right verdict?"** It should judge the results of `risk-mapping.md`,
+`bug-hunting.md`, and `verify.md` — not restart exploratory testing from
+scratch.
+
 ## How to run the gate
 
 - Explicitly check **every** item below and reason about each one briefly and clearly.
@@ -10,7 +15,26 @@ Phase 7 of `/finalize`. You are critically evaluating a completed code change be
 - **Apply the finding-verification discipline.** Anything that would push the verdict to `NEEDS REVISION` or `BLOCKED` must survive `finding-verification.md` first — a concrete, reachable trigger, not a hunch. A finding you can't reproduce is a low-confidence note, not a blocker.
 - **Label every finding** with a **severity** (Critical/High/Medium/Low) and your **confidence** (High/Medium/Low) that it's real. Calibrate severity by blast radius: **Critical** = data loss/corruption, a security breach, or a broken core flow with no workaround; **High** = a real defect on a common path, or a meaningful security/correctness gap; **Medium** = a narrower or lower-likelihood issue, or one with a reasonable workaround; **Low** = minor, cosmetic, or easily avoided. Low-confidence items can be surfaced but should not block on their own.
 - **Order findings by business impact, not code elegance.** A data-corruption path that ships matters more than an inelegant abstraction. Lead the verdict with what actually harms the user or the business.
-- This checklist is necessary but **not exhaustive** — after it, apply your own judgement and look for risks it doesn't name (the required final step below). Treat the checklist as a structure for thought, not a substitute for a risk-led bug hunt.
+- This checklist is necessary but **not exhaustive** — after it, apply your own judgement and look for risks it doesn't name (the required final step below). Treat the checklist as a structure for thought, not a substitute for a risk-led bug hunt. But do that by evaluating the gathered evidence and explicit gaps, not by opening a fresh unbounded review loop here.
+
+## Verdict calibration
+
+Do not choose the verdict by vibe. Calibrate it explicitly:
+
+- **BLOCKED** — a serious problem prevents shipping at all: data loss/corruption,
+  a real security breach/external exploit path, a broken core flow with a clear
+  trigger, a dangerous migration/rollout path with no safe mitigation, or a
+  failed verification gate on a critical path.
+- **NEEDS REVISION** — the change mostly works but still has issues worth fixing
+  before merge: a confirmed non-catastrophic correctness bug, missing required
+  coverage on a high-risk new path, a spec gap, a risky but bounded config/doc
+  mismatch, or a residual risk too important to leave implicit.
+- **READY TO SHIP** — relevant gates are green, the top risks from the risk map
+  were meaningfully exercised, no confirmed blocking findings remain, and any
+  residual risks are explicitly small, bounded, and acceptable.
+
+When in doubt, name the exact reason the issue changes the verdict. "Feels
+unfinished" is not enough.
 
 ## Checklist
 
@@ -99,6 +123,7 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 After the checklist, you must also:
 - Identify any risks, gaps, or failure modes **not** covered above.
 - Bring forward residual bug hypotheses from `bug-hunting.md`, especially around timing, retries, concurrency, stale state, and invariants that broad checklists often under-specify.
+- Revisit the Phase-0 risk map and state which top risks were actually disproven, which remain open, and whether any of those open risks materially affect the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
 - **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `/finalize` does not implement the gap itself). Unrequested scope creep is at least a flagged item.
 - State the verdict explicitly, with a short justification:
