@@ -1,6 +1,6 @@
 # Simplify
 
-Phase 2 of `/finalize` (improve clarity, remove accidental complexity). Make the changed code easier to read **without changing what it does**. Applies to the changed code in the diff, not the whole repo. Many diffs are already simple — say so and move on rather than manufacturing churn. Project conventions in CLAUDE.md always override these rules.
+Phase 2 of `/finalize` (improve clarity, remove accidental complexity). Make the changed code easier to read **without changing what it does**. Applies to the changed code in the diff, not the whole repo. Many diffs are already simple — say so and move on rather than manufacturing churn. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Where this phase sits
 Phase 2 is the middle rung of the three improve phases — between language idioms and structural change. Keep to your own rung:

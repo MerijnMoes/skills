@@ -6,14 +6,14 @@ Currently ships one skill:
 
 ## `finalize`
 
-A post-implementation **finalization pipeline**: you run it once a change is functionally complete, and it brings the change up to shippable standard, then gives a go/no-go verdict. It is a **self-contained orchestrator** — it carries its own guidance for every phase (language best-practices, simplification, refactor assessment, code review, security review, focused bug-hunting, behavioral verification, spec-conformance, doc updates, the validation gate) and depends on no host-agent built-in commands. The independent audit checks (code review, security review) run in fresh-context subagents that follow the skill's own references; behavioral verification runs in the main agent.
+A post-implementation **finalization pipeline**: you run it once a change is functionally complete, and it brings the change up to shippable standard, then gives a go/no-go verdict. It is a **self-contained orchestrator** — it carries its own guidance for every phase (project-context discovery, language best-practices, simplification, refactor assessment, code review, security review, focused bug-hunting, behavioral verification, spec-conformance, doc updates, the validation gate) and depends on no host-agent built-in commands. The independent audit checks (code review, security review) run in fresh-context subagents that follow the skill's own references; behavioral verification runs in the main agent.
 
 **It never commits, pushes, or opens a PR** — it stops at a verdict and a summary, and leaves all git actions to you.
 
 ### The pipeline
 
 ```
-0  Scope & baseline    detect diff/languages, read CLAUDE.md, pin the spec/intent, confirm green start (commit first!)
+0  Scope & baseline    detect diff/languages, capture project context, risk-map, pin the spec/intent, confirm green start (commit first!)
 1  Best-practices      apply language/framework idioms to the changed code
 2  Simplify            local clarity pass on the diff (behavior-obvious cleanups)
 3  Refactor            fix structural problems worth fixing now (test-gated)
@@ -28,7 +28,7 @@ Findings in the audit and gate phases are adversarially verified — each must s
 
 The gate's checklist is a floor, not a ceiling: the skill is expected to generate risk-led bug hypotheses from the actual diff instead of only ticking boxes. Its final output is meant to be evidence-rich and reviewer-ready, so you can turn it into a strong PR or handoff without reconstructing the session.
 
-Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, Python, PHP, Laravel, Vue, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: simplify (local clarity), refactoring (incl. structural-regression), code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
+Best-practices coverage (loaded only for the languages in your diff): general OOP/backend, JavaScript, TypeScript, Python, PHP, Laravel, Vue, SQL, PostgreSQL, plus accessibility & i18n. Cross-cutting: project context (architecture boundaries, team conventions, domain rules, tooling/test/doc norms), simplify (local clarity), refactoring (incl. structural-regression), code review (correctness), security review (OWASP Top 10:2025 + conditional API & LLM lenses), behavioral verification, codebase-fit, spec-conformance, finding-verification and triage, test quality, docs, dependency/license audit, performance profiling, and the validation gate.
 
 ## Install
 

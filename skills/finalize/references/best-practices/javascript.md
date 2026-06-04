@@ -1,6 +1,6 @@
 # JavaScript best-practices
 
-Applies to the changed JavaScript code in `/finalize` Phase 1 (the diff, not the whole repo). For TypeScript *type* idioms see `typescript.md`; for SOLID/composition/layering see `general-oop.md`; for UI accessibility & i18n see `frontend-a11y-i18n.md`. The pattern catalogues below are distilled from patterns.dev. Project conventions in CLAUDE.md always override these rules.
+Applies to the changed JavaScript code in `/finalize` Phase 1 (the diff, not the whole repo). For TypeScript *type* idioms see `typescript.md`; for SOLID/composition/layering see `general-oop.md`; for UI accessibility & i18n see `frontend-a11y-i18n.md`. The pattern catalogues below are distilled from patterns.dev. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Core language hygiene
 - `const` by default, `let` when reassigned, never `var` (function-scoped, hoisted — a footgun).

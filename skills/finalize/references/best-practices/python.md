@@ -1,6 +1,6 @@
 # Python best-practices
 
-Applies to the changed Python code in `/finalize` Phase 1 (the diff, not the whole repo). Project conventions in CLAUDE.md always override these rules. For concrete tooling config (ruff/mypy/pytest) and worked code examples, see `python-details.md`.
+Applies to the changed Python code in `/finalize` Phase 1 (the diff, not the whole repo). The Phase-0 project context capsule and standing project instructions always override these generic rules. For concrete tooling config (ruff/mypy/pytest) and worked code examples, see `python-details.md`.
 
 Guiding philosophy (the Zen of Python, applied): explicit over implicit, simple over complex, readable over clever, and *errors should never pass silently*. Prefer functional/immutable over mutable, and `async`/`await` over callbacks.
 

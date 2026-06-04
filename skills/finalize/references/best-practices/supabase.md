@@ -1,6 +1,6 @@
 # Supabase (Postgres) best-practices
 
-Loaded in `/finalize` Phase 1 for Supabase projects. **Layers on `postgresql.md` and `sql.md`** — those cover generic indexing, N+1, `EXPLAIN`, pagination, transactions, and migration discipline, which all still apply. This file adds only the Supabase-specific RLS / auth / roles / pooling layer. Project conventions in CLAUDE.md always win.
+Loaded in `/finalize` Phase 1 for Supabase projects. **Layers on `postgresql.md` and `sql.md`** — those cover generic indexing, N+1, `EXPLAIN`, pagination, transactions, and migration discipline, which all still apply. This file adds only the Supabase-specific RLS / auth / roles / pooling layer. The Phase-0 project context capsule and standing project instructions always win.
 
 ## Row-Level Security & auth
 - Enable RLS on **every** table exposed through the API. An un-RLS'd table reachable by the `anon`/`authenticated` role is a public read/write hole — this is the most common Supabase security mistake.

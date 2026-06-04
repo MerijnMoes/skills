@@ -1,6 +1,6 @@
 # Frontend accessibility & i18n best-practices
 
-Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/Svelte/templates/components), and verified again in Phase 6. Applies to the changed UI code in the diff, not the whole app. Project conventions in CLAUDE.md always override these rules — when they conflict, follow the project and note the deviation.
+Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/Svelte/templates/components), and verified again in Phase 6. Applies to the changed UI code in the diff, not the whole app. The Phase-0 project context capsule and standing project instructions always override these generic rules — when they conflict, follow the project and note the deviation.
 
 ## Accessibility (a11y)
 

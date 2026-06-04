@@ -1,6 +1,6 @@
 # Vue best-practices
 
-Applies to the changed Vue 3 code in `/finalize` Phase 1 (the diff, not the whole repo). Project conventions in CLAUDE.md always override these rules.
+Applies to the changed Vue 3 code in `/finalize` Phase 1 (the diff, not the whole repo). The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Implementation guidelines
 

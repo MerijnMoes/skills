@@ -1,8 +1,10 @@
 # Risk mapping
 
-Used in `/finalize` Phase 0 and then carried into Phases 4, 6, and 7. Before
-you start polishing or reviewing, build a small map of **what kind of change
-this is** and **how it can fail**. Different changes need different scrutiny.
+Used in `/finalize` Phase 0 and then carried into Phases 4, 6, and 7. Build it
+after the project context capsule in `project-context.md`, so repo-specific
+architecture boundaries and domain rules inform the risks. Before you start
+polishing or reviewing, build a small map of **what kind of change this is** and
+**how it can fail**. Different changes need different scrutiny.
 
 Its job is to answer **"where is the risk?"** It does **not** need to choose
 every probe, prove the behavior, or decide the verdict. Those belong to
@@ -24,6 +26,7 @@ Build the map from the **diff's actual semantics**, not from this document's
 headings. Ask:
 
 - what can this change newly break?
+- what project-specific boundary, convention, or domain rule does it rely on?
 - what invariants does this product/domain care about?
 - what side effects or safety properties matter here even if they are unusual?
 
@@ -71,6 +74,10 @@ At least one invariant should usually be **domain-level**, not just technical.
 Examples: "invoice totals match contract rules", "rendered export preserves page
 breaks", "ranking never returns filtered-out items", "compiler transform does
 not change meaning", "sync does not resurrect deleted records."
+
+Pull domain and architecture invariants from the project context capsule when it
+has them. If the repo appears to have a domain rule but it is not documented,
+record that as an unknown instead of guessing.
 
 ## 3. List side effects and boundaries
 
@@ -214,6 +221,7 @@ they are not the main story.
 
 - [ ] Change archetypes identified.
 - [ ] Domain-specific lane added when the generic ones are not enough.
+- [ ] Project context capsule consulted for architecture/domain risks.
 - [ ] 2-5 core invariants named.
 - [ ] At least one invariant reflects the product/domain semantics when relevant.
 - [ ] Important state writes / side effects / trust boundaries listed.

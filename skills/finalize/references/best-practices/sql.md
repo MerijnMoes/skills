@@ -1,6 +1,6 @@
 # SQL best-practices
 
-Applies to the changed SQL queries and indexes in `/finalize` Phase 1 (the diff, not the whole schema). Engine-agnostic (MySQL, PostgreSQL, SQL Server, Oracle). Project conventions in CLAUDE.md always override these rules.
+Applies to the changed SQL queries and indexes in `/finalize` Phase 1 (the diff, not the whole schema). Engine-agnostic (MySQL, PostgreSQL, SQL Server, Oracle). The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Implementation guidelines
 

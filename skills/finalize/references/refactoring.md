@@ -1,6 +1,6 @@
 # Refactor assessment
 
-Phase 3 of `/finalize` (fix structural problems) and the structural-regression lane of Phase 4 (flag them, read-only). Assess the changed code for structural problems and, in Phase 3, fix ONLY those that genuinely improve it. Many changes need no refactor at all — don't manufacture work to look thorough. Applies to the changed code in the diff, not the whole repo. Project conventions in CLAUDE.md always override these rules.
+Phase 3 of `/finalize` (fix structural problems) and the structural-regression lane of Phase 4 (flag them, read-only). Assess the changed code for structural problems and, in Phase 3, fix ONLY those that genuinely improve it. Many changes need no refactor at all — don't manufacture work to look thorough. Applies to the changed code in the diff, not the whole repo. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 Local clarity fixes — flattening with guard clauses, deleting dead code, naming magic numbers, renaming a local — belong to **Phase 2** (`simplify.md`), whose equivalence is visible on inspection. This phase is for *structural* change whose behavior preservation needs the test suite to prove it.
 

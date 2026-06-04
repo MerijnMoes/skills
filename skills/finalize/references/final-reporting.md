@@ -9,6 +9,7 @@ The user should not need to reconstruct:
 - what changed;
 - what was actually verified;
 - which findings are real versus speculative;
+- which project-specific conventions, boundaries, and domain rules were checked;
 - what remains risky;
 - what they should do next.
 
@@ -17,6 +18,9 @@ The user should not need to reconstruct:
 - **Lead with the decision.** Verdict first, then the evidence that supports it.
 - **Evidence over reassurance.** Prefer "ran `pnpm test`, exercised create+edit
   flow, added regression test for duplicate submit" over "tests looked good."
+- **Show project fit.** If the verdict relies on repo-specific architecture,
+  domain, tooling, or release conventions, name what was checked and any
+  unknowns.
 - **Reviewer-ready, not diary-like.** Keep chronology out unless it matters for
   risk or debugging.
 - **Separate facts from confidence from gaps.** What you know, how sure you are,
@@ -46,6 +50,8 @@ State:
 - **Touched surfaces** — major modules, user flows, APIs, schemas, config, docs.
 - **Intent/spec source** — issue, spec file, commit message, user statement, or
   "no external spec; internal-consistency check only."
+- **Project context** — standing instructions, architecture/domain conventions,
+  and unknowns that materially affected the review.
 
 Avoid file-by-file churn unless the diff is tiny.
 
@@ -60,6 +66,8 @@ Include only what applies:
 - **Tests** — suite result, high-value targeted probes, regression tests added
   or improved, notable coverage gaps.
 - **Behavioral verification** — real flows exercised and their outcomes.
+- **Project-fit verification** — architecture boundaries, prior-art reuse,
+  domain rules, tooling/test norms, docs/release conventions checked.
 - **Browser/UI verification** — manual path, Playwright path, a11y checks.
 - **Security verification** — concrete exploit checks, auth/tenant checks,
   secret scan, dependency/license audit.
@@ -84,6 +92,7 @@ For every finding, include:
 
 - severity;
 - confidence;
+- action type: Fix, Investigate, Plan, or Decide;
 - reachability when relevant;
 - concrete trigger or violated spec line;
 - current status: fixed, deferred, or unresolved.
@@ -141,8 +150,9 @@ it, but the report should make that description easy to derive.
 
 - [ ] Verdict appears immediately and is justified.
 - [ ] Scope, touched surfaces, and intent source are stated clearly.
+- [ ] Project-specific context that mattered is stated clearly.
 - [ ] Evidence is listed per relevant lane, not implied.
-- [ ] Findings carry severity/confidence/trigger/status.
+- [ ] Findings carry severity/confidence/action/trigger/status.
 - [ ] Residual risk/open questions are explicit, even if empty.
 - [ ] Recommended next step matches the verdict.
 - [ ] Output is concise but reusable in a PR or review handoff.

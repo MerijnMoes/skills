@@ -1,6 +1,6 @@
 # PostgreSQL (ORM) best-practices
 
-Applies to the changed entities, migrations, and DB access in `/finalize` Phase 1 (the diff, not the whole schema). Targets PostgreSQL behind an ORM (TypeORM or Prisma, common in NestJS-style apps). Project conventions in CLAUDE.md always override these rules. For generic query/index tuning see `sql.md`; this file adds the Postgres + ORM specifics.
+Applies to the changed entities, migrations, and DB access in `/finalize` Phase 1 (the diff, not the whole schema). Targets PostgreSQL behind an ORM (TypeORM or Prisma, common in NestJS-style apps). The Phase-0 project context capsule and standing project instructions always override these generic rules. For generic query/index tuning see `sql.md`; this file adds the Postgres + ORM specifics.
 
 ## Implementation guidelines
 

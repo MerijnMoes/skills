@@ -2,13 +2,15 @@
 
 Prove the change actually works by **running it**, not just by reading it or trusting a green test suite. Type-checks and tests show code correctness; this step shows *feature* correctness. Run by the main agent (it holds the change's intent and can drive the app).
 
-Build the verification plan from the Phase-0 risk map. Do not just "poke around"
-randomly: choose probes that attack the highest-value failure modes.
+Build the verification plan from the Phase-0 risk map and project context
+capsule. Do not just "poke around" randomly: choose probes that attack the
+highest-value failure modes and the project/domain invariants that matter for
+this repo.
 
 Its job is to answer **"what did we actually run, and what did we actually
 observe?"** It should execute the highest-value probes suggested by
-`risk-mapping.md` and `bug-hunting.md`, not reopen broad ideation or verdict
-debate.
+`risk-mapping.md`, `project-context.md`, and `bug-hunting.md`, not reopen broad
+ideation or verdict debate.
 
 ## Procedure
 
@@ -27,12 +29,14 @@ debate.
    - **migration / rollout safety** *(when relevant)* — verify new code tolerates existing data shape and migrated data shape where the environment allows; see `migration-safety.md`.
    - **async / duplicate / replay behavior** *(when relevant)* — rerun the same message, job, or action and confirm side effects are not duplicated or corrupted.
    - **config / feature-flag behavior** *(when relevant)* — verify safe defaults, missing-config behavior, and both sides of the flag when the change depends on rollout controls.
+   - **project/domain invariants** *(when relevant)* — exercise the repo-specific calculation, workflow state, tenant/privacy boundary, compatibility promise, or documented convention captured in the project context capsule.
    - **Playwright/browser automation** *(when already available)* — for UI/web changes, prefer at least one focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path over an ad hoc manual click-through.
 4. **Accessibility** *(UI changes only)* — a keyboard-only pass plus an automated checker (e.g. axe), verifying the rules in `frontend-a11y-i18n.md` actually hold, not just that the markup looks right.
 5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. Skip with a note for cold-path changes.
 
-At the end of verification, be able to say which top risks from the risk map
-were actually exercised, and which were not.
+At the end of verification, be able to say which top risks from the risk map and
+which relevant project-context invariants were actually exercised, and which
+were not.
 
 ## Required probes by archetype
 

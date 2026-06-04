@@ -5,9 +5,9 @@ Phase 5 of `/finalize`. Sync documentation with the change you just made. Update
 narration, never document behavior that isn't there. A stale or fictional doc is
 worse than no doc, because it actively misleads the next reader.
 
-Project conventions in CLAUDE.md / AGENTS.md always override the generic rules
-below. If the project documents its own doc style, format, or changelog process,
-follow it and say so.
+The Phase-0 project context capsule and standing project instructions always
+override the generic rules below. If the project documents its own doc style,
+format, or changelog process, follow it and say so.
 
 ## What to check
 
