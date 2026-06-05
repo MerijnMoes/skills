@@ -36,11 +36,10 @@ explained.
   this router with
   `architecture-docs-review.md` to decide whether README/API docs are enough or
   whether ADR / architecture / component docs are required.
-- If the diff changes iOS reviewer-facing setup, metadata, purchase, privacy,
-  or account-policy surfaces, pair this router with `appstore-review.md` so the
-  doc update covers reviewer notes or submission instructions instead of
-  generic product prose. App Store-only changes should stay on that lane unless
-  the same diff also changes public APIs, boundaries, or responsibilities.
+- If the App Store lane is already relevant, this router may still choose
+  reviewer notes or submission instructions as the doc target for that surface.
+  In mixed diffs, it may also choose a separate non-reviewer doc target when
+  public APIs, boundaries, or responsibilities changed.
 
 ## Minimal-scope guardrails
 

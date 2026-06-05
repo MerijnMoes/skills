@@ -49,7 +49,9 @@ affected it.
   entitlements, privacy manifests, purchase flows, account rules, or reviewer
   setup, route through `appstore-review.md` and update only the reviewer-facing
   notes, submission instructions, or release-note text the changed surface
-  actually requires.
+  actually requires. If the same diff also changes public APIs, system
+  boundaries, or responsibilities, run the ADR / architecture / component-doc
+  route as well.
 
 ## How to write the updates
 

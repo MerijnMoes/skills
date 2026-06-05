@@ -305,9 +305,10 @@ Bring documentation in sync with the change so the next reader isn't misled.
 - For doc-type escalation, route through `references/docs-quality-router.md`;
   when the diff changes public APIs, system boundaries, or responsibilities,
   pair that with `references/architecture-docs-review.md`. For iOS
-  submission-facing metadata, purchase, privacy, or reviewer-setup docs, route
-  through `references/appstore-review.md` unless the same diff also changes
-  those API/boundary/responsibility surfaces.
+  submission-facing metadata, purchase, privacy, or reviewer-setup docs, use
+  `references/appstore-review.md`. App Store-only diffs use that lane alone;
+  mixed diffs that also change API/boundary/responsibility surfaces run both
+  lanes.
 - Use the `Evidence Pack` and risk lane, not just touched files, to decide
   whether docs, rollout notes, config guidance, or migration instructions should
   be updated.
