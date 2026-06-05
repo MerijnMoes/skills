@@ -49,6 +49,10 @@ recovery, and operator visibility introduced or changed by the diff.
 - Queue/job flow that retries forever or drops poison messages without an
   operator-visible trail.
 
+## Mutability
+
+- Mutability mode: `report-first`
+
 ## Output
 
 Use this lane for resilience findings and verification notes about the changed
