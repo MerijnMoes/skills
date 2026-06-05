@@ -302,6 +302,12 @@ must be verified (reproducible trigger), correctly normalized in the
 Bring documentation in sync with the change so the next reader isn't misled.
 
 - Follow `references/update-docs.md`. It covers what to check (READMEs, `CLAUDE.md`, API/usage docs, inline docstrings for changed signatures, and the changelog) and how to keep updates minimal and truthful.
+- For doc-type escalation, route through `references/docs-quality-router.md`;
+  when the diff changes public APIs, system boundaries, responsibilities, or
+  reviewer-facing app behavior, pair that with
+  `references/architecture-docs-review.md`. For iOS submission-facing metadata,
+  purchase, privacy, or reviewer-setup docs, also route through
+  `references/appstore-review.md`.
 - Use the `Evidence Pack` and risk lane, not just touched files, to decide
   whether docs, rollout notes, config guidance, or migration instructions should
   be updated.
@@ -472,7 +478,8 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/infra-security-review.md` | Phase 4 (+7 +8) | Specialty infrastructure security lane for Docker/Kubernetes/Terraform/cloud config; minimal router only |
 | `references/gha-exploit-review.md` | Phase 4 (+7 +8) | Specialty automation-exploit lane for `.github/workflows` and related CI/CD automation; minimal router only |
 | `references/threat-model-escalation.md` | Phase 4 (+7 +8) | Specialty escalation lane for red-lane trust-boundary changes; captures whether deeper threat-model follow-up is required |
-| `references/architecture-docs-review.md` | Phase 4 (+5 +8) | Specialty architecture-doc lane for public API and architecture boundary changes; minimal router only |
+| `references/architecture-docs-review.md` | Phase 4 (+5) | Specialty architecture-doc lane for deciding ADR / architecture / component-doc escalation and detecting stale API/boundary docs |
+| `references/docs-quality-router.md` | Phase 5 | Minimal-scope router for choosing README, API docs, runbook, ADR, architecture doc, or component doc |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
 | `references/verification-ledger.md` | Phase 6 (+7 +8) | Shared `Verification Ledger` artifact for executed checks, observed results, coverage type, and unexercised risks |
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
