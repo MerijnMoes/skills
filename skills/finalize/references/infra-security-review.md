@@ -30,13 +30,13 @@ runtime settings that deserve focused review.
 
 ## Mutability
 
-- Mutability mode: `report-first`
+- Mutability mode: `small-fix-allowed`
 - `small-fix-allowed` only for clearly safe hardening changes such as pinning
   container image digests, narrowing service-account scope, tightening
   obviously overbroad network exposure, or secret-reference hygiene.
 
 ## Output
 
-Emit infra findings into the shared `Finding Set` with the changed resource,
-exposure path, missing control, and whether the next action is `Fix`,
-`Investigate`, `Plan`, or `Decide`.
+Emit infra findings into the shared `Finding Set` under security-lane
+ownership, with the changed resource, exposure path, missing control, and
+whether the next action is `Fix`, `Investigate`, `Plan`, or `Decide`.

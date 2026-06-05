@@ -59,6 +59,13 @@ cleanup deserves architecture paperwork.
 
 ## Output
 
-Emit one of: no escalation, update existing API/boundary docs, create or update
-component doc, create or update architecture doc, or create ADR. Include any
-stale-doc findings tied to the changed public API or boundary surface.
+- If the lane concludes **no escalation**, keep that as specialty-lane
+  registry metadata only; do not emit a placeholder finding.
+- If existing API/boundary docs are stale, emit a normalized `Finding Set`
+  entry with the changed surface, stale doc target, mismatch, and action type
+  (`Fix` when the update is local and safe now; otherwise `Plan`,
+  `Investigate`, or `Decide`).
+- If the lane concludes that a component doc, architecture doc, or ADR is
+  required, emit a normalized `Finding Set` entry naming the required doc
+  target, the boundary/decision gap, and the action type that should carry it
+  into Phase 5 and Phase 7.

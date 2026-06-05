@@ -193,14 +193,14 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   `error-handling-review.md` for retry/recovery-heavy flows,
   `accessibility-review.md` for UI/markup accessibility surfaces,
   `appstore-review.md` for iOS metadata/purchase/privacy/reviewer-facing
-  surfaces, `infra-security-review.md` for Docker/Kubernetes/Terraform/cloud
-  config, `gha-exploit-review.md` for `.github/workflows` and related
-  automation, `threat-model-escalation.md` for red-lane trust-boundary changes,
-  and `architecture-docs-review.md` for public API or architecture boundary
+  surfaces, the security-owned specialty routes in
+  `security-review.md` / `security-cheat-sheets.md` for infra, workflow,
+  exploit-path, or threat-model escalation, and
+  `architecture-docs-review.md` for public API or architecture boundary
   changes.
 
 - **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Pass the diff plus the relevant slices of the `Evidence Pack` it needs to judge the change: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass using the same context packet.
-- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings.
+- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings. Infra, GitHub Actions exploit-path, threat-model-escalation, and security-requirements routes stay under security-lane ownership: keep them visible in the specialty lane registry, but normalize their findings under the shared security lane rather than as standalone Phase-4 lanes. Use the threat-model route when a red-lane trust boundary changes or a high-impact security finding needs abuse-path framing before it can block.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens,
   private keys, or `.env` values. Verify hits with the same false-positive
   discipline in `references/findings-lifecycle.md`; any confirmed real secret
@@ -245,16 +245,6 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
 - **App Store / reviewer-facing review** *(only when the risk map flags iOS
   metadata, purchase, privacy, or reviewer-facing submission surfaces)*:
   register the lane and route it through `appstore-review.md`.
-- **Infrastructure security review** *(only when the risk map flags
-  Docker/Kubernetes/Terraform/cloud configuration surfaces)*: register the
-  lane and route it through `infra-security-review.md`.
-- **Automation exploit review** *(only when the risk map flags
-  `.github/workflows`, release automation, or adjacent CI/CD automation
-  surfaces)*: register the lane and route it through `gha-exploit-review.md`.
-- **Threat-model escalation** *(only for red-lane trust-boundary changes)*:
-  route the diff through `threat-model-escalation.md` and treat the result as
-  escalation metadata, not as an invitation to redesign the feature inside
-  `/finalize`.
 - **Architecture docs review** *(only when the diff changes a public API or an
   architecture boundary)*: register the lane and route it through
   `architecture-docs-review.md`.
@@ -425,7 +415,7 @@ Present a concise report:
 - Risk lane / challenger / lane availability: <lane, whether challenger ran, and any major skipped or unavailable lanes>
 - Specialty lane registry: <lane -> `run` | `N/A` | `deferred by environment`, plus any escalation targets>
 - Specialty-lane auto-fixes: <which specialty-lane findings were auto-fixed, or `none`; note Phase-6 verification status>
-- Threat-model escalation: <whether `threat-model-escalation.md` was triggered and what follow-up it caused>
+- Threat-model escalation: <whether the security-owned `threat-model-escalation.md` route was triggered and what follow-up it caused>
 - Audit independence: <structural or instructional>
 ```
 
@@ -484,10 +474,10 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/error-handling-review.md` | Phase 4 (+6) | Resilience lane for retries, recovery logic, degraded paths, and replay/retry visibility on changed flows |
 | `references/accessibility-review.md` | Phase 4 (+6 +8) | Specialty accessibility audit + verification lane for changed UI surfaces, with evidence expectations and limited safe fixes |
 | `references/appstore-review.md` | Phase 4 (+5 +8) | Specialty App Store / reviewer-facing lane for metadata, purchase, privacy, and submission-readiness surfaces |
-| `references/infra-security-review.md` | Phase 4 (+7 +8) | Specialty infrastructure security lane for Docker/Kubernetes/Terraform/cloud config, exposure paths, and least-privilege defaults |
-| `references/gha-exploit-review.md` | Phase 4 (+7 +8) | Specialty CI/CD exploit-path lane for `.github/workflows` and related automation surfaces |
-| `references/threat-model-escalation.md` | Phase 4 (+7 +8) | Specialty escalation lane for red-lane trust-boundary changes; captures whether deeper threat-model follow-up is required |
-| `references/security-requirements.md` | Phase 4 (+7) | Escalation companion that turns security threats into explicit requirement notes and acceptance criteria |
+| `references/infra-security-review.md` | Phase 4 security review (+7 +8) | Security-owned specialty route for Docker/Kubernetes/Terraform/cloud config, exposure paths, and least-privilege defaults |
+| `references/gha-exploit-review.md` | Phase 4 security review (+7 +8) | Security-owned specialty route for `.github/workflows` and related automation exploit-path analysis |
+| `references/threat-model-escalation.md` | Phase 4 security review (+7 +8) | Security-owned escalation route for trust-boundary changes or high-impact findings that need abuse-path framing |
+| `references/security-requirements.md` | Phase 4 security review (+7) | Security-owned escalation companion that turns surviving threats into explicit requirement notes and acceptance criteria |
 | `references/architecture-docs-review.md` | Phase 4 (+5) | Specialty architecture-doc lane for deciding ADR / architecture / component-doc escalation and detecting stale API/boundary docs |
 | `references/docs-quality-router.md` | Phase 5 | Minimal-scope router for choosing README, API docs, runbook, ADR, architecture doc, or component doc |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |

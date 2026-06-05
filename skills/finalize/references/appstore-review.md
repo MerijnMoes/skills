@@ -58,9 +58,9 @@ policy review lanes.
 ## Mutability
 
 - Mutability mode: `report-first`
-- Only obvious stale metadata or reviewer-facing docs fixes may be applied
-  automatically. Do not auto-fix policy interpretations, account-rule changes,
-  or substantial submission-note rewrites without explicit scope.
+- Do not auto-fix reviewer-facing submission metadata, reviewer notes, policy
+  interpretations, account-rule changes, or substantial submission-note
+  rewrites without explicit scope.
 
 ## Output
 

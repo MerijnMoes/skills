@@ -2,6 +2,10 @@
 
 Phase 4 support for `/finalize`. This file turns broad security review into targeted, surface-aware checks. It is not a separate verdict lane by itself; it tells you which narrower references to load so the audit is complete without becoming noisy.
 
+All routes chosen here stay under `security-review.md` ownership. Keep them in
+the specialty lane registry for traceability, but normalize their findings
+under the shared security lane in the `Finding Set`.
+
 ## How to use
 
 Start with `security-review.md` as the always-on floor. Then load the focused references below when the diff touches their surface:
@@ -15,15 +19,15 @@ Start with `security-review.md` as the always-on floor. Then load the focused re
 - `input-upload-output-review.md`
   Load when the diff accepts untrusted input, parses files, renders rich output, builds URLs/queries/commands, or handles uploads/downloads.
 - `infra-security-review.md`
-  Load when the diff changes Docker, Kubernetes, Terraform, cloud config,
-  deploy manifests, container/runtime security settings, or other
-  infra-sensitive runtime configuration.
+  Load under `security-review.md` when the diff changes Docker, Kubernetes,
+  Terraform, cloud config, deploy manifests, container/runtime security
+  settings, or other infra-sensitive runtime configuration.
 - `workflow-security.md`
   Load when the diff changes `.github/workflows/**`, CI/CD config, release automation, build scripts, deploy scripts, or secrets usage in automation.
 - `gha-exploit-review.md`
-  Load alongside `workflow-security.md` when the diff changes GitHub Actions,
-  local composite actions, or workflow-loaded config/scripts and the review
-  needs an external-attacker exploit-path check.
+  Load under `security-review.md` alongside `workflow-security.md` when the
+  diff changes GitHub Actions, local composite actions, or workflow-loaded
+  config/scripts and the review needs an external-attacker exploit-path check.
 - `repo-hygiene.md`
   Load when the diff changes dependency manifests, lockfiles, release config, repo policy files, action pinning, or supply-chain-sensitive project config.
 - `observability-review.md`
@@ -36,13 +40,14 @@ Start with `security-review.md` as the always-on floor. Then load the focused re
 ## Escalation routing
 
 - `threat-model-escalation.md`
-  Load when a red-lane trust boundary changes or a high-impact security
-  finding needs compact trust-boundary, asset, attacker-goal, and abuse-path
-  framing for the changed surface.
+  Load under `security-review.md` when a red-lane trust boundary changes or a
+  high-impact security finding needs compact trust-boundary, asset,
+  attacker-goal, and abuse-path framing for the changed surface.
 - `security-requirements.md`
-  Load when an escalated threat or surviving security finding needs explicit
-  requirements, acceptance criteria, or `Fix` / `Plan` / `Investigate` /
-  `Decide` classification support before Phase 7.
+  Load under `security-review.md` when an escalated threat or surviving
+  security finding needs explicit requirements, acceptance criteria, or
+  `Fix` / `Plan` / `Investigate` / `Decide` classification support before
+  Phase 7.
 
 ## Trigger heuristics
 
