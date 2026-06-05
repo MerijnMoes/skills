@@ -31,5 +31,5 @@ Phase 1 of `/finalize` loads only the best-practices files relevant to what chan
 - **Style diffs can have logic-level quality issues too.** Load `css.md` for maintainability, cascade, responsiveness, and motion discipline; keep `frontend-a11y-i18n.md` for accessibility and localization concerns.
 - **`python.md` points to `python-details.md`** for concrete tooling config (ruff/mypy/pytest) and worked code examples — read that only when you need the exact syntax.
 - A change can match several rows (e.g. a NestJS endpoint touching `.ts` + a Prisma migration → `general-oop.md` + `typescript.md` + `postgresql.md`). Load all that apply.
-- If the diff's language isn't covered here, apply `general-oop.md` plus the change's surrounding-code conventions, and note that no language-specific reference exists yet.
+- If the diff's language isn't covered here, and it is a backend/business-logic change, apply `general-oop.md` and `clean-coding.md` plus the change's surrounding-code conventions, and note that no language-specific reference exists yet.
 - **The Phase-0 project context capsule and standing project instructions always win** over these generic rules. When they conflict, follow the project and note the deviation rather than overriding silently.
