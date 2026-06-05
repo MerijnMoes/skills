@@ -145,7 +145,7 @@ plain happy-path tests and checklist reviews miss.
 ## Output shape
 
 High-value bug hypotheses should feed the shared `finding set` artifact defined
-in `finding-set.md` as candidate findings.
+in `findings-lifecycle.md` as candidate findings.
 
 Keep the bug-hunting-specific nuance here: name the violated invariant, the
 concrete trigger or probe, the likely surface and impact, and how the

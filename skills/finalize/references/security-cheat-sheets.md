@@ -40,4 +40,4 @@ Use filename and behavior clues together:
 
 - Load only the references that match the diff surface.
 - If a surface clearly does not apply, note `N/A` and move on.
-- Findings from these focused refs still must pass `finding-verification.md` before blocking.
+- Findings from these focused refs still must pass `findings-lifecycle.md` before blocking.

@@ -16,6 +16,23 @@ than phase-local and narrative-first.
 
 The pipeline is ordered so that **code-modifying phases run first against a known-good baseline, and verification + sign-off run last** — you never declare something shippable that you changed after you last confirmed it works.
 
+## Phase map
+
+| Phase | Purpose | Reads | Writes | Modifies code? | Gate |
+|------|---------|-------|--------|----------------|------|
+| 0 — Scope & baseline | Establish diff scope, context, risk, intent, and baseline | repo state, diff, project docs, tests | `Evidence Pack` | No | clear scope, composed evidence pack, green baseline |
+| 1 — Best-practices pass | Apply idiomatic and codebase-fit improvements to changed code | `Evidence Pack`, best-practice references | improved diff | Yes | idiomatic changed code or noted deviations |
+| 2 — Simplify | Remove local accidental complexity without changing behavior | changed diff, `simplify.md` | simpler diff | Yes | simplest clear equivalent form |
+| 3 — Refactor assessment | Fix only worthwhile structural issues, test-gated | changed diff, `refactoring.md`, tests | refactored diff | Yes | structural issues fixed or consciously deferred |
+| 4 — Audit | Independently review the polished diff and consolidate verified findings | `Evidence Pack`, audit references, diff | `Finding Set` | No | no speculative blockers remain |
+| 5 — Update docs | Align docs with the finalized change | `Evidence Pack`, risk lane, changed surfaces | updated docs | Docs only | affected docs aligned |
+| 6 — Verify | Gather post-edit evidence from static, test, and runtime checks | tests, runtime flows, risk map | `Verification Ledger` | No | sufficient post-edit evidence gathered |
+| 7 — Validation gate | Turn evidence and surviving findings into a verdict | `Evidence Pack`, `Finding Set`, `Verification Ledger` | `Decision Packet` | No | verdict justified from evidence |
+| 8 — Final report & retro | Present verdict, evidence, residual risk, and next steps | `Decision Packet` | user-facing summary | No | concise decision-ready report complete |
+
+The table above is the quick interface to the pipeline. The phase sections
+below carry the detailed operating rules, exceptions, and per-phase routing.
+
 ## Operating principles
 
 Read these before starting. They explain *why* the pipeline is shaped the way it is, so you can handle situations the phase list doesn't spell out.
@@ -31,8 +48,8 @@ Read these before starting. They explain *why* the pipeline is shaped the way it
 - **Build the right change, not just a correct one.** Code can be clean, idiomatic, and correct yet not be *what was asked for* — a requirement left half-built, a misread of the spec, or behavior nobody requested. Conformance to the originating intent is its own check, distinct from quality; see `references/spec-conformance.md`.
 - **Classify the change before judging it.** UI, API, auth, persistence, migrations, jobs, integrations, config, and feature flags fail in different ways. Build a small risk map up front and let it drive which checks, probes, and conditional lanes matter; see `references/risk-mapping.md`.
 - **Use the checklist as a floor, not a ceiling.** `/finalize` has explicit gates so the pass is complete and repeatable, but no checklist is exhaustive. Generate bug hypotheses from the actual diff, the changed invariants, and the system boundaries; use the references to structure your thinking, not replace it.
-- **A finding blocks only if it survives challenge.** Before any issue gates the verdict, it must have a concrete, reachable trigger — not a theory or an aesthetic objection. Challenging your own findings keeps the punch list small and trustworthy, so the user doesn't have to re-verify it by hand; see `references/finding-verification.md`.
-- **Classify findings by next action.** After findings survive verification, label what should happen next: Fix, Investigate, Plan, or Decide. This keeps real blockers actionable without pretending every architectural smell or domain question can be solved inside `/finalize`; see `references/finding-triage.md`.
+- **A finding blocks only if it survives challenge.** Before any issue gates the verdict, it must have a concrete, reachable trigger — not a theory or an aesthetic objection. Challenging your own findings keeps the punch list small and trustworthy, so the user doesn't have to re-verify it by hand; see `references/findings-lifecycle.md`.
+- **Classify findings by next action.** After findings survive verification, label what should happen next: Fix, Investigate, Plan, or Decide. This keeps real blockers actionable without pretending every architectural smell or domain question can be solved inside `/finalize`; see `references/findings-lifecycle.md`.
 - **Evidence beats narration.** The final report should make it easy for a reviewer to see what changed, what was verified, what remains risky, what project-specific rules were checked, and why the verdict is justified. Prefer concrete evidence — commands run, flows exercised, files updated, triggers reproduced, docs checked — over generic reassurance.
 - **Artifacts beat rediscovery.** Build the shared evidence once, then let later
   phases consume it. The pipeline's core internal artifacts are the `Evidence
@@ -138,7 +155,7 @@ Independently review the now-polished diff. These checks are read-only and indep
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `/finalize` should not pretend every diff has the same risk profile.
 
 - Every audit lane emits candidate findings into the shared `Finding Set`,
-  normalized according to `references/finding-set.md`.
+  normalized according to `references/findings-lifecycle.md`.
 - Candidate findings must include a provisional recommended action so the
   shared `Finding Set` stays structurally complete; consolidation is
   responsible for verifying and finalizing the
@@ -165,7 +182,7 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
 - **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens,
   private keys, or `.env` values. Verify hits with the same false-positive
-  discipline in `references/finding-verification.md`; any confirmed real secret
+  discipline in `references/findings-lifecycle.md`; any confirmed real secret
   is a hard stop for the `/finalize` run and must be resolved before the
   pipeline can continue.
 - **Dependency & license audit** *(only if the diff changed dependency manifests/lockfiles)*: follow `references/dependency-audit.md` — check new/bumped dependencies for known vulnerabilities, license compatibility, and supply-chain hygiene. Skip with a note if no dependencies changed.
@@ -217,14 +234,14 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   by codebase fit, report it once there instead of duplicating it.
 
 Consolidate the lanes into one punch list. **Before marking anything blocking,
-run it through `references/finding-verification.md`** — require a concrete
-reachable trigger, downgrade known false-positive classes, and verify any
-framework/library claim against docs. Then apply
-`references/finding-set.md` and `references/finding-triage.md`: every surviving
-finding must carry title, lane/source, file or surface, severity, confidence,
-reachability, evidence type, concrete trigger/evidence, violated invariant or
-spec point, action type (Fix / Investigate / Plan / Decide), and an internal
-workflow status from `references/finding-set.md`. Order by business impact.
+run it through `references/findings-lifecycle.md`** — require a concrete
+reachable trigger, downgrade known false-positive classes, verify any
+framework/library claim against docs, and assign the right action type and
+status. Every surviving finding must carry title, lane/source, file or
+surface, severity, confidence, reachability, evidence type, concrete
+trigger/evidence, violated invariant or spec point, action type
+(Fix / Investigate / Plan / Decide), and an internal workflow status from the
+shared `Finding Set`. Order by business impact.
 Only localized findings with action type `Fix` should be fixed inside
 `/finalize`; blocking findings with action types like `Plan`, `Decide`, or
 `Investigate` stay open and are reported forward rather than auto-fixed. Any
@@ -271,11 +288,16 @@ Gate: lint/format/type-check clean, tests green, the feature observably works, a
 Apply the critical, structured validation review to the final diff and produce a verdict.
 
 - Phase 7 produces the `Decision Packet` following
-  `references/decision-packet.md`: evidence summary, surviving findings,
+  `references/findings-lifecycle.md`: evidence summary, surviving findings,
   verification coverage, residual unknowns, and verdict rationale.
 
 - Follow `references/validation-gate.md` exactly — it is a 12-section checklist (including business-risk lanes for data integrity, idempotency/concurrency, and financial correctness) plus a required final risk pass. Reason about each item against the diff, the Phase-0 project context capsule, the Phase-0 risk map, and the evidence gathered in Phase 6; flag issues rather than assuming correctness. Use the checklist as a floor; bring forward any residual bug hypotheses from `references/bug-hunting.md` that the checklist doesn't name explicitly.
-- Apply the same `references/finding-verification.md` and `references/finding-triage.md` discipline as Phase 4: anything that pushes the verdict to `NEEDS REVISION`/`BLOCKED` needs a concrete reachable trigger, every finding carries severity, confidence, action type, trigger/evidence, and status, and findings are ordered by business impact. Fold in the Phase 4 spec-conformance result — a confirmed missing requirement is `NEEDS REVISION`.
+- Apply the same `references/findings-lifecycle.md` discipline as Phase 4:
+  anything that pushes the verdict to `NEEDS REVISION`/`BLOCKED` needs a
+  concrete reachable trigger, every finding carries severity, confidence,
+  action type, trigger/evidence, and status, and findings are ordered by
+  business impact. Fold in the Phase 4 spec-conformance result — a confirmed
+  missing requirement is `NEEDS REVISION`.
 - Calibrate the verdict with the rules in `references/validation-gate.md`, not gut feel. Different issues should push to `READY TO SHIP`, `NEEDS REVISION`, or `BLOCKED` for clear reasons, especially on data loss, security, broken core flows, dangerous migrations, and unverifiable rollout risk.
 - Explicitly state which top risks were disproven, which remain open, and
   whether the remaining open risks are acceptable for shipping.
@@ -291,7 +313,7 @@ Follow `references/final-reporting.md` so the output is **decision-ready** for t
 
 - Phase 8 reports from the `Decision Packet` rather than reconstructing the
   story from scratch.
-- Surface report-facing finding statuses from `references/finding-triage.md`
+- Surface report-facing finding statuses from `references/findings-lifecycle.md`
   (`fixed`, `unresolved`, `deferred`, `needs user decision`) in the final
   report. Do not expose the internal workflow statuses from the shared
   `Finding Set` unless they are specifically useful as metadata.
@@ -384,7 +406,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/spec-conformance.md` | Phase 0 (+4) | Pin the originating intent; check the diff for missing requirements, scope creep, wrong implementation |
 | `references/risk-mapping.md` | Phase 0 (+4 +6 +7) | Classify the change, define invariants/boundaries/side effects, and choose the highest-value risks to probe |
 | `references/refactoring.md` | Phase 3 (+4) | Refactor priority model, behavior-preservation discipline & the diff-scoped structural-regression lane |
-| `references/finding-set.md` | Phase 4 (+7 +8) | Shared `Finding Set` artifact for normalized candidate findings, challenger outcomes, and surviving finding status |
+| `references/findings-lifecycle.md` | Phase 4 (+7 +8) | Shared lifecycle for normalized findings, blocker verification, action typing, report-status mapping, and the `Decision Packet` |
 | `references/code-review.md` | Phase 4 | Correctness/bug review of the diff (logic, edges, error paths, concurrency, resource leaks, API misuse) |
 | `references/common-bugs-checklist.md` | Phase 4 | Fast sweep of recurring defect classes so boring-but-reachable bugs are not missed before deeper review |
 | `references/security-review.md` | Phase 4 | Security audit floor plus conditional focused lanes for API, auth/session, input/output, workflow/release, repo hygiene, migration, observability, configuration, and LLM/agent behavior |
@@ -401,12 +423,9 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/migration-safety.md` | Phase 4 (+6 +7) | Schema, migration, backfill, rollout, and persistent-data safety |
 | `references/configuration-review.md` | Phase 4 (+5 +7) | Safe defaults, env vars, feature flags, deployment config, and fail-safe behavior |
 | `references/static-intelligence.md` | Phase 4 (+7) | JS/TS changed-code graph, duplication, complexity, boundary & feature-flag risk; optional static-analysis accelerator without requiring install |
-| `references/finding-verification.md` | Phase 4 (+7) | Trigger test, known-false-positive exclusions & confidence/severity labels — keep the blocking list true |
-| `references/finding-triage.md` | Phase 4 (+7 +8) | Classify surviving findings by next action: Fix, Investigate, Plan, or Decide |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
 | `references/verification-ledger.md` | Phase 6 (+7 +8) | Shared `Verification Ledger` artifact for executed checks, observed results, coverage type, and unexercised risks |
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
 | `references/performance-profiling.md` | Phase 6 | Measure-first profiling for hot-path changes |
-| `references/decision-packet.md` | Phase 7 (+8) | Shared `Decision Packet` artifact for evidence summary, surviving findings, verification coverage, residual unknowns, and verdict rationale |
 | `references/validation-gate.md` | Phase 7 | 12-section validation checklist (incl. business-risk lanes) + verdict |
 | `references/final-reporting.md` | Phase 8 | PR-ready reporting: executive summary, `Verification Ledger` summary, findings, residual risk, reviewer handoff |

@@ -60,10 +60,10 @@ Committed secrets remain the dedicated Phase-4 lane (keys, tokens, credentials, 
 
 ## Output
 
-Consolidate all applicable security sub-lanes into the Phase-4 punch list. Every finding must survive the `finding-verification.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.
+Consolidate all applicable security sub-lanes into the Phase-4 punch list. Every finding must survive the `findings-lifecycle.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.
 
 Emit findings into the shared `finding set` artifact defined in
-`finding-set.md` rather than as loose prose.
+`findings-lifecycle.md` rather than as loose prose.
 
 Keep the security-review-specific nuance here: every surviving finding still
 needs a concrete, reachable exploit path plus severity, confidence, and

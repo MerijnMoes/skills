@@ -70,7 +70,7 @@ Use these when no static-intelligence tool is available:
 
 ## Finding rules
 
-Every blocking finding must survive `finding-verification.md`:
+Every blocking finding must survive `findings-lifecycle.md`:
 - Name the concrete trigger: the export/import/path/function/flag branch that reaches the issue.
 - Distinguish confirmed defects from cleanup opportunities. A noisy static finding is not a blocker by itself.
 - Verify framework/library claims against current docs when unsure.
