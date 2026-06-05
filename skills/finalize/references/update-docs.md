@@ -29,9 +29,9 @@ affected it.
   shapes, CLI flags, and config keys that changed must be reflected. Internal-only
   helpers usually don't need doc updates unless the project documents them.
 - **ADR / architecture / component docs**: If the diff changes public APIs,
-  system boundaries, responsibilities, or reviewer-facing app behavior, route
-  through `docs-quality-router.md` and `architecture-docs-review.md` to decide
-  whether routine README/API docs are enough or whether the changed surface now
+  system boundaries, or responsibilities, route through
+  `docs-quality-router.md` and `architecture-docs-review.md` to decide whether
+  routine README/API docs are enough or whether the changed surface now
   requires ADR / architecture / component documentation.
 - **Inline docstrings/comments**: Update docstrings on changed *public*
   signatures — params, return type, raised errors. Update any comment the change

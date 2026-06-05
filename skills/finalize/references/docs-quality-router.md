@@ -32,14 +32,15 @@ explained.
   different audiences were genuinely affected.
 - Keep scope minimal: update the smallest existing document that can tell the
   truth before creating a new doc.
-- If the diff changes public APIs, system boundaries, responsibilities, or
-  reviewer-facing app behavior, pair this router with
+- If the diff changes public APIs, system boundaries, or responsibilities, pair
+  this router with
   `architecture-docs-review.md` to decide whether README/API docs are enough or
   whether ADR / architecture / component docs are required.
 - If the diff changes iOS reviewer-facing setup, metadata, purchase, privacy,
   or account-policy surfaces, pair this router with `appstore-review.md` so the
-  doc update covers reviewer notes or submission instructions instead of generic
-  product prose.
+  doc update covers reviewer notes or submission instructions instead of
+  generic product prose. App Store-only changes should stay on that lane unless
+  the same diff also changes public APIs, boundaries, or responsibilities.
 
 ## Minimal-scope guardrails
 
