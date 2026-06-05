@@ -24,7 +24,7 @@ The pipeline is ordered so that **code-modifying phases run first against a know
 | 1 — Best-practices pass | Apply idiomatic and codebase-fit improvements to changed code | `Evidence Pack`, best-practice references | improved diff | Yes | idiomatic changed code or noted deviations |
 | 2 — Simplify | Remove local accidental complexity without changing behavior | changed diff, `simplify.md` | simpler diff | Yes | simplest clear equivalent form |
 | 3 — Refactor assessment | Fix only worthwhile structural issues, test-gated | changed diff, `refactoring.md`, tests | refactored diff | Yes | structural issues fixed or consciously deferred |
-| 4 — Audit | Register the maximal audit lane set, run every applicable lane, and consolidate verified findings | `Evidence Pack`, audit references, diff | `Finding Set`, specialty lane registry | No | lane registry complete; no speculative blockers remain |
+| 4 — Audit | Register the maximal audit lane set, run every applicable lane, consolidate verified findings, and apply only safe localized post-consolidation fixes | `Evidence Pack`, audit references, diff | `Finding Set`, specialty lane registry | Limited, post-consolidation only | lane registry complete; no speculative blockers remain |
 | 5 — Update docs | Align docs with the finalized change | `Evidence Pack`, risk lane, changed surfaces | updated docs | Docs only | affected docs aligned |
 | 6 — Verify | Gather post-edit evidence from static, test, and runtime checks | tests, runtime flows, risk map | `Verification Ledger` | No | sufficient post-edit evidence gathered |
 | 7 — Validation gate | Turn evidence and surviving findings into a verdict | `Evidence Pack`, `Finding Set`, `Verification Ledger` | `Decision Packet` | No | verdict justified from evidence |
@@ -148,16 +148,17 @@ Assess whether the changed code has structural problems worth fixing *now*, and 
 
 Gate: structural issues are either fixed (with tests still green) or consciously deferred with a reason.
 
-### Phase 4 — Audit *(read-only review; maximal lane registry; fixes applied after consolidation)*
+### Phase 4 — Audit *(limited-mutation audit; maximal lane registry; fixes applied after consolidation)*
 
-Independently review the now-polished diff. Phase 4 is a **maximal-audit lane registry**: enumerate the full lane set the diff could plausibly need, then mark each lane `run`, `N/A`, or `deferred by environment` before consolidating findings. These checks are read-only and independent, so run them in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list.
+Independently review the now-polished diff. Phase 4 is a **maximal-audit lane registry**: enumerate the full lane set the diff could plausibly need, then mark each lane `run`, `N/A`, or `deferred by environment` before consolidating findings. The default contract is audit-first, with mutation allowed only after consolidation and only for safe localized fixes that satisfy the auto-fix contract below. Run the lane work in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list before any fix is applied.
 
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `/finalize` should not pretend every diff has the same risk profile.
 
 - Build and carry a specialty lane registry as part of the Phase-4 artifact set.
   The registry is compact metadata, not a second checklist document: lane name,
   why it was considered, state (`run`, `N/A`, or `deferred by environment`),
-  and any escalation target.
+  mutability mode (`read-only`, `report-first`, or `small-fix-allowed`), and
+  any escalation target.
 - Every audit lane emits candidate findings into the shared `Finding Set`,
   normalized according to `references/findings-lifecycle.md`.
 - Candidate findings must include a provisional recommended action so the
@@ -442,7 +443,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/best-practices/frontend-a11y-i18n.md` | Phase 1 (+6) | Accessibility & i18n for UI changes |
 | `references/testing.md` | Phase 1 (+6) | Test-quality discipline (behavior over implementation, determinism, mocking) |
 | `references/simplify.md` | Phase 2 | Local clarity: equivalence test, clarity ethos, local-simplification catalog |
-| `references/evidence-pack.md` | Phase 0 (+4 +6 +7 +8) | Canonical `Evidence Pack` schema and output discipline for diff scope, comparison point, surfaces, context, intent, risk lane, runtime sketch, hotspots, verifier inventory, and unknowns |
+| `references/evidence-pack.md` | Phase 0 (+4 +6 +7 +8) | Canonical `Evidence Pack` schema and output discipline for diff scope, comparison point, surfaces, context, intent, risk lane, runtime sketch, hotspots, specialty-lane candidates, environment availability, architecture/App Store implications, verifier inventory, and unknowns |
 | `references/project-context.md` | Phase 0 (+1 +4 +6 +7 +8) | Capture repo-specific instructions, architecture boundaries, domain rules, tooling/test/doc conventions, and unknowns |
 | `references/codebase-fit.md` | Phase 1 (+4) | Reuse prior art, match patterns, respect boundaries — fit the change to the repo |
 | `references/universal-quality.md` | Phase 1 (+4) | Cross-language anti-patterns: abstraction leaks, flag bloat, stringly typed behavior, redundant writes, check-then-act races, shallow wrappers |
@@ -466,6 +467,12 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/migration-safety.md` | Phase 4 (+6 +7) | Schema, migration, backfill, rollout, and persistent-data safety |
 | `references/configuration-review.md` | Phase 4 (+5 +7) | Safe defaults, env vars, feature flags, deployment config, and fail-safe behavior |
 | `references/static-intelligence.md` | Phase 4 (+7) | JS/TS changed-code graph, duplication, complexity, boundary & feature-flag risk; optional static-analysis accelerator without requiring install |
+| `references/accessibility-review.md` | Phase 4 (+6 +8) | Specialty accessibility lane for UI/markup audits; minimal router for scope, evidence expectations, and mutability mode |
+| `references/appstore-review.md` | Phase 4 (+5 +8) | Specialty iOS submission lane for metadata, purchase, privacy, and reviewer-facing surfaces; minimal router only |
+| `references/infra-security-review.md` | Phase 4 (+7 +8) | Specialty infrastructure security lane for Docker/Kubernetes/Terraform/cloud config; minimal router only |
+| `references/gha-exploit-review.md` | Phase 4 (+7 +8) | Specialty automation-exploit lane for `.github/workflows` and related CI/CD automation; minimal router only |
+| `references/threat-model-escalation.md` | Phase 4 (+7 +8) | Specialty escalation lane for red-lane trust-boundary changes; captures whether deeper threat-model follow-up is required |
+| `references/architecture-docs-review.md` | Phase 4 (+5 +8) | Specialty architecture-doc lane for public API and architecture boundary changes; minimal router only |
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
 | `references/verification-ledger.md` | Phase 6 (+7 +8) | Shared `Verification Ledger` artifact for executed checks, observed results, coverage type, and unexercised risks |
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
