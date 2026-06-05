@@ -1,14 +1,15 @@
 # Threat-model escalation
 
 Use this specialty reference when a red-lane change crosses or reshapes a trust
-boundary and Phase 4 needs to decide whether a deeper threat-model follow-up is
+boundary, or when a high-impact security finding needs compact abuse-path
+framing before Phase 4 can decide whether deeper threat-model follow-up is
 required.
 
 ## Scope
 
 - Model only the changed high-risk surface, not the full system.
 - Record enough structure to explain why the finding matters or why the
-  boundary change needs follow-up.
+  boundary change or abuse path needs follow-up.
 - Feed compact outputs into the shared `Finding Set` and the Phase 7
   `Decision Packet`; do not redesign the architecture inside `/finalize`.
 
