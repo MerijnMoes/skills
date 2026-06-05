@@ -24,7 +24,7 @@ The pipeline is ordered so that **code-modifying phases run first against a know
 | 1 — Best-practices pass | Apply idiomatic and codebase-fit improvements to changed code | `Evidence Pack`, best-practice references | improved diff | Yes | idiomatic changed code or noted deviations |
 | 2 — Simplify | Remove local accidental complexity without changing behavior | changed diff, `simplify.md` | simpler diff | Yes | simplest clear equivalent form |
 | 3 — Refactor assessment | Fix only worthwhile structural issues, test-gated | changed diff, `refactoring.md`, tests | refactored diff | Yes | structural issues fixed or consciously deferred |
-| 4 — Audit | Independently review the polished diff and consolidate verified findings | `Evidence Pack`, audit references, diff | `Finding Set` | No | no speculative blockers remain |
+| 4 — Audit | Register the maximal audit lane set, run every applicable lane, and consolidate verified findings | `Evidence Pack`, audit references, diff | `Finding Set`, specialty lane registry | No | lane registry complete; no speculative blockers remain |
 | 5 — Update docs | Align docs with the finalized change | `Evidence Pack`, risk lane, changed surfaces | updated docs | Docs only | affected docs aligned |
 | 6 — Verify | Gather post-edit evidence from static, test, and runtime checks | tests, runtime flows, risk map | `Verification Ledger` | No | sufficient post-edit evidence gathered |
 | 7 — Validation gate | Turn evidence and surviving findings into a verdict | `Evidence Pack`, `Finding Set`, `Verification Ledger` | `Decision Packet` | No | verdict justified from evidence |
@@ -148,12 +148,16 @@ Assess whether the changed code has structural problems worth fixing *now*, and 
 
 Gate: structural issues are either fixed (with tests still green) or consciously deferred with a reason.
 
-### Phase 4 — Audit *(read-only review; fixes applied after consolidation)*
+### Phase 4 — Audit *(read-only review; maximal lane registry; fixes applied after consolidation)*
 
-Independently review the now-polished diff. These checks are read-only and independent, so run them in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list.
+Independently review the now-polished diff. Phase 4 is a **maximal-audit lane registry**: enumerate the full lane set the diff could plausibly need, then mark each lane `run`, `N/A`, or `deferred by environment` before consolidating findings. These checks are read-only and independent, so run them in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list.
 
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `/finalize` should not pretend every diff has the same risk profile.
 
+- Build and carry a specialty lane registry as part of the Phase-4 artifact set.
+  The registry is compact metadata, not a second checklist document: lane name,
+  why it was considered, state (`run`, `N/A`, or `deferred by environment`),
+  and any escalation target.
 - Every audit lane emits candidate findings into the shared `Finding Set`,
   normalized according to `references/findings-lifecycle.md`.
 - Candidate findings must include a provisional recommended action so the
@@ -177,6 +181,21 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   adversarial pass using the same diff and the relevant slices of the
   `Evidence Pack`. On hosts without subagents, run the same challenger criteria
   inline as a separate pass after the initial audit consolidation.
+- Auto-fix contract: only apply findings whose fix is safe, localized,
+  low-blast-radius, and realistically verifiable in Phase 6. Do not auto-fix
+  architecture boundary changes, rollout-plan changes, legal/policy wording,
+  reviewer-facing submission metadata, or speculative hardening that lacks a
+  concrete triggered defect. Those stay as `Plan`, `Decide`, or
+  `Investigate` findings unless the user explicitly broadens scope.
+- Escalation hooks: keep specialty lanes orchestration-focused and route them
+  outward instead of embedding their full checklists here. Use
+  `accessibility-review.md` for UI/markup accessibility surfaces,
+  `appstore-review.md` for iOS metadata/purchase/privacy/reviewer-facing
+  surfaces, `infra-security-review.md` for Docker/Kubernetes/Terraform/cloud
+  config, `gha-exploit-review.md` for `.github/workflows` and related
+  automation, `threat-model-escalation.md` for red-lane trust-boundary changes,
+  and `architecture-docs-review.md` for public API or architecture boundary
+  changes.
 
 - **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Pass the diff plus the relevant slices of the `Evidence Pack` it needs to judge the change: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass using the same context packet.
 - **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings.
@@ -211,6 +230,26 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   production-vs-dev behavior)*: follow `references/configuration-review.md` for
   safe defaults and deploy behavior. Keep security misconfiguration findings
   under the security lane and non-security behavior/routing findings here.
+- **Accessibility review** *(only when the risk map flags user-facing UI or
+  markup as a specialty surface)*: register the lane and route it through
+  `accessibility-review.md`. If the environment cannot support the required
+  audit, mark the lane `deferred by environment` and carry that forward.
+- **App Store / reviewer-facing review** *(only when the risk map flags iOS
+  metadata, purchase, privacy, or reviewer-facing submission surfaces)*:
+  register the lane and route it through `appstore-review.md`.
+- **Infrastructure security review** *(only when the risk map flags
+  Docker/Kubernetes/Terraform/cloud configuration surfaces)*: register the
+  lane and route it through `infra-security-review.md`.
+- **Automation exploit review** *(only when the risk map flags
+  `.github/workflows`, release automation, or adjacent CI/CD automation
+  surfaces)*: register the lane and route it through `gha-exploit-review.md`.
+- **Threat-model escalation** *(only for red-lane trust-boundary changes)*:
+  route the diff through `threat-model-escalation.md` and treat the result as
+  escalation metadata, not as an invitation to redesign the feature inside
+  `/finalize`.
+- **Architecture docs review** *(only when the diff changes a public API or an
+  architecture boundary)*: register the lane and route it through
+  `architecture-docs-review.md`.
 - **Focused bug hunt:** follow `references/bug-hunting.md` to generate a small set of high-value bug hypotheses from the diff itself — boundaries, invariants, state transitions, retries, concurrency, caching, persistence, auth/tenant separation, and rollout/failure paths. Prefer focused probes with existing tests/harnesses/tools over broad new scaffolding; do not install dependencies or build elaborate new frameworks inside `/finalize`.
 - **Project-context fit:** per `references/project-context.md`, check the change
   respects the repo's standing instructions, domain rules, tooling/test norms,
@@ -243,11 +282,12 @@ trigger/evidence, violated invariant or spec point, action type
 (Fix / Investigate / Plan / Decide), and an internal workflow status from the
 shared `Finding Set`. Order by business impact.
 Only localized findings with action type `Fix` should be fixed inside
-`/finalize`; blocking findings with action types like `Plan`, `Decide`, or
-`Investigate` stay open and are reported forward rather than auto-fixed. Any
-fix applied here must still pass Phase 6 verification for the touched code.
-Record non-blocking items, systemic follow-ups, and human decision points in
-the final report, where Phase 8 can map findings into report-facing statuses.
+`/finalize`, and only when they satisfy the auto-fix contract above. Blocking
+findings with action types like `Plan`, `Decide`, or `Investigate` stay open
+and are reported forward rather than auto-fixed. Any fix applied here must
+still pass Phase 6 verification for the touched code. Record non-blocking
+items, systemic follow-ups, and human decision points in the final report,
+where Phase 8 can map findings into report-facing statuses.
 
 Gate: no speculative or unverified blocking review, security, dependency,
 static-intelligence, migration-safety, observability, configuration,
@@ -368,6 +408,9 @@ Present a concise report:
 
 ## Compact metadata
 - Risk lane / challenger / lane availability: <lane, whether challenger ran, and any major skipped or unavailable lanes>
+- Specialty lane registry: <lane -> `run` | `N/A` | `deferred by environment`, plus any escalation targets>
+- Specialty-lane auto-fixes: <which specialty-lane findings were auto-fixed, or `none`; note Phase-6 verification status>
+- Threat-model escalation: <whether `threat-model-escalation.md` was triggered and what follow-up it caused>
 - Audit independence: <structural or instructional>
 ```
 
