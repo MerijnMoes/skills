@@ -8,6 +8,20 @@ Use `security-cheat-sheets.md` as the canonical router for focused security
 references. Load only the references that match the diff surface; if a surface
 clearly does not apply, mark it `N/A` with a one-line reason and move on.
 
+That router now covers specialty lanes for:
+
+- `infra-security-review.md` when the diff changes Docker, Kubernetes,
+  Terraform, cloud config, deploy manifests, or infra-sensitive runtime
+  configuration.
+- `gha-exploit-review.md` when the diff changes GitHub Actions, local
+  composite actions, or workflow-loaded config/scripts and needs exploit-path
+  discipline in addition to `workflow-security.md`.
+- `threat-model-escalation.md` when a red-lane trust boundary changes or a
+  high-impact security finding needs compact abuse-path framing before it can
+  block.
+- `security-requirements.md` when escalated security findings need explicit
+  requirement or acceptance-criteria framing to support the verdict.
+
 ## Always — OWASP Top 10:2025
 
 For each, check the concrete patterns and confirm the control is actually present in the changed code.
@@ -57,6 +71,18 @@ Grounded in the **OWASP Top 10 for LLM Applications (2025)**:
 ## Secret scan
 
 Committed secrets remain the dedicated Phase-4 lane (keys, tokens, credentials, private keys, `.env` values) — a hard stop. Referenced here, not duplicated.
+
+## Escalation rules
+
+Escalate past the baseline lane when the diff changes a high-risk surface but
+the security question is no longer just "is this vulnerable?"
+
+- Use `threat-model-escalation.md` to capture the changed trust boundary,
+  protected assets, attacker goals, and the concrete abuse path for the
+  changed surface only.
+- Use `security-requirements.md` when that escalated threat needs an explicit
+  requirement, acceptance criterion, or human decision framing before the
+  `Decision Packet` can be made cleanly.
 
 ## Output
 

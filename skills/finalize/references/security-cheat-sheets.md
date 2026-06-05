@@ -14,8 +14,16 @@ Start with `security-review.md` as the always-on floor. Then load the focused re
   Load when the diff touches login, signup, logout, password reset, MFA, session/cookie/token handling, roles/permissions, or identity-provider integration.
 - `input-upload-output-review.md`
   Load when the diff accepts untrusted input, parses files, renders rich output, builds URLs/queries/commands, or handles uploads/downloads.
+- `infra-security-review.md`
+  Load when the diff changes Docker, Kubernetes, Terraform, cloud config,
+  deploy manifests, container/runtime security settings, or other
+  infra-sensitive runtime configuration.
 - `workflow-security.md`
   Load when the diff changes `.github/workflows/**`, CI/CD config, release automation, build scripts, deploy scripts, or secrets usage in automation.
+- `gha-exploit-review.md`
+  Load alongside `workflow-security.md` when the diff changes GitHub Actions,
+  local composite actions, or workflow-loaded config/scripts and the review
+  needs an external-attacker exploit-path check.
 - `repo-hygiene.md`
   Load when the diff changes dependency manifests, lockfiles, release config, repo policy files, action pinning, or supply-chain-sensitive project config.
 - `observability-review.md`
@@ -25,6 +33,17 @@ Start with `security-review.md` as the always-on floor. Then load the focused re
 - `configuration-review.md`
   Load when the diff changes env vars, feature flags, defaults, deployment config, debug modes, or production-vs-dev behavior.
 
+## Escalation routing
+
+- `threat-model-escalation.md`
+  Load when a red-lane trust boundary changes or a high-impact security
+  finding needs compact trust-boundary, asset, attacker-goal, and abuse-path
+  framing for the changed surface.
+- `security-requirements.md`
+  Load when an escalated threat or surviving security finding needs explicit
+  requirements, acceptance criteria, or `Fix` / `Plan` / `Investigate` /
+  `Decide` classification support before Phase 7.
+
 ## Trigger heuristics
 
 Use filename and behavior clues together:
@@ -32,6 +51,12 @@ Use filename and behavior clues together:
 - Auth/session: `auth`, `login`, `session`, `token`, `cookie`, `oauth`, `saml`, `mfa`, `acl`, `rbac`
 - Input/output: upload handlers, HTML rendering, redirect helpers, file parsing, template rendering, shell/SQL builders
 - Workflow/repo: `.github/workflows`, `Dockerfile`, release scripts, package manager config, action references, policy files
+- Infrastructure: `Dockerfile`, `docker-compose`, `helm`, `kustomize`,
+  `terraform`, `tfvars`, `cloudbuild`, `eks`, `gke`, `ecs`, ingress/service
+  manifests, IAM/policy config
+- GitHub Actions exploit path: `.github/workflows`, `.github/actions`,
+  scripts invoked from workflows, templated workflow config, cache/artifact
+  setup
 - Migration/data: `migrations`, `prisma`, `typeorm`, `schema.sql`, `alembic`, backfill scripts, ETL jobs
 - Config/flags: `.env.example`, deployment manifests, feature flag config, runtime settings
 - Observability: logger setup, tracing middleware, audit events, Sentry/Datadog/OpenTelemetry hooks
