@@ -15,7 +15,7 @@ ideation or verdict debate.
 ## Procedure
 
 1. **Static gates** — run the project's formatter, linter and type-checker (detected in Phase 0). These are cheap and catch more than a human read.
-2. **Test suite** — run the full suite; it must pass. Confirm new code paths are actually *covered* (an untested new path is a finding). Assess test *quality* against `testing.md` — behavior over implementation, deterministic, not over-mocked, not vacuous (asserts something real). A green-but-meaningless test is false confidence and is itself a finding. For higher-risk diffs, use `bug-hunting.md` to choose a few focused probes or regression tests rather than trusting suite breadth alone.
+2. **Test suite** — run the full suite; it must pass. Confirm new code paths are actually *covered* (an untested new path is a finding). Assess test *quality* against `testing.md` — behavior over implementation, deterministic, not over-mocked, not vacuous (asserts something real). A green-but-meaningless test is false confidence and is itself a finding. If the changed surface needs framework-specific testing guidance, load `testing-specialty-router.md`. For higher-risk diffs, use `bug-hunting.md` to choose a few focused probes or regression tests rather than trusting suite breadth alone.
 3. **Run the app / feature** — launch it and exercise the change for real:
    - the **golden path** the change was built for (use the intent pinned in Phase 0);
    - **at least one negative/error path** — invalid input, empty state, permission-denied path, timeout, or dependency failure, whichever best matches the risk map;
@@ -30,9 +30,10 @@ ideation or verdict debate.
    - **async / duplicate / replay behavior** *(when relevant)* — rerun the same message, job, or action and confirm side effects are not duplicated or corrupted.
    - **config / feature-flag behavior** *(when relevant)* — verify safe defaults, missing-config behavior, and both sides of the flag when the change depends on rollout controls.
    - **project/domain invariants** *(when relevant)* — exercise the repo-specific calculation, workflow state, tenant/privacy boundary, compatibility promise, or documented convention captured in the project context capsule.
-   - **Playwright/browser automation** *(when already available)* — for UI/web changes, prefer at least one focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path over an ad hoc manual click-through.
-4. **Accessibility** *(UI changes only)* — a keyboard-only pass plus an automated checker (e.g. axe), verifying the rules in `frontend-a11y-i18n.md` actually hold, not just that the markup looks right.
-5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. Skip with a note for cold-path changes.
+   - **Playwright/browser automation** *(when already available)* — for UI/web changes, prefer at least one focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path over an ad hoc manual click-through. When the project already has specialty browser/E2E tooling and the changed surface needs that detail, route through `testing-specialty-router.md`.
+   - **workflow safety confirmation** *(when relevant and static verification is meaningful)* — for workflow/release automation changes, confirm the trusted event model, token/secrets exposure, and execution path assumptions from `workflow-security.md`, and record what was statically proven versus what could not be exercised directly.
+4. **Accessibility** *(UI changes only)* — run accessibility verification for the changed UI: a keyboard-only pass plus an automated checker (e.g. axe), verifying the rules in `frontend-a11y-i18n.md` actually hold, not just that the markup looks right.
+5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. If the changed surface needs framework-specific performance guidance, load `performance-specialty-router.md`. Skip with a note for cold-path changes.
 
 At the end of verification, be able to say which top risks from the risk map and
 which relevant project-context invariants were actually exercised, and which
@@ -75,6 +76,10 @@ meaningful probe from its row. High-risk diffs usually need more than one.
   - safe default / missing-config path;
   - flag off and flag on behavior when both modes can exist;
   - startup/runtime failure mode when config is invalid.
+- **Workflow / release automation**
+  - trusted event / trigger assumptions;
+  - secret and token exposure path;
+  - static workflow safety confirmation when direct execution is unavailable.
 - **Performance-sensitive**
   - measure the suspected hotspot;
   - compare before/after or explain why no before/after was possible.

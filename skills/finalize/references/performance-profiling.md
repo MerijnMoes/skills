@@ -12,6 +12,10 @@ Run when the changed code touches any of:
 
 If the change is on a cold path with no perf budget, **skip and say so**. Profiling cold code is wasted effort — most code is not hot, and time spent here is time not spent shipping.
 
+If the changed surface needs framework-specific performance guidance, load
+`performance-specialty-router.md` rather than stuffing ecosystem-specific detail
+into this generic profiling reference.
+
 ## Method: measure first
 
 1. **Baseline** — take a measurement before changing anything, so "faster" is provable, not felt.

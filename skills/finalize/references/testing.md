@@ -84,6 +84,10 @@ The right test mix is part of correctness. A giant E2E test for a tiny pure
 function is as mismatched as a unit test that mocks away the exact integration
 that tends to fail in production.
 
+If the changed surface needs framework-specific testing guidance, load
+`testing-specialty-router.md` rather than turning this generic reference into a
+framework catalog.
+
 ## Invariants over examples
 
 Examples are good; invariants are better. Where possible, express what must
