@@ -103,7 +103,7 @@ stop rather than proceeding with an acknowledged failure.
 
 Apply idiomatic, language- and framework-specific best practices to the changed code only.
 
-- Read `references/best-practices/_index.md` and load only the files matching the languages detected in Phase 0. Always also load `references/best-practices/general-oop.md` for any backend/business-logic change, `references/best-practices/frontend-a11y-i18n.md` for any user-facing UI/markup change, and `references/testing.md` if the diff adds or changes test code (so the tests themselves get brought up to standard, not just the production code).
+- Read `references/best-practices/_index.md` and load only the files matching the languages detected in Phase 0. Always also load `references/best-practices/general-oop.md` and `references/best-practices/clean-coding.md` for any backend/business-logic change, `references/best-practices/frontend-a11y-i18n.md` for any user-facing UI/markup change, and `references/testing.md` if the diff adds or changes test code (so the tests themselves get brought up to standard, not just the production code).
 - Before changing anything, use the Phase-0 project context capsule and follow `references/codebase-fit.md`: study how the project already does this and reuse existing utilities/patterns, so the change conforms instead of introducing a parallel approach.
 - For cross-language design/code smells that often survive language-specific guides, consult `references/universal-quality.md` and apply only the safe, clearly-improving fixes.
 - Apply the rules to the diff. Prefer the smallest change that brings the code in line; do not rewrite working code wholesale.
@@ -359,6 +359,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 |------|---------|---------|
 | `references/best-practices/_index.md` | Phase 1 | Language → best-practices file router |
 | `references/best-practices/general-oop.md` | Phase 1 | SOLID, DI, composition, layering for backend code |
+| `references/best-practices/clean-coding.md` | Phase 1 | Cross-language naming, control-flow, comment, error-handling, and readability guidance |
 | `references/best-practices/javascript.md` | Phase 1 | JS hygiene + patterns.dev design/performance/rendering patterns |
 | `references/best-practices/typescript.md` | Phase 1 | TypeScript idioms & anti-patterns |
 | `references/best-practices/react.md` | Phase 1 | React hooks, effects, boundaries, data flows, and rendering discipline |
