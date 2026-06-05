@@ -50,7 +50,8 @@ Use filename and behavior clues together:
 - API surfaces: `routes`, `controllers`, `handlers`, `openapi`, `schema`, `api`, `webhook`
 - Auth/session: `auth`, `login`, `session`, `token`, `cookie`, `oauth`, `saml`, `mfa`, `acl`, `rbac`
 - Input/output: upload handlers, HTML rendering, redirect helpers, file parsing, template rendering, shell/SQL builders
-- Workflow/repo: `.github/workflows`, `Dockerfile`, release scripts, package manager config, action references, policy files
+- Workflow/repo: `.github/workflows`, release scripts, package manager config,
+  action references, policy files
 - Infrastructure: `Dockerfile`, `docker-compose`, `helm`, `kustomize`,
   `terraform`, `tfvars`, `cloudbuild`, `eks`, `gke`, `ecs`, ingress/service
   manifests, IAM/policy config
@@ -64,5 +65,8 @@ Use filename and behavior clues together:
 ## Discipline
 
 - Load only the references that match the diff surface.
+- Prefer `infra-security-review.md` for container/build/config artifacts such
+  as `Dockerfile` unless the diff also changes CI/CD trust, workflow
+  execution, or release automation.
 - If a surface clearly does not apply, note `N/A` and move on.
 - Findings from these focused refs still must pass `findings-lifecycle.md` before blocking.

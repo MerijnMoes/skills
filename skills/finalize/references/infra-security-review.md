@@ -31,8 +31,9 @@ runtime settings that deserve focused review.
 ## Mutability
 
 - Mutability mode: `report-first`
-- `small-fix-allowed` only for clearly safe hardening changes such as action
-  pinning, obvious permission narrowing, or secret-reference hygiene.
+- `small-fix-allowed` only for clearly safe hardening changes such as pinning
+  container image digests, narrowing service-account scope, tightening
+  obviously overbroad network exposure, or secret-reference hygiene.
 
 ## Output
 
