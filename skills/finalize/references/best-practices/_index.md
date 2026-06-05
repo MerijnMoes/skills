@@ -6,7 +6,7 @@ Phase 1 of `/finalize` loads only the best-practices files relevant to what chan
 
 | If the diff includes… | Load |
 |---|---|
-| Any backend / business-logic change (any language) | `general-oop.md` |
+| Any backend / business-logic change (any language) | `general-oop.md` + `clean-coding.md` |
 | `.js`, `.jsx`, `.mjs`, `.cjs` | `javascript.md` |
 | `.ts`, `.tsx`, `.mts`, `.cts` | `typescript.md` + `javascript.md` (TS is JS — the patterns & perf rules apply) |
 | React project (`react` in deps, `.jsx`/`.tsx`, hooks, client components) | `react.md` + `typescript.md`/`javascript.md` as applicable |
@@ -24,7 +24,7 @@ Phase 1 of `/finalize` loads only the best-practices files relevant to what chan
 
 ## Notes
 
-- **`general-oop.md` is the baseline** for any backend change regardless of language — load it alongside the language-specific file.
+- **`general-oop.md` and `clean-coding.md` are the backend baseline** for any backend change regardless of language — load both alongside the language-specific file.
 - **`universal-quality.md` is the cross-language smell companion** for Phase 1. Use it for abstraction leaks, flag bloat, stringly typed behavior, redundant writes, and similar issues that are not owned by one language guide.
 - **Framework refs layer on the language refs.** `react.md` does not replace `javascript.md`/`typescript.md`; `fastapi.md` and `django.md` do not replace `python.md`.
 - **A UI change is also a language change.** A `.vue`/`.tsx`/template edit loads both its language file (e.g. `typescript.md`) and `frontend-a11y-i18n.md` — accessibility and i18n are quality dimensions of any user-facing change.
