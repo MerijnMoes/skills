@@ -17,6 +17,12 @@ Apply these pragmatically — they describe forces, not commandments.
 - Favor composition over inheritance. Inheritance is for a genuine, stable *is-a* relationship; most "reuse" is better served by holding a collaborator and delegating. Composition avoids the fragile-base-class problem and lets behavior vary at runtime.
 - Program to interfaces so modules can evolve and be tested independently of each other's internals.
 
+### Cohesion & coupling
+- Keep data and the behavior that maintains its invariants close together. When logic constantly reaches across module boundaries to manipulate another object's internals, the boundary is probably wrong.
+- Aim for high cohesion: a module's fields and methods should mostly be about the same concept. If half the methods only use half the state, the type may be doing several jobs.
+- Aim for low coupling: prefer depending on a small, stable surface rather than many concrete details of another module.
+- Watch for feature envy. If a method spends most of its time asking another object for data so it can do that object's job, move the behavior to where the knowledge lives.
+
 ### Layering & boundaries
 - Separate concerns into layers: transport/controller/handler → service/domain → repository/data-access. Each layer talks only to the one beneath it.
 - Keep business logic out of controllers (they wire HTTP/CLI to the domain) and out of the data layer (it persists, it doesn't decide). Logic that drifts into either becomes untestable and hard to find.
@@ -34,12 +40,22 @@ Apply these pragmatically — they describe forces, not commandments.
 - Prefer rich, well-named domain types over passing primitives and raw maps/dicts around. `Money`, `EmailAddress`, and `UserId` carry meaning and validation that `string`/`decimal` don't — primitive obsession scatters the same checks across every caller.
 - Keep invariants inside the object that owns them. The type that holds the data is the one place that can guarantee it's always valid; validation spread across callers will eventually miss a path.
 
+### Patterns, pragmatically
+- Reach for a pattern only when it removes a real change hotspot or clarifies a boundary already present in the diff.
+- **Strategy** fits when new variants would otherwise keep extending the same conditional logic.
+- **Adapter** fits when the domain needs a stable interface over a third-party or infrastructure-specific API.
+- **Factory** fits when object creation has meaningful setup rules, invariants, or variant selection that should not leak into every caller.
+- Prefer patterns that make the code easier to extend and easier to read; avoid pattern-shaped indirection that only adds ceremony.
+
 ### A note on balance
 Don't over-engineer. Abstractions and patterns earn their place by removing real duplication or real change-risk that exists *now* — not by anticipating a future that may never arrive. An interface with a single implementation, a strategy with one strategy, or a layer that only forwards calls adds indirection without buying anything. This ties directly to the refactoring file's DRY-is-knowledge rule: introduce structure when two things genuinely share a concept and will change together, not because two things momentarily look alike.
 
 ## Anti-patterns
 - **God class/service** — one type that knows and does everything; impossible to change safely or test.
 - **Anemic domain with scattered logic** — data-only objects while the rules live spread across controllers; the model can't enforce its own invariants.
+- **Feature envy** — behavior living far from the data and invariants it needs.
+- **Orchestration blob** — one service coordinates everything because the real responsibilities never found stable homes.
+- **Type-switch hotspot** — each new variant edits the same branching logic again instead of extending behavior through a better boundary.
 - **Deep inheritance hierarchies** — fragile base classes and behavior smeared across levels; prefer composition.
 - **Primitive obsession** — meaning and validation encoded in bare strings/numbers instead of domain types.
 - **Long parameter lists** — usually a hidden value object; also a sign a function does too much.
@@ -52,10 +68,14 @@ Don't over-engineer. Abstractions and patterns earn their place by removing real
 - [ ] New variants added via polymorphism/strategy, not a growing conditional
 - [ ] Dependencies injected through the constructor against interfaces
 - [ ] Composition preferred; inheritance only for genuine, stable is-a
+- [ ] Cohesion is high; the changed boundary is not doing several unrelated jobs
+- [ ] Coupling is low; collaborators are used through small, stable surfaces
+- [ ] Pattern use removes a real hotspot instead of adding speculative indirection
 - [ ] Business logic lives in the domain/service layer, not controllers or data access
 - [ ] No persistence/transport types leaking into the domain
 - [ ] Guard clauses over deep nesting; functions are small and single-purpose
 - [ ] No long parameter lists (grouped into value objects/DTOs)
 - [ ] No magic numbers; meaningful literals are named
 - [ ] Domain concepts modeled as types, not primitives/raw maps; invariants owned by their type
+- [ ] No feature envy, orchestration blob, or growing type-switch hotspot was introduced
 - [ ] No speculative abstraction added without a present need
