@@ -11,4 +11,3 @@ that deserves a dedicated accessibility lane in Phase 4.
 - Scope: compact findings and lane-registration metadata only; later tasks may
   expand this reference with deeper review prompts.
 - Mutability mode: `report-first`
-

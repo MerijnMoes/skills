@@ -10,4 +10,3 @@ Terraform, or cloud-configuration surfaces that deserve focused review.
 - Scope: minimal router only for now; later tasks may expand the lane-specific
   checks.
 - Mutability mode: `report-first`
-

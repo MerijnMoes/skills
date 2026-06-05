@@ -9,4 +9,3 @@ privacy disclosures, or reviewer-facing submission/setup surfaces.
 - Scope: compact routing and findings only; later tasks may expand the actual
   review checklist content.
 - Mutability mode: `report-first`
-

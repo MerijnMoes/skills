@@ -11,4 +11,3 @@ required.
 - Scope: later tasks may expand this into a richer threat-model helper; keep it
   routing-focused for now.
 - Mutability mode: `read-only`
-
