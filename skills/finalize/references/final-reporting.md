@@ -53,6 +53,10 @@ contract.
   project fit, docs/config, and only the relevant perf/a11y/rollout/security
   checks. If something could not be run, say that plainly. Do not let absence
   of evidence read like positive evidence.
+- **Compact metadata matters.** Keep lane availability, specialty lane
+  registry, specialty-lane auto-fix notes, and threat-model escalation status
+  concise but explicit. This is where readers should learn which lanes ran,
+  which were `N/A`, and which were `deferred by environment`.
 - **Findings** — split blocking from non-blocking items. For every finding,
   include severity, confidence, action type, concrete trigger or violated spec
   line, and current status. Order findings by business impact, not by phase or
@@ -68,6 +72,9 @@ contract.
   suggest commit/PR framing, reviewer attention points, and any rollout note
   worth carrying forward. For `NEEDS REVISION` or `BLOCKED`, state the exact
   fixes required before rerunning `/finalize`.
+- **Threat-model escalation** — if the run triggered a red-lane trust-boundary
+  escalation, say whether it produced a blocking finding, a follow-up plan, or
+  no additional action.
 - **Retro** — keep it to a few lines on durable lessons or conventions worth
   remembering, not a second report.
 

@@ -1,6 +1,6 @@
 # Frontend accessibility & i18n best-practices
 
-Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/Svelte/templates/components), and verified again in Phase 6. Applies to the changed UI code in the diff, not the whole app. The Phase-0 project context capsule and standing project instructions always override these generic rules — when they conflict, follow the project and note the deviation.
+Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/Svelte/templates/components). This file is implementation guidance for building the changed UI accessibly and localizably. The audit and verification companion lives in `../accessibility-review.md` for Phase 4 and Phase 6 checks. Applies to the changed UI code in the diff, not the whole app. The Phase-0 project context capsule and standing project instructions always override these generic rules; when they conflict, follow the project and note the deviation.
 
 ## Accessibility (a11y)
 
@@ -29,7 +29,7 @@ Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/
 - Never convey meaning by color alone (e.g. red = error) — add text, an icon, or a pattern for colorblind users.
 - Respect `prefers-reduced-motion`: reduce or remove non-essential animation for users who request it.
 - Give icon-only controls an accessible name (`aria-label` or visually-hidden text) so they're not announced as "button" with no purpose.
-- Verify with an automated checker (e.g. axe) plus a manual keyboard pass — automated tools catch only a fraction of issues, so the keyboard walkthrough is not optional.
+- Build the changed surface so it can pass the dedicated accessibility review lane's automated and manual checks without last-minute remediation.
 
 ## Internationalization (i18n)
 - Never hardcode user-facing strings — route them through the project's i18n framework (i18next, vue-i18n, FormatJS/react-intl, gettext, etc.).
@@ -61,7 +61,6 @@ Loaded in `/finalize` Phase 1 when the diff touches UI/markup (HTML/JSX/TSX/Vue/
 - [ ] Focus managed on route change / modal open & close
 - [ ] Native semantics preferred over ARIA; icon-only controls named
 - [ ] AA contrast met; meaning never by color alone; `prefers-reduced-motion` honored
-- [ ] Verified with axe + a manual keyboard pass
 - [ ] No hardcoded strings; full strings with named interpolation (no concatenation)
 - [ ] Plurals, dates, numbers, currency handled via framework/`Intl`
 - [ ] RTL + logical CSS properties where locales require it

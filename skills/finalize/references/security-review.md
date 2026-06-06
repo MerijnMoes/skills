@@ -8,6 +8,24 @@ Use `security-cheat-sheets.md` as the canonical router for focused security
 references. Load only the references that match the diff surface; if a surface
 clearly does not apply, mark it `N/A` with a one-line reason and move on.
 
+That router now covers specialty routes for:
+
+- `infra-security-review.md` when the diff changes Docker, Kubernetes,
+  Terraform, cloud config, deploy manifests, or infra-sensitive runtime
+  configuration.
+- `gha-exploit-review.md` when the diff changes GitHub Actions, local
+  composite actions, or workflow-loaded config/scripts and needs exploit-path
+  discipline in addition to `workflow-security.md`.
+- `threat-model-escalation.md` when a red-lane trust boundary changes or a
+  high-impact security finding needs compact abuse-path framing before it can
+  block.
+- `security-requirements.md` when escalated security findings need explicit
+  requirement or acceptance-criteria framing to support the verdict.
+
+These are **security-owned specialty routes**, not separate Phase-4 lanes.
+Keep them visible in the specialty lane registry when considered, but emit
+their findings under security-lane ownership in the shared `Finding Set`.
+
 ## Always — OWASP Top 10:2025
 
 For each, check the concrete patterns and confirm the control is actually present in the changed code.
@@ -58,11 +76,27 @@ Grounded in the **OWASP Top 10 for LLM Applications (2025)**:
 
 Committed secrets remain the dedicated Phase-4 lane (keys, tokens, credentials, private keys, `.env` values) — a hard stop. Referenced here, not duplicated.
 
+## Escalation rules
+
+Escalate past the baseline lane when the diff changes a high-risk surface but
+the security question is no longer just "is this vulnerable?"
+
+- Use `threat-model-escalation.md` to capture the changed trust boundary,
+  protected assets, attacker goals, and the concrete abuse path for the
+  changed surface only.
+- Use `security-requirements.md` when that escalated threat needs an explicit
+  requirement, acceptance criterion, or human decision framing before the
+  `Decision Packet` can be made cleanly.
+
 ## Output
 
-Consolidate all applicable security sub-lanes into the Phase-4 punch list. Every finding must survive the `findings-lifecycle.md` trigger test (a concrete, reachable exploit path — not a theoretical category) before it can block; label **severity** and **confidence**; order by business impact.
+Consolidate all applicable security sub-lanes into the Phase-4 punch list.
+Every finding must survive the `findings-lifecycle.md` trigger test (a
+concrete, reachable exploit path — not a theoretical category) before it can
+block; label **severity** and **confidence**; order by business impact.
 
-Emit findings into the shared `finding set` artifact defined in
+Emit findings from the baseline security pass and every security-owned
+specialty route into the shared `Finding Set` artifact defined in
 `findings-lifecycle.md` rather than as loose prose.
 
 Keep the security-review-specific nuance here: every surviving finding still

@@ -84,6 +84,10 @@ The right test mix is part of correctness. A giant E2E test for a tiny pure
 function is as mismatched as a unit test that mocks away the exact integration
 that tends to fail in production.
 
+If the changed surface needs framework-specific testing guidance, load
+`testing-specialty-router.md` rather than turning this generic reference into a
+framework catalog.
+
 ## Invariants over examples
 
 Examples are good; invariants are better. Where possible, express what must
@@ -105,23 +109,9 @@ Favor many fast, isolated unit tests; fewer integration tests; a few slow
 end-to-end tests. Unit tests must stay fast so the whole suite runs on every
 change — a suite too slow to run is a suite that doesn't get run. Reserve broad,
 slow, brittle end-to-end tests for the high-value flows that genuinely need
-them; don't reach for E2E what a unit test could pin precisely.
-
-## Browser / Playwright tests
-
-If Playwright is already in the project, use it deliberately:
-
-- keep the suite focused on high-value user journeys and regressions;
-- cover one meaningful negative path, not only the golden path;
-- assert on visible behavior, accessibility roles, network outcomes, or
-  persisted effects — not incidental markup noise;
-- prefer stable selectors/roles and explicit waits over brittle CSS chains and
-  `waitForTimeout`;
-- avoid giant snapshots and "test the whole app" scripts that fail for reasons
-  unrelated to the change.
-
-If the project does **not** already use Playwright, `/finalize` should not add
-it just to satisfy the skill.
+them; don't reach for E2E what a unit test could pin precisely. If browser/E2E
+verification needs framework-specific tactics, route outward through
+`testing-specialty-router.md` instead of expanding this generic reference.
 
 ## Anti-patterns
 

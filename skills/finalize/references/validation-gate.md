@@ -28,12 +28,17 @@ Do not choose the verdict by vibe. Calibrate it explicitly:
 
 - **BLOCKED** — a serious problem prevents shipping at all: data loss/corruption,
   a real security breach/external exploit path, a broken core flow with a clear
-  trigger, a dangerous migration/rollout path with no safe mitigation, or a
-  failed verification gate on a critical path.
+  trigger, a dangerous migration/rollout path with no safe mitigation, a
+  critical accessibility failure on a changed UI path, a confirmed
+  exploit-driven workflow vulnerability, an unresolved red-lane
+  threat-model finding that leaves a serious residual risk, or a failed
+  verification gate on a critical path.
 - **NEEDS REVISION** — the change mostly works but still has issues worth fixing
   before merge: a confirmed non-catastrophic correctness bug, missing required
   coverage on a high-risk new path, a spec gap, a risky but bounded config/doc
-  mismatch, or a residual risk too important to leave implicit.
+  mismatch, a serious App Store reviewability issue, an unresolved red-lane
+  threat-model finding that is important but not fully blocking, or a residual
+  risk too important to leave implicit.
 - **READY TO SHIP** — relevant gates are green, the top risks from the risk map
   were meaningfully exercised, no confirmed blocking findings remain, and any
   residual risks are explicitly small, bounded, and acceptable.
@@ -48,6 +53,8 @@ unfinished" is not enough.
 - Core logic is correct, not merely syntactically valid.
 - Edge cases handled: empty input, nulls, invalid states.
 - No obvious logical errors or inconsistencies.
+- For changed UI flows, accessibility verification evidence exists and no
+  critical accessibility failure remains unresolved.
 
 ### 2. Tests & regression safety
 - Existing tests still pass (or equivalent reasoning confirms no breakage).
@@ -81,6 +88,9 @@ unfinished" is not enough.
 - File system and network access are safe and intentional.
 - Any dependencies introduced are safe and justified.
 - For relevant diffs, focused security lanes were considered: API, auth/session, input/upload/output, workflow/release, configuration, observability, migration safety, and agent/LLM behavior.
+- Confirmed exploit-driven workflow vulnerabilities and unresolved red-lane
+  threat-model findings are carried into the verdict explicitly rather than
+  left as vague concerns.
 
 ### 6. Performance
 - No unnecessary performance regressions.
@@ -120,6 +130,14 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 - **Idempotency & concurrency** — race conditions and TOCTOU on shared state, operations that aren't safe to retry (double-charge, duplicate row, replayed webhook), missing locks/transactions across a read-modify-write, and double-submit / at-least-once delivery assumptions. Ask: what happens if this runs twice, or two of these run at once?
 - **Financial / quantitative correctness** *(only where the change touches money, billing, quotas, or other quantitative invariants)* — currency and unit consistency, rounding direction and accumulation error, off-by-one on quotas/limits, and sign/overflow on balances. A wrong number that looks plausible is worse than a crash.
 - **Configuration / rollout safety** — defaults are safe, missing config fails safely, feature flags have explicit fallback behavior, and deployment sequencing does not silently weaken security or correctness.
+- **Workflow / release safety** — trusted event assumptions, secret/token exposure,
+  artifact trust, and exploitability of changed automation paths are understood;
+  confirmed exploit-driven workflow vulnerabilities can block.
+- **Accessibility** *(for UI diffs)* — changed user journeys remain keyboard-,
+  focus-, and automation-verifiable; critical accessibility failures can block.
+- **App Store reviewability** *(when relevant)* — changed reviewer-facing setup,
+  account, purchase, entitlement, or metadata surfaces remain reviewable; serious
+  App Store reviewability issues require revision.
 
 ### 12. Final sanity check
 - If reviewing this in production, you would approve it.

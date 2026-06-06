@@ -45,6 +45,10 @@ Phase 0 should carry these forward explicitly:
 - side effects and trust boundaries
 - hotspot tags, such as auth, migration, concurrency, cache, external effects,
   config/rollout, and public API
+- specialty-surface flags
+- threat-model escalation trigger for red-lane trust-boundary changes
+- resilience-sensitive behavior trigger when availability, retry, recovery, or
+  degradation semantics are correctness-critical
 
 The map is not complete until these are written in a way later phases can reuse
 without rediscovering them.
@@ -69,6 +73,18 @@ Many diffs hit more than one archetype. That's normal.
 
 If none of these labels are quite right, create a better one. The value is in
 making the risk legible, not in sticking to a fixed list.
+
+Also flag specialty surfaces when present, even if they overlap the archetypes
+above. Typical flags include:
+
+- user-facing UI / markup accessibility surface
+- iOS metadata / purchase / privacy / reviewer-facing submission surface
+- Docker / Kubernetes / Terraform / cloud configuration surface
+- `.github/workflows` / release automation / CI automation surface
+- public API / architecture boundary surface
+
+These flags do not replace the archetypes. They help Phase 4 register
+specialty lanes without bloating the core risk taxonomy.
 
 ## 2. Name the invariants
 
@@ -101,6 +117,15 @@ Capture the important edges:
 - **External effects** — HTTP calls, emails, payments, webhooks, jobs scheduled.
 - **Trust boundaries** — user input, uploaded files, external payloads, tenant/account switches.
 - **Operational boundaries** — feature flags, env vars, deploy order, restart/retry behavior.
+
+If a red-lane trust boundary changed here, mark that explicitly as a
+**threat-model escalation trigger** for Phase 4. The trigger is about routing
+the review, not automatically redesigning the system.
+
+If the correctness story depends on graceful degradation, retry safety,
+recovery after interruption, or other uptime-sensitive semantics, mark that as
+**resilience-sensitive behavior** so later phases probe it intentionally rather
+than treating it as generic performance work.
 
 This is where many bugs hide: at module boundaries, not inside a single pure function.
 

@@ -16,6 +16,10 @@ risk is, and what evidence exists before deeper review begins.
 - risk map
 - runtime interaction sketch
 - hotspots
+- specialty lane candidates
+- environment availability notes
+- architecture-doc implications
+- App Store / submission implications
 - verifier inventory and initial results
 - missing artifacts / unknowns
 
@@ -65,6 +69,40 @@ Mark any of these when present:
 - public API changes
 - trust-boundary input handling
 - performance-sensitive paths
+
+## Specialty lane candidates
+
+List only the specialty surfaces that later phases might need to register. Keep
+this short and evidence-driven. Typical candidates include:
+
+- UI / markup accessibility surfaces
+- iOS metadata, purchase, privacy, or reviewer-facing submission surfaces
+- Docker / Kubernetes / Terraform / cloud configuration
+- `.github/workflows` or related automation
+- red-lane trust-boundary changes
+- public API or architecture boundary changes
+
+For each candidate, note the likely target lane or escalation file if known.
+
+## Environment availability notes
+
+Record any environment limits that affect whether a specialty lane can run
+normally in Phase 4 or Phase 6. This should explain future `deferred by
+environment` lane states in one line each, rather than surprising the reader
+later.
+
+## Architecture-doc implications
+
+If the diff changes a public API, architecture boundary, or another surface
+that should update architecture-facing documentation, say so here even if the
+later answer is "no doc update required." The point is to make the implication
+explicit for Phase 4 and Phase 5 routing.
+
+## App Store / submission implications
+
+If the diff touches iOS purchase flows, privacy disclosures, metadata,
+reviewer-facing setup, or other submission-sensitive surfaces, capture that
+here so the App Store lane can be registered later. Otherwise write `none`.
 
 ## Output discipline
 
