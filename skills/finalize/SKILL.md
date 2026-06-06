@@ -16,6 +16,27 @@ than phase-local and narrative-first.
 
 The pipeline is ordered so that **code-modifying phases run first against a known-good baseline, and verification + sign-off run last** — you never declare something shippable that you changed after you last confirmed it works.
 
+## When NOT to Use
+
+- Do **not** use `/finalize` during active implementation, debugging, or
+  exploratory review. It is for changes that are already functionally complete.
+- Do **not** use it for broad repo audits unrelated to the current diff. The
+  diff is the unit of work.
+- Do **not** use it when the baseline is already broken and needs debugging
+  first. `/finalize` is not the tool for recovering an already-red starting
+  point.
+
+## Operating stance
+
+- Prefer the **smallest justified improvement** to the changed code. Do not
+  turn `/finalize` into speculative cleanup.
+- Do not expand scope because a nearby file "could be better." Stay anchored to
+  the diff and the pinned intent.
+- State assumptions explicitly when evidence is incomplete instead of letting
+  confidence tone hide uncertainty.
+- Prefer concrete proof, observed behavior, and reachable triggers over
+  narrative confidence.
+
 ## Phase map
 
 | Phase | Purpose | Reads | Writes | Modifies code? | Gate |
@@ -362,6 +383,9 @@ Follow `references/final-reporting.md` so the output is **decision-ready** for t
   (`fixed`, `unresolved`, `deferred`, `needs user decision`) in the final
   report. Do not expose the internal workflow statuses from the shared
   `Finding Set` unless they are specifically useful as metadata.
+- Be explicit about coverage honesty: distinguish what was **directly
+  verified**, what was only **reasoned about**, and what remained
+  **environment-blocked** or otherwise unexercised.
 
 Present a concise report:
 
@@ -393,8 +417,9 @@ Present a concise report:
 - Non-blocking: <deferred items, coverage gaps, low-confidence notes, planned follow-ups, decision points, with report status>
 
 ## Verification coverage
-- Top risks exercised: <what was directly or indirectly proven>
-- Top risks not exercised: <what remained unproven and why>
+- Directly verified: <what was run and observed>
+- Reasoned about: <what is supported indirectly by static checks, surrounding evidence, or code inspection>
+- Environment-blocked / not exercised: <what remained unproven and why>
 
 ## What each phase did
 - Best-practices: <changes made, or "no change">

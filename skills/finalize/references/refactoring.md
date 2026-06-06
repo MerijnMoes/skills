@@ -25,6 +25,14 @@ DRY is about a single source of truth for a piece of *knowledge*, not about elim
 - Abstract only when the same *business concept* lives in both places and would have to change in both at once. That shared concept is the thing worth naming once.
 - Two fragments that merely look alike but represent *different* concepts must stay separate. Merging them couples things that should evolve independently — and when one needs to change, you'll either fork the abstraction back apart or distort it with flags. A premature abstraction is worse than the duplication it replaced. When unsure, prefer the duplication and wait for the third occurrence to reveal the real pattern.
 
+## Rationalizations to reject
+- **"I can imagine a cleaner architecture."** `/finalize` is not a license to
+  pursue every architectural idea that occurs to you.
+- **"This duplication looks similar enough."** Similar text is not shared
+  knowledge. Only abstract when the underlying concept really needs one home.
+- **"I'll add flexibility now for later."** Speculative seams, wrappers, and
+  ports are cost today for a future that may never arrive.
+
 ## When NOT to refactor
 - **Don't refactor purely to enable testing.** If code is hard to test, the design is telling you something — fix the design (inject the dependency, split the responsibility), don't bolt on seams just to reach private state.
 - **Don't add speculative flexibility** for imagined future needs (YAGNI). Generality you don't need today is cost you pay today.

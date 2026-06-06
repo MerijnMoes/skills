@@ -12,6 +12,18 @@ observe?"** It should execute the highest-value probes suggested by
 `risk-mapping.md`, `project-context.md`, and `bug-hunting.md`, not reopen broad
 ideation or verdict debate.
 
+## Verification posture
+
+- Match the verification method to the risk shape: static analysis for some
+  structural/data-flow issues, targeted tests for logic and regressions,
+  runtime probes for stateful behavior, and adversarial review for
+  exploitability/security claims.
+- On high-risk changes, do not let one green evidence source substitute for the
+  others. A passing suite, a clean linter run, or a green static lane can each
+  be meaningful without being sufficient alone.
+- Record what was directly observed, what is only indirectly supported by
+  evidence, and what the environment prevented you from running.
+
 ## Procedure
 
 1. **Static gates** — run the project's formatter, linter and type-checker (detected in Phase 0). These are cheap and catch more than a human read.
@@ -106,6 +118,10 @@ there:
 
 If a top risk from the Phase-0 risk map was not exercised, carry that gap
 forward explicitly into the validation gate.
+
+When summarizing the ledger, be explicit about which entries are **directly
+verified**, which are only **indirectly supported**, and which remain
+**not-run/environment-blocked**.
 
 ## When a bug appears during verification
 

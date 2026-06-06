@@ -66,6 +66,15 @@ Examples:
 
 Good invariants turn vague suspicion into crisp tests and sharper reviews.
 
+Also ask whether the changed surface carries **property-style** expectations:
+
+- round-trip or encode/decode symmetry;
+- retry safety / idempotency;
+- monotonic ordering, version, counter, or timestamp behavior;
+- conservation of totals, balances, quotas, or counts;
+- cross-version or cross-implementation equivalence where two paths are
+  supposed to agree.
+
 ## 3. Propose the smallest high-value probe
 
 Choose one or more, depending on the risk:
@@ -82,6 +91,9 @@ Choose one or more, depending on the risk:
 - **Repeat/replay probe** — run the same scenario many times, or with fixed
   seeds/fixtures, to shake out timing/order bugs while keeping failures
   reproducible.
+- **Differential probe** — compare old/new paths, two implementations, or two
+  equivalent code paths when the main risk is behavioral drift rather than an
+  outright crash.
 - **Restart/retry/failure probe** — rerun across reconnects, page reloads,
   process restarts, temporary network loss, or dependency errors if the project
   already has harnesses/fakes to do so.

@@ -52,6 +52,22 @@ useEffect(() => {
 - Prefer clear props over "bag of options" objects unless the prop shape is genuinely shared and stable.
 - Keep feature-specific logic out of shared layout or primitive components; push it outward or behind a dedicated hook/helper.
 
+## Composition and boundaries
+- Prefer composition over prop bags and feature-flag-heavy shared components.
+  If a "reusable" component keeps accumulating workflow-specific switches, the
+  boundary is wrong.
+- Keep shared primitives and headless pieces free of feature workflow leakage.
+  Reusable building blocks should not need to know which product flow invoked
+  them.
+- Split orchestration from presentation when it clarifies ownership, but do not
+  extract components that add only another indirection hop.
+- Prefer explicit ownership of derived values and transient UI state. If two
+  components both need the same truth, make the owner obvious instead of
+  copying it around.
+- Treat server/client and async/render boundaries as composition concerns, not
+  just syntax constraints. A boundary that forces a large subtree client-side
+  or mixes loading concerns into shared UI is usually worth revisiting.
+
 ## Rendering and boundaries
 - Preserve server/client boundaries. Do not pull client-only hooks or browser APIs into server-rendered modules.
 - Wrap Suspenseful or failure-prone async UI in meaningful loading and error states.
@@ -68,6 +84,10 @@ useEffect(() => {
 - Fetching/mutation logic that has no stale-response or rollback story.
 - A parent `"use client"` boundary pulling a large subtree client-side without a clear need.
 - Shared presentational components branching on feature-specific workflow rules.
+- Headless or primitive components taking workflow-specific props just to serve
+  one feature path.
+- Component extraction that spreads one responsibility across more files without
+  making ownership clearer.
 - Query keys or memo dependencies that omit the value actually controlling the result.
 
 ## Anti-patterns
@@ -76,6 +96,7 @@ useEffect(() => {
 - Blanket memoization without evidence.
 - Client-only code leaking into server components.
 - Index keys on dynamic lists.
+- "Reusable" components built around prop soup and boolean feature switches.
 - Shared mutable state passed through props/context without a clear ownership model.
 
 ## Quick checklist
@@ -83,6 +104,7 @@ useEffect(() => {
 - [ ] Effects are for external sync, not redundant derived state
 - [ ] Effect dependencies and async cancellation/staleness handling are correct
 - [ ] Component responsibilities are focused; feature logic is not leaking into shared primitives
+- [ ] Composition boundaries clarify ownership instead of spreading workflow logic across shared components
 - [ ] Server/client, loading, and error boundaries are respected
 - [ ] Query keys, cache invalidation, and optimistic rollback paths are correct when applicable
 - [ ] Stable keys and explicit state ownership preserve predictable rendering

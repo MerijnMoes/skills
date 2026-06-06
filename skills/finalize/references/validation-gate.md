@@ -20,7 +20,22 @@ right verdict?"** It should judge the results of `risk-mapping.md`,
 - **Apply the findings lifecycle discipline.** Anything that would push the verdict to `NEEDS REVISION` or `BLOCKED` must survive `findings-lifecycle.md` first — a concrete, reachable trigger, not a hunch. A finding you can't reproduce is a low-confidence note, not a blocker, and every surviving finding gets the right next action: Fix, Investigate, Plan, or Decide.
 - **Label every finding** with a **severity** (Critical/High/Medium/Low) and your **confidence** (High/Medium/Low) that it's real. Calibrate severity by blast radius: **Critical** = data loss/corruption, a security breach, or a broken core flow with no workaround; **High** = a real defect on a common path, or a meaningful security/correctness gap; **Medium** = a narrower or lower-likelihood issue, or one with a reasonable workaround; **Low** = minor, cosmetic, or easily avoided. Low-confidence items can be surfaced but should not block on their own.
 - **Order findings by business impact, not code elegance.** A data-corruption path that ships matters more than an inelegant abstraction. Lead the verdict with what actually harms the user or the business.
+- **Be honest about tool limits.** A green static-analysis or static-intelligence
+  pass is supporting evidence, not proof of absence. Interpret tool output in
+  light of what it actually covered, what it can miss, and what the environment
+  prevented you from exercising.
 - This checklist is necessary but **not exhaustive** — after it, apply your own judgement and look for risks it doesn't name (the required final step below). Treat the checklist as a structure for thought, not a substitute for a risk-led bug hunt. But do that by evaluating the gathered evidence and explicit gaps, not by opening a fresh unbounded review loop here.
+
+## Rationalizations to reject
+
+- **"The tests passed, so ship it."** Passing tests matter, but they do not
+  prove the *right* risks were exercised.
+- **"Nothing failed, so coverage must be enough."** Unexercised high-risk areas
+  remain open risks until disproven.
+- **"The tools were green, so the problem is probably not there."** Tool output
+  is evidence, not absolution.
+- **"This is probably fine."** Verdicts need concrete justification from
+  evidence, not a confident tone.
 
 ## Verdict calibration
 
@@ -149,6 +164,10 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 After the checklist, you must also:
 - Identify any risks, gaps, or failure modes **not** covered above.
 - Bring forward residual bug hypotheses from `bug-hunting.md`, especially around timing, retries, concurrency, stale state, and invariants that broad checklists often under-specify.
+- Ask whether the changed surface carries property-style expectations —
+  round-trip, idempotency, monotonicity, conservation, ordering, or
+  differential equivalence — and whether those expectations were actually
+  exercised or remain open.
 - Revisit the Phase-0 risk map and state which top risks were actually disproven, which remain open, and whether any of those open risks materially affect the verdict.
 - Revisit the Phase-0 project context capsule and state whether any project-specific boundary, convention, domain rule, tooling norm, docs/release convention, or unknown materially affects the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.

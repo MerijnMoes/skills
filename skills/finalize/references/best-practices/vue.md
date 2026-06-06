@@ -36,6 +36,22 @@ Keep root/route-view components thin. A CRUD feature typically splits into conta
 - Extract reused, stateful, or side-effect-heavy logic into composables with small, typed, predictable APIs — easier to test and reuse than inlined logic.
 - patterns.dev treats composables as the **modern default** that supersedes older logic-reuse approaches (renderless components, data-provider components, HOC-style wrappers): reach for a composable before a renderless component or scoped-slot trick, which add an extra component instance for no gain here.
 
+### Composition and state boundaries
+- Prefer composables for shared logic before renderless indirection. A
+  composable usually makes reuse clearer than hiding behavior behind slot-heavy
+  wrapper components.
+- Keep props/events as the default explicit boundary before `provide`/`inject`
+  or broader shared state. Reach for hidden channels only when the tree depth
+  or surface area truly earns it.
+- Keep route/root views thin and push reusable behavior into focused
+  composables and smaller components. Root views should orchestrate, not carry
+  every implementation detail themselves.
+- Use slots and dynamic components when they clarify composition, not when they
+  hide coupling or smuggle state across unclear boundaries.
+- Choose local component state, lifted state, shared store, and injected
+  context deliberately. If ownership is hard to explain, the boundary likely
+  needs work.
+
 ### Patterns (patterns.dev)
 - **State management**: props/events for local state, a shared `reactive()` store for moderate needs, and **Pinia** once you need devtools, plugins, SSR, or typed cross-app state. Don't pull in a global store for state that two components could pass directly.
 - **Provide/Inject is the Provider pattern**: use it for genuinely app-wide data (theme, locale, auth) to avoid prop-drilling; keep props when data should stay local and traceable.
@@ -50,12 +66,25 @@ Keep root/route-view components thin. A CRUD feature typically splits into conta
 - Treat performance as a pass done AFTER functionality is correct, then: virtualize long lists, use `v-once`/`v-memo` for static/expensive subtrees, and avoid abstraction overhead in hot loops.
 - **Async components** for code-splitting: load heavy or rarely-used components (modals, big features, route views) with `defineAsyncComponent(() => import('...'))`, and supply `loadingComponent`/`errorComponent` for the load/error states. See `javascript.md` for the broader code-splitting / lazy-loading patterns.
 
+## Red flags to look for
+- Route/root views doing orchestration plus detailed presentation plus
+  reusable-business-logic all at once.
+- Watchers maintaining derived state that `computed` or clearer ownership could
+  express directly.
+- Shared components branching on feature workflow rules rather than receiving a
+  clear presentational contract.
+- `provide`/`inject` used as a quiet state bus where props/events would be more
+  explicit.
+- Slot structures that make state ownership harder to trace instead of easier.
+
 ## Anti-patterns
 - Heavy logic in templates — re-runs every render; move it to script/computed.
 - Watchers deriving state that should be `computed` — extra code and stale-value bugs.
 - Giant multi-responsibility components — hard to read, test, and reuse.
 - Mutating props — breaks one-way data flow; emit an event instead.
 - Overusing `provide`/`inject` — hidden coupling that's hard to trace.
+- Dynamic components or slots used to dodge a cleaner explicit component
+  boundary.
 - Premature performance micro-optimizations — adds complexity before there's a measured problem.
 
 ## Quick checklist
@@ -68,6 +97,7 @@ Keep root/route-view components thin. A CRUD feature typically splits into conta
 - [ ] `v-for` keyed; `v-html` avoided or justified
 - [ ] Components split per objective triggers; route views kept thin
 - [ ] Reused/stateful logic extracted to typed composables (preferred over renderless/HOC)
+- [ ] State ownership and component boundaries remain explicit; `provide`/`inject` and slots are justified
 - [ ] Heavy/rarely-used components code-split via `defineAsyncComponent` + `import()`
 - [ ] Runtime component switching uses `<component :is>` (+ `KeepAlive`), not `v-if` chains
 - [ ] Shared state scoped appropriately (local → props, app-wide → Pinia/provide-inject)

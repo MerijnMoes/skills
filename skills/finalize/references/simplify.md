@@ -36,6 +36,14 @@ Each: what it is → the fix. Act only when the result is plainly equivalent and
 - **Vague local name** — `data`, `tmp`, `x`, a misleading name → rename to what it holds.
 - **Comment restating the code** — a comment that narrates *what* the next line does → delete it; keep only comments that explain *why*.
 
+## Rationalizations to reject
+- **"Shorter means simpler."** Fewer characters are not the goal. If the new
+  form increases reading cost, it is a regression.
+- **"While I'm here, I should clean up nearby code too."** Stay in the diff.
+  Unrelated cleanup is scope creep wearing a tidy face.
+- **"This feels equivalent."** If equivalence is not obvious on inspection, it
+  does not belong in the no-test-gate phase.
+
 ## When NOT to simplify (the tempering)
 - **Equivalence not obvious? It's not Phase 2.** Anything you can't verify by reading is a Phase 3 refactor or out of scope — don't risk a silent behavior change under the no-test-gate phase.
 - **Don't over-compress.** If a "simplification" makes the next reader pause, you've gone backwards. Stop at clear.

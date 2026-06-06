@@ -8,6 +8,15 @@ structure (`refactoring.md` owns that). Start with a fast sweep from
 below. Read surrounding code only to understand the change; never review
 untouched neighbors.
 
+## Rationalizations to reject
+- **"This pattern looks dangerous, so it must be a bug."** Pattern recognition
+  is only a starting point. Findings need a concrete, reachable trigger.
+- **"The code feels wrong."** Name the failing input, sequence, contract, or
+  invariant. Vague unease is not a blocker.
+- **"The docs probably say this API is wrong."** If a framework or library
+  claim matters to the finding, verify it against current docs rather than
+  guessing from memory.
+
 ## What to check
 
 - **Logic & control flow** — off-by-one, inverted conditionals, wrong boolean operators, incorrect loop bounds, missing or duplicated `switch`/match cases.
