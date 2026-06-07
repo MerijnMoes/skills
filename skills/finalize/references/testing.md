@@ -84,9 +84,9 @@ The right test mix is part of correctness. A giant E2E test for a tiny pure
 function is as mismatched as a unit test that mocks away the exact integration
 that tends to fail in production.
 
-If the changed surface needs framework-specific testing guidance, load
-`testing-specialty-router.md` rather than turning this generic reference into a
-framework catalog.
+If the changed surface needs stack-specific testing tactics, route through
+`testing-specialty-router.md` rather than expanding this generic reference into
+a framework catalog.
 
 ## Invariants over examples
 
@@ -109,9 +109,7 @@ Favor many fast, isolated unit tests; fewer integration tests; a few slow
 end-to-end tests. Unit tests must stay fast so the whole suite runs on every
 change — a suite too slow to run is a suite that doesn't get run. Reserve broad,
 slow, brittle end-to-end tests for the high-value flows that genuinely need
-them; don't reach for E2E what a unit test could pin precisely. If browser/E2E
-verification needs framework-specific tactics, route outward through
-`testing-specialty-router.md` instead of expanding this generic reference.
+them; don't reach for E2E what a unit test could pin precisely.
 
 ## Anti-patterns
 

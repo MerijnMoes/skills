@@ -42,9 +42,10 @@ ideation or verdict debate.
    - **async / duplicate / replay behavior** *(when relevant)* — rerun the same message, job, or action and confirm side effects are not duplicated or corrupted.
    - **config / feature-flag behavior** *(when relevant)* — verify safe defaults, missing-config behavior, and both sides of the flag when the change depends on rollout controls.
    - **project/domain invariants** *(when relevant)* — exercise the repo-specific calculation, workflow state, tenant/privacy boundary, compatibility promise, or documented convention captured in the project context capsule.
-   - **Playwright/browser automation** *(when already available)* — for UI/web changes, prefer at least one focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path over an ad hoc manual click-through. When the project already has specialty browser/E2E tooling and the changed surface needs that detail, route through `testing-specialty-router.md`.
+   - **Browser QA for important runnable web UI** *(when relevant)* — for important runnable web UI changes, prefer `browser-qa.md` as the Phase 6 proof path instead of an ad hoc manual click-through. Cover the golden path, one meaningful negative path, and one viewport- or state-specific regression check. When the project already has specialty browser/E2E tooling and the changed surface needs that detail, route through `testing-specialty-router.md`.
+   - **post-deploy / canary observation** *(when relevant and a target environment exists)* — if the risk map includes rollout-sensitive deployed behavior, use `post-deploy-monitoring.md` to record at least one canary-style observation instead of relying only on local checks.
    - **workflow safety confirmation** *(when relevant and static verification is meaningful)* — for workflow/release automation changes, confirm the trusted event model, token/secrets exposure, and execution path assumptions from `workflow-security.md`, and record what was statically proven versus what could not be exercised directly.
-4. **Accessibility** *(UI changes only)* — run the dedicated `accessibility-review.md` lane for the changed UI. Treat it as the Phase 6 verification path that proves the expectations introduced by `best-practices/frontend-a11y-i18n.md` actually hold: keyboard-only pass, automated checker (e.g. axe), and any changed focus/label/error/motion expectations that matter for this surface.
+4. **Accessibility** *(UI changes only)* — run the dedicated `accessibility-review.md` lane for the changed UI. Treat it as the Phase 6 verification path that proves the expectations introduced by `best-practices/frontend-a11y-i18n.md` actually hold: keyboard-only pass, automated checker (e.g. axe), and any changed focus/label/error/motion expectations that matter for this surface. This complements `browser-qa.md`; do not treat browser smoke/interaction evidence as a substitute for the dedicated accessibility lane.
 5. **Performance** *(hot-path / perf-sensitive changes only)* — follow `performance-profiling.md`: measure against realistic data, find the real bottleneck, confirm any optimisation with a before/after. If the changed surface needs framework-specific performance guidance, load `performance-specialty-router.md`. Skip with a note for cold-path changes.
 
 At the end of verification, be able to say which top risks from the risk map and
@@ -122,6 +123,8 @@ forward explicitly into the validation gate.
 When summarizing the ledger, be explicit about which entries are **directly
 verified**, which are only **indirectly supported**, and which remain
 **not-run/environment-blocked**.
+
+When post-deploy monitoring was relevant, record whether it was `run and healthy`, `run with warnings`, or `not run because no environment` rather than collapsing those cases into generic verification success.
 
 ## When a bug appears during verification
 

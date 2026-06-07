@@ -18,6 +18,19 @@ Phase 4 and Phase 6 support for `/finalize`, conditional. Apply when the diff ch
 - Can this run twice safely?
 - Which existing rows, nulls, enum values, or malformed historical data break this path?
 
+## Common safe patterns
+
+- Use expand-contract for renames and removals: add the new column/table first, dual-read or dual-write as needed, backfill, cut traffic over, then drop the old shape in a later deploy.
+- Create indexes `CONCURRENTLY` where the engine supports it, especially on large PostgreSQL tables where a blocking build would stall writes; on PostgreSQL this cannot run inside a transaction block, and many migration runners wrap migrations in transactions by default.
+- Backfill in batches with explicit ordering, checkpoints, and idempotent predicates so retries resume safely instead of rewriting the whole table.
+- Keep both old and new data shapes readable during staggered rollout: old code must tolerate extra columns/tables, and new code must tolerate partially migrated rows.
+
+## Common dangerous shortcuts
+
+- Direct rename/drop in one deployment when old and new app versions may run at the same time.
+- Full-table backfill in one transaction on a large dataset, especially when it holds locks for a long time or amplifies replica lag.
+- Adding a `NOT NULL`, default, or validating constraint without checking historical rows, backfill order, or whether the engine rewrites the table.
+
 ## Common blockers
 
 - Destructive schema change with no compatibility or rollback story.

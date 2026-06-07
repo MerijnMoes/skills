@@ -11,6 +11,18 @@ right verdict?"** It should judge the results of `risk-mapping.md`,
 
 - Treat the `verification ledger` as the primary record of what was actually
   exercised. Do not infer runtime coverage that the ledger does not show.
+- If rollout-sensitive deployed behavior was in scope, check whether
+  `post-deploy-monitoring.md` produced a canary-style observation or an
+  explicit `not run because no environment` gap. Do not treat local-only proof
+  as equivalent evidence when a deployed runtime check was the meaningful risk.
+- If container behavior, deployment sequencing, or rollout overlap assumptions
+  were in scope, check whether `docker-deployment.md` captured concrete
+  evidence or an explicit gap. Do not silently treat an unexercised rollout
+  assumption as safe.
+- If a UI diff clearly warranted `browser-qa.md` but that evidence was not
+  gathered, carry it forward as an explicit evidence gap. This includes both
+  no runnable environment and cases where the environment existed but the lane
+  still was not run; do not assume success from static review alone.
 - Produce a `decision packet` as the gate's output bundle: evidence summary,
   surviving findings, verification coverage, residual unknowns, and verdict
   rationale.
@@ -145,6 +157,11 @@ Beyond generic correctness, sweep the diff for the failure classes that do the m
 - **Idempotency & concurrency** — race conditions and TOCTOU on shared state, operations that aren't safe to retry (double-charge, duplicate row, replayed webhook), missing locks/transactions across a read-modify-write, and double-submit / at-least-once delivery assumptions. Ask: what happens if this runs twice, or two of these run at once?
 - **Financial / quantitative correctness** *(only where the change touches money, billing, quotas, or other quantitative invariants)* — currency and unit consistency, rounding direction and accumulation error, off-by-one on quotas/limits, and sign/overflow on balances. A wrong number that looks plausible is worse than a crash.
 - **Configuration / rollout safety** — defaults are safe, missing config fails safely, feature flags have explicit fallback behavior, and deployment sequencing does not silently weaken security or correctness.
+- **Container / deployment assumptions** — when Docker, Compose, health checks,
+  or rollout mechanics changed, the gate distinguishes reviewed overlap and
+  readiness assumptions from `not exercised` gaps rather than collapsing both
+  into a generic green result.
+- **Post-deploy runtime evidence** — when the diff changed deployed behavior, assets, transport, or rollout-sensitive config, the gate distinguishes `run and healthy` from `run with warnings` and from `not run because no environment`.
 - **Workflow / release safety** — trusted event assumptions, secret/token exposure,
   artifact trust, and exploitability of changed automation paths are understood;
   confirmed exploit-driven workflow vulnerabilities can block.

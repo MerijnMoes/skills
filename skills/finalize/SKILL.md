@@ -243,6 +243,13 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   `references/migration-safety.md` for non-security migration/rollout safety.
   If the same surface also has security implications, keep the security finding
   under the security lane and the operational/rollout finding here.
+- **Docker / deployment review** *(only when the diff changes Dockerfiles,
+  Compose, image build logic, deployment manifests, health checks, rollout
+  strategy, or runtime container behavior)*: follow
+  `references/docker-deployment.md` for image safety, runtime least privilege,
+  health-check discipline, and rollout assumptions. Keep exploit-path or
+  infra-exposure findings under the security lane; use this lane for
+  non-security operability and rollout correctness.
 - **Observability review** *(only when the diff affects logging, tracing,
   auditing, or incident visibility on important flows)*: follow
   `references/observability-review.md` for signal quality and operability.
@@ -263,12 +270,22 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   markup as a specialty surface)*: register the lane and route it through
   `accessibility-review.md`. If the environment cannot support the required
   audit, mark the lane `deferred by environment` and carry that forward.
+- **Browser QA** *(only when the diff changes important user-facing web UI and
+  a runnable browser target exists)*: follow `references/browser-qa.md` for
+  smoke, interaction, visual, and lightweight browser-based verification of
+  the changed UX. Keep deeper accessibility findings and remediation under the
+  dedicated accessibility lane.
 - **App Store / reviewer-facing review** *(only when the risk map flags iOS
   metadata, purchase, privacy, or reviewer-facing submission surfaces)*:
   register the lane and route it through `appstore-review.md`.
 - **Architecture docs review** *(only when the diff changes a public API or an
   architecture boundary)*: register the lane and route it through
   `architecture-docs-review.md`.
+- **Post-deploy monitoring** *(only when the diff changes deployed web
+  behavior, rollout-sensitive config, or release-critical journeys and a
+  target environment is available)*: follow
+  `references/post-deploy-monitoring.md` for canary-style runtime verification
+  and regression thresholds.
 - **Focused bug hunt:** follow `references/bug-hunting.md` to generate a small set of high-value bug hypotheses from the diff itself — boundaries, invariants, state transitions, retries, concurrency, caching, persistence, auth/tenant separation, and rollout/failure paths. Prefer focused probes with existing tests/harnesses/tools over broad new scaffolding; do not install dependencies or build elaborate new frameworks inside `/finalize`.
 - **Project-context fit:** per `references/project-context.md`, check the change
   respects the repo's standing instructions, domain rules, tooling/test norms,
@@ -343,9 +360,10 @@ Gather hard evidence that the change works after all the modifications above. Th
 
 1. **Static gates:** run the project's formatter, linter, and type-checker (detected in Phase 0). These are cheap and catch more than human review.
 2. **Test suite:** run the full suite. It must pass. Confirm that new functionality is actually covered by tests — if a new code path has no test, that is a finding for the validation gate. Also assess the *quality* of new/changed tests against `references/testing.md` — they should test behavior not implementation, avoid over-mocking, and be deterministic; a brittle, order-dependent, or vacuous (asserts-nothing) test is itself a finding, since green-but-meaningless tests are false confidence. Use `references/bug-hunting.md` to choose a few focused probes or regression tests for the highest-risk bug hypotheses instead of relying on broad coverage numbers.
-3. **Behavioral check:** follow **`references/verify.md`** to actually run the app/feature and observe real behavior, not just green tests. Type-checks and tests prove code correctness, not feature correctness. Build the verification plan from the Phase-0 risk map and project context capsule: always exercise the golden path, at least one meaningful negative/error path, and at least one risk-specific probe for each top failure mode that matters (retry/double-submit, persistence round-trip, old/new data shape, auth boundary, stale cache, project-specific domain invariant, etc.). Use the required-probe guidance in `verify.md` so every archetype in the risk map gets at least one meaningful probe. When the changed flow is retry-, job-, or recovery-heavy, load `references/error-handling-review.md` to choose the duplicate-run, partial-failure, degraded-path, or replayability probes that Phase 6 must observe. For UI/web changes, if Playwright is already configured in the repo or otherwise already available in the environment, prefer a focused reproducible browser flow for the highest-value journey and one meaningful negative/regression path rather than an ad hoc click-through.
+3. **Behavioral check:** follow **`references/verify.md`** to actually run the app/feature and observe real behavior, not just green tests. Type-checks and tests prove code correctness, not feature correctness. Build the verification plan from the Phase-0 risk map and project context capsule: always exercise the golden path, at least one meaningful negative/error path, and at least one risk-specific probe for each top failure mode that matters (retry/double-submit, persistence round-trip, old/new data shape, auth boundary, stale cache, project-specific domain invariant, etc.). Use the required-probe guidance in `verify.md` so every archetype in the risk map gets at least one meaningful probe. Route through `references/testing-specialty-router.md` when the changed surface needs Playwright-specific browser guidance or pytest-specific fixture/async discipline, `references/browser-qa.md` when important runnable UI changes need browser evidence beyond generic checks, `references/post-deploy-monitoring.md` when deployed web behavior needs canary-style runtime verification, and `references/error-handling-review.md` when retries, jobs, or recovery behavior need targeted probes.
 4. **Accessibility check** *(only for UI changes)*: verify the a11y rules from `references/best-practices/frontend-a11y-i18n.md` actually hold — a keyboard pass plus an automated checker (e.g. axe), not just code inspection.
 5. **Performance profiling** *(only if the change touches a hot path / performance-sensitive code)*: follow `references/performance-profiling.md` — measure against realistic data, find the real bottleneck, confirm any optimization with a before/after. Skip with a note for cold-path changes.
+6. **Deployment/runtime checks** *(only when the diff changes containerized runtime or rollout-sensitive deployment behavior)*: use `references/docker-deployment.md` for non-security container/build/runtime assumptions and health-check verification; keep exploit-path or infra-exposure concerns under the security lane.
 
 Gate: lint/format/type-check clean, tests green, the feature observably works, and any a11y/perf concerns are resolved or explicitly recorded.
 
@@ -494,11 +512,14 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/dependency-audit.md` | Phase 4 | Vulnerability, license & supply-chain audit for changed deps |
 | `references/observability-review.md` | Phase 4 (+6 +7) | Logging, tracing, auditability, signal quality, and redaction checks |
 | `references/migration-safety.md` | Phase 4 (+6 +7) | Schema, migration, backfill, rollout, and persistent-data safety |
+| `references/docker-deployment.md` | Phase 4 (+6 +7) | Container/build/runtime/deployment review for Dockerized and rollout-sensitive changes |
 | `references/configuration-review.md` | Phase 4 (+5 +7) | Safe defaults, env vars, feature flags, deployment config, and fail-safe behavior |
 | `references/static-intelligence.md` | Phase 4 (+7) | JS/TS changed-code graph, duplication, complexity, boundary & feature-flag risk; optional static-analysis accelerator without requiring install |
 | `references/error-handling-review.md` | Phase 4 (+6) | Resilience lane for retries, recovery logic, degraded paths, and replay/retry visibility on changed flows |
 | `references/accessibility-review.md` | Phase 4 (+6 +8) | Specialty accessibility audit + verification lane for changed UI surfaces, with evidence expectations and limited safe fixes |
+| `references/browser-qa.md` | Phase 4 (+6) | Browser smoke, interaction, visual, and accessibility checks for runnable UI changes |
 | `references/appstore-review.md` | Phase 4 (+5 +8) | Specialty App Store / reviewer-facing lane for metadata, purchase, privacy, and submission-readiness surfaces |
+| `references/post-deploy-monitoring.md` | Phase 4 (+6 +7) | Post-deploy canary verification, thresholds, compare mode, and regression reporting |
 | `references/infra-security-review.md` | Phase 4 security review (+7 +8) | Security-owned specialty route for Docker/Kubernetes/Terraform/cloud config, exposure paths, and least-privilege defaults |
 | `references/gha-exploit-review.md` | Phase 4 security review (+7 +8) | Security-owned specialty route for `.github/workflows` and related automation exploit-path analysis |
 | `references/threat-model-escalation.md` | Phase 4 security review (+7 +8) | Security-owned escalation route for trust-boundary changes or high-impact findings that need abuse-path framing |
@@ -508,7 +529,9 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/update-docs.md` | Phase 5 | What docs to update and how |
 | `references/verification-ledger.md` | Phase 6 (+7 +8) | Shared `Verification Ledger` artifact for executed checks, observed results, coverage type, and unexercised risks |
 | `references/verify.md` | Phase 6 | Behavioral verification — run the app & observe; composes testing, a11y & performance refs |
-| `references/testing-specialty-router.md` | Phase 6 | Router for framework- or stack-specific testing guidance when generic `testing.md` is not enough |
+| `references/testing-specialty-router.md` | Phase 6 | Router for framework- or stack-specific testing guidance when generic `testing.md` is not enough; use it for Playwright-specific browser flows and pytest fixture/async discipline |
+| `references/testing-playwright.md` | Phase 6 (via router) | Playwright specialty guidance for flake-resistant E2E verification and artifacts |
+| `references/testing-pytest.md` | Phase 6 (via router) | Pytest specialty guidance for fixtures, parametrization, async tests, and isolation |
 | `references/performance-profiling.md` | Phase 6 | Measure-first profiling for hot-path changes |
 | `references/performance-specialty-router.md` | Phase 6 | Router for stack-specific performance guidance when generic profiling needs ecosystem detail |
 | `references/validation-gate.md` | Phase 7 | 12-section validation checklist (incl. business-risk lanes) + verdict |
