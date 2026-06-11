@@ -22,7 +22,12 @@ For collaborative discovery or design-doc work, load
    shaping and QA must cover.
 6. Identify verification expectations: unit tests, integration tests,
    Playwright coverage, manual probes, or docs checks.
-7. Pause for user approval when the spec changes scope or product behavior.
+7. Reconcile the spec with `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
+   `CONTEXT-MAP.md`, and ADRs when those files exist.
+8. Update project knowledge, or mark an explicit unresolved doc gap, when the
+   spec resolves reusable product, design, domain, or decision truth.
+9. Pause for user approval when the spec changes scope, product behavior, or
+   durable project knowledge.
 
 ## Acceptance criteria rules
 
@@ -33,6 +38,8 @@ For collaborative discovery or design-doc work, load
   regression check.
 - If the request affects a browser flow, identify which durable Playwright
   tests should be created or updated by default.
+- Criteria may reference standing project knowledge files when they define a
+  product promise, design rule, domain term, or architecture constraint.
 - Do not hide unresolved product choices inside implementation notes; mark them
   as questions or pause points.
 
@@ -51,6 +58,7 @@ Record:
 - out-of-scope items
 - approval status
 - verification expectations
+- project knowledge files referenced or updated
 - unresolved choices
 
 ## Quality bar

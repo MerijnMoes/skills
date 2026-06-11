@@ -2,9 +2,9 @@
 
 This file decides what happens after classification.
 
-Load `source-integration.md` before deep phase work. The compact files in this
-directory route the workflow; the payloads under `methodology/` and
-`design-studio/` provide the detailed procedures.
+Load `source-integration.md` and `project-knowledge.md` before deep phase work.
+The compact files in this directory route the workflow; the payloads under
+`methodology/` and `design-studio/` provide the detailed procedures.
 
 ## Default order
 
@@ -21,6 +21,8 @@ lane or otherwise affects a user-facing flow.
 For non-trivial work, load the matching source payloads:
 
 - Discovery and product shaping: `methodology/skills/brainstorming/SKILL.md`
+- Domain language and durable project memory:
+  `methodology/skills/brainstorming/domain-grilling.md`
 - Planning: `methodology/skills/writing-plans/SKILL.md`
 - Branch/workspace setup: `methodology/skills/using-git-worktrees/SKILL.md`
 - Implementation loop: `methodology/skills/test-driven-development/SKILL.md`

@@ -15,3 +15,13 @@ This repository includes internal reference payloads adapted into `forge`.
 - Snapshot: `92d6141`
 - License: Apache-2.0
 - Vendored path: `skills/forge/references/design-studio/`
+
+## Domain Grilling Principles
+
+- Upstream: `https://github.com/mattpocock/skills`
+- Source path: `skills/engineering/grill-with-docs/`
+- Copyright: Matt Pocock, 2026
+- License: MIT
+- Adapted paths:
+  - `skills/forge/references/project-knowledge.md`
+  - `skills/forge/references/methodology/skills/brainstorming/domain-grilling.md`

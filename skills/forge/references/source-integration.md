@@ -28,9 +28,10 @@ references.
 ## Methodology payload
 
 Use `references/methodology/skills/` as the source of truth for disciplined
-development behavior:
+development behavior. Use `references/project-knowledge.md` as the Forge-owned
+contract for durable repo memory that these methodology files read and update.
 
-- `brainstorming`: collaborative discovery and design docs
+- `brainstorming`: collaborative discovery, domain grilling, and design docs
 - `writing-plans`: executable implementation plans
 - `using-git-worktrees`: isolated workspaces and branch hygiene
 - `subagent-driven-development`: cross-agent task execution and reviews

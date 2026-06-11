@@ -3,8 +3,9 @@
 Discovery turns the request into grounded project context before any design or
 implementation work starts.
 
-For non-trivial requests, load `methodology/skills/brainstorming/SKILL.md`
-through `source-integration.md` before finalizing the discovery output.
+For non-trivial requests, load `project-knowledge.md` and
+`methodology/skills/brainstorming/SKILL.md` through `source-integration.md`
+before finalizing the discovery output.
 
 ## Required inputs
 
@@ -12,7 +13,7 @@ through `source-integration.md` before finalizing the discovery output.
 - repo instructions such as `README.md`, `AGENTS.md`, `CLAUDE.md`, or
   `GEMINI.md` when present
 - project context docs such as `DESIGN.md`, `PRODUCT.md`, architecture notes,
-  or existing specs
+  `CONTEXT-MAP.md`, `CONTEXT.md`, ADRs, or existing specs
 - relevant existing code, tests, routes, components, jobs, schemas, and
   configuration for the changed surface
 
@@ -20,12 +21,15 @@ through `source-integration.md` before finalizing the discovery output.
 
 1. Identify the intended outcome in one or two sentences.
 2. Read the nearest existing context before asking detailed questions.
+   If `CONTEXT-MAP.md` exists, use it to find the relevant bounded context.
 3. Map the changed surfaces: UI, API, auth, persistence, jobs, integrations,
    config, docs, tests, or release behavior.
 4. Look for prior art in the repo before inventing a new pattern.
 5. Decompose obviously large requests into smaller work packages before
    writing a spec.
-6. Ask only the questions needed to remove material ambiguity.
+6. For domain-heavy work, run the brainstorming `domain-grilling.md` subroutine
+   to resolve terms, context boundaries, and durable decisions.
+7. Ask only the questions needed to remove material ambiguity.
 
 ## Investigation rules
 
@@ -36,15 +40,19 @@ through `source-integration.md` before finalizing the discovery output.
 - If the request mentions an external tool, package, or current service,
   verify the current docs or installed version before relying on memory.
 - Separate facts, assumptions, and open questions in the run notes.
+- Surface contradictions between code, user statements, and project knowledge
+  docs instead of silently choosing one.
 
 ## Output
 
 Record:
 
 - concise intent
-- relevant project-context files
+- project knowledge files read
 - changed surfaces
 - existing patterns to follow
+- domain terms, context boundaries, or ADR candidates discovered
+- contradictions or stale project knowledge found
 - open questions or assumptions
 - whether the request is small enough for one `forge` run
 - current verification story

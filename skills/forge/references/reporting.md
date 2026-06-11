@@ -10,6 +10,8 @@ tool outputs.
 - changed deliverables
 - Playwright coverage created or updated
 - QA evidence gathered
+- project knowledge files read, updated, or intentionally left unchanged
+- contradictions, stale docs, or missing docs that affected confidence
 - `temper` verdict or blockers
 - note that the verdict comes from `temper`, the internal final phase inside
   `forge`

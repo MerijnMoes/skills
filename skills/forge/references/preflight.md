@@ -5,8 +5,9 @@ Run this before any deeper phase work.
 ## Required startup checks
 
 1. Read the user request carefully and restate the intended outcome.
-2. Inspect the repo for standing context such as `README.md`, `DESIGN.md`, and
-   `PRODUCT.md` when present.
+2. Load `project-knowledge.md` and inspect the repo for standing context such
+   as `README.md`, `PRODUCT.md`, `DESIGN.md`, `CONTEXT-MAP.md`,
+   `CONTEXT.md`, and `docs/adr/` when present.
 3. Identify whether the request needs a written spec, an implementation plan,
    or both before edits begin.
 4. Map the task to one primary class from `classification.md`:
@@ -23,7 +24,8 @@ Run this before any deeper phase work.
 Capture:
 
 - current branch
-- relevant project-context files
+- project knowledge inventory: relevant files found, missing-but-relevant
+  files, and any obvious stale or conflicting docs
 - chosen primary class and any overlays
 - whether spec and plan artifacts are required
 - obvious blockers before planning

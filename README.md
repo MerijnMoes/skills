@@ -34,6 +34,8 @@ design references, detector scripts, and final hardening gate.
 
 - `forge` uses a repo-local `.forge/` folder in target app repos for ephemeral
   run state, pause points, and resume metadata.
+- `forge` treats `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
+  `CONTEXT-MAP.md`, and ADRs as durable project memory when those files exist.
 - Playwright is a first-class QA lane, and durable browser tests are created or
   updated by default for affected flows when that lane is active.
 

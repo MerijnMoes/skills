@@ -29,6 +29,9 @@ specification, planning, implementation routing, Playwright QA, and the final
 - Start with `references/preflight.md`.
 - Use `references/source-integration.md` to resolve the internal methodology
   and design-studio source payloads.
+- Use `references/project-knowledge.md` to read and maintain durable repo
+  memory such as `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
+  `CONTEXT-MAP.md`, and ADRs.
 - Classify the task using `references/classification.md`.
 - Route the rest of the run through `references/workflow-routing.md`.
 - Use `references/discovery.md` to gather project context and requirements.
@@ -53,6 +56,9 @@ specification, planning, implementation routing, Playwright QA, and the final
 
 - Ground first, then specify, then plan; do not jump from request to edits when
   scope is unclear.
+- Treat durable project knowledge as part of grounding: read it before asking
+  questions and update it when reusable product, design, domain, or decision
+  truth is resolved.
 - For behavior changes, prefer a red-green-refactor loop and prove tests fail
   for the intended reason before implementing.
 - For bugs or broken checks, find root cause before fixing symptoms.
