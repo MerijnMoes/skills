@@ -9,6 +9,9 @@ This file decides what happens after classification.
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
 
+After Playwright verification and any exploratory QA, move into `temper` as the
+internal final hardening phase before reporting out.
+
 ## Loopbacks
 
 - If shaping changes the intended UI direction materially, return to `Spec` or

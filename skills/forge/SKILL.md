@@ -35,6 +35,7 @@ specification, planning, implementation routing, Playwright QA, and the final
 - Use `references/pause-resume.md` to manage `.forge/` state and resume points.
 - Use `references/reporting.md` to produce the final handoff.
 - Enter the final hardening phase through `references/temper/SKILL.md`.
+- Do not present `temper` as a second public skill or separate user command.
 
 ## User experience
 

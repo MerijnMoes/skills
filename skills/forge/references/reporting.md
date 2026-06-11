@@ -11,6 +11,8 @@ tool outputs.
 - Playwright coverage created or updated
 - QA evidence gathered
 - `temper` verdict or blockers
+- note that the verdict comes from `temper`, the internal final phase inside
+  `forge`
 - next recommended step
 
 ## Tone
