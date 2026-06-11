@@ -52,13 +52,21 @@ classification requires it.
 
 When implementation exposes a bug, failing check, or unexpected behavior:
 
-1. Reproduce the symptom with the smallest command, route, or interaction.
-2. Read the full error and trace the failing value or state backward to its
-   source.
-3. Compare against a working pattern in the same repo before inventing a fix.
-4. State one hypothesis and test one variable at a time.
-5. Fix the root cause, then add or update a regression check where practical.
-6. If three distinct fixes fail, stop and revisit the architecture or plan with
+1. Build the smallest trusted feedback loop first: failing test, curl script,
+   CLI fixture, Playwright script, trace replay, harness, fuzz loop, bisect, or
+   differential run.
+2. Run the loop and confirm it reproduces the user's symptom, not a nearby
+   failure.
+3. Read the full error, relevant project knowledge, and recent changes; trace
+   the failing value or state backward to its source.
+4. Compare against a working pattern in the same repo before inventing a fix.
+5. State 3-5 ranked falsifiable hypotheses, then instrument one variable at a
+   time. Tag temporary debug logs with a unique `[DEBUG-...]` prefix.
+6. Fix the root cause, then add or update a regression check at the correct
+   seam when practical.
+7. Re-run both the minimized feedback loop and the original scenario, remove
+   debug instrumentation, and record what would have prevented the bug.
+8. If three distinct fixes fail, stop and revisit the architecture or plan with
    the user instead of stacking patches.
 
 ## Review discipline
