@@ -84,6 +84,10 @@ The right test mix is part of correctness. A giant E2E test for a tiny pure
 function is as mismatched as a unit test that mocks away the exact integration
 that tends to fail in production.
 
+For Forge QA, compare changed tests against the QA intent draft when one exists.
+The draft is not a contract to automate every idea, but any omitted high-value
+scenario should be covered at a cheaper layer or recorded as residual risk.
+
 If the changed surface needs stack-specific testing tactics, route through
 `testing-specialty-router.md` rather than expanding this generic reference into
 a framework catalog.
@@ -140,3 +144,7 @@ them; don't reach for E2E what a unit test could pin precisely.
 - [ ] No vacuous tests, no coverage-chasing, no logic in test bodies.
 - [ ] Unit tests fast; slow E2E reserved for flows that earn it.
 - [ ] Test type matches the risk; bug fixes get a regression test where practical.
+- [ ] If a QA intent draft exists, changed tests cover or consciously defer the
+      high-value scenarios.
+- [ ] API tests validate body/shape/side effects when those are the changed
+      contract, not only status codes.

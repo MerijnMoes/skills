@@ -7,18 +7,22 @@ covered elsewhere.
 
 ## What to review
 
-- Locator discipline over brittle selectors, especially avoiding CSS/XPath
-  chains when role-, label-, or test-id-based locators can express intent.
-- Waiting on explicit conditions instead of sleeps, including navigation,
-  network, visibility, and state transitions that the test can observe
-  directly.
-- Focused page-object or helper boundaries when they clarify reuse without
-  hiding assertions or turning the test flow into an unreadable abstraction
-  layer.
-- Retries, traces, screenshots, video, and artifact capture for failures so
-  flaky or environment-specific breaks leave enough evidence to debug.
-- `repeat-each` or retry-based flake diagnosis when stability is in doubt, used
-  to investigate nondeterminism rather than to mask it.
+- User-centric coverage: the test mirrors the meaningful journey from the QA
+  intent draft or pinned intent rather than implementation structure.
+- Locator discipline: prefer role, label, text, placeholder, and stable test-id
+  locators over brittle CSS/XPath chains.
+- Waiting discipline: use Playwright auto-waiting, web-first assertions, and
+  explicit observable conditions instead of sleeps.
+- Isolation: tests can run alone, in parallel where the project supports it,
+  and without relying on state from previous tests.
+- Assertions: verify observable outcomes, URL/state/persistence/API effects,
+  and useful negative/recovery behavior.
+- Page Objects/helpers: use them when they clarify repeated flows or expensive
+  setup; do not force them when direct tests are clearer.
+- Artifact capture: traces, screenshots, video, and failure output are
+  configured or captured well enough to debug CI/environment failures.
+- Flake diagnosis: use `repeat-each`, retries, traces, or focused reruns to
+  investigate nondeterminism, not to hide it.
 
 ## Keep the scope tight
 

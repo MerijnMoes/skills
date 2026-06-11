@@ -44,6 +44,8 @@ Record:
 - direct observations;
 - screenshots or artifact paths if captured;
 - console/network/accessibility issues;
+- QA capability matrix state for browser E2E, accessibility, visual smoke, and
+  performance smoke when those capabilities are relevant;
 - explicitly state when artifacts were not captured;
 - explicitly state any checks that were not run and why;
 - what could not be exercised in the environment.

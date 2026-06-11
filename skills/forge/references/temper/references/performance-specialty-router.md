@@ -7,6 +7,13 @@ This router does not repeat the measure-first guidance from
 `performance-profiling.md`; it only hands off to narrower references when the
 changed hotspot needs stack-specific interpretation.
 
+## Local/free QA tools
+
+For Forge QA, Lighthouse and k6 are optional local/free capabilities, not
+universal requirements. Use Lighthouse for web UI load/render/accessibility/SEO
+signals when the diff affects those surfaces. Use k6 for load-sensitive API or
+backend flows only when targets, thresholds, and environment are explicit.
+
 ## Suggested routes
 
 - **Web perf / Core Web Vitals** — when the change affects first paint,

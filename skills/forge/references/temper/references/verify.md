@@ -109,6 +109,11 @@ Use `verification-ledger.md` as the canonical schema and minimum-coverage
 contract. For each verification activity, record the exact fields defined
 there:
 
+When Forge QA produced a QA capability matrix, carry its states into the
+verification ledger. `run` capabilities should point to commands or observed
+flows; `not configured` and `deferred` capabilities should stay visible as
+not-run or environment-blocked evidence.
+
 - activity name
 - command, flow, or probe that was run
 - observed result

@@ -221,7 +221,9 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   `security-review.md` / `security-cheat-sheets.md` for infra, workflow,
   exploit-path, or threat-model escalation, and
   `architecture-docs-review.md` for public API or architecture boundary
-  changes.
+  changes. Use `qa-evidence-review.md` when Forge produced or should have
+  produced QA intent, Playwright/API tests, exploratory browser evidence, or a
+  QA capability matrix.
 
 - **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Pass the diff plus the relevant slices of the `Evidence Pack` it needs to judge the change: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass using the same context packet.
 - **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings. Infra, GitHub Actions exploit-path, threat-model-escalation, and security-requirements routes stay under security-lane ownership: keep them visible in the specialty lane registry, but normalize their findings under the shared security lane rather than as standalone Phase-4 lanes. Use the threat-model route when a red-lane trust boundary changes or a high-impact security finding needs abuse-path framing before it can block.
@@ -278,6 +280,12 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   smoke, interaction, visual, and lightweight browser-based verification of
   the changed UX. Keep deeper accessibility findings and remediation under the
   dedicated accessibility lane.
+- **QA evidence review:** when the Forge run includes QA intent, Playwright/API
+  artifacts, exploratory browser notes, or a capability matrix, follow
+  `references/qa-evidence-review.md`. Verify that QA evidence covers the
+  diff's meaningful risks, that missing capabilities are honestly marked, and
+  that test gaps are normalized into the shared `Finding Set` only when they
+  affect this diff's ship-readiness.
 - **App Store / reviewer-facing review** *(only when the risk map flags iOS
   metadata, purchase, privacy, or reviewer-facing submission surfaces)*:
   register the lane and route it through `appstore-review.md`.
@@ -360,6 +368,9 @@ Gather hard evidence that the change works after all the modifications above. Th
 - Phase 6 must produce the shared `Verification Ledger` following
   `references/verification-ledger.md`, recording what was run, what was
   observed, which risks were exercised, and which remained unexercised.
+  When Forge QA ran before `temper`, include the QA capability matrix and
+  Playwright/API artifacts in the verification ledger. Do not collapse
+  `not configured` or `deferred` capabilities into success.
 
 1. **Static gates:** run the project's formatter, linter, and type-checker (detected in Phase 0). These are cheap and catch more than human review.
 2. **Test suite:** run the full suite. It must pass. Confirm that new functionality is actually covered by tests — if a new code path has no test, that is a finding for the validation gate. Also assess the *quality* of new/changed tests against `references/testing.md` — they should test behavior not implementation, avoid over-mocking, and be deterministic; a brittle, order-dependent, or vacuous (asserts-nothing) test is itself a finding, since green-but-meaningless tests are false confidence. Use `references/bug-hunting.md` to choose a few focused probes or regression tests for the highest-risk bug hypotheses instead of relying on broad coverage numbers.
@@ -388,6 +399,9 @@ Apply the critical, structured validation review to the final diff and produce a
 - Calibrate the verdict with the rules in `references/validation-gate.md`, not gut feel. Different issues should push to `READY TO SHIP`, `NEEDS REVISION`, or `BLOCKED` for clear reasons, especially on data loss, security, broken core flows, dangerous migrations, and unverifiable rollout risk.
 - Explicitly state which top risks were disproven, which remain open, and
   whether the remaining open risks are acceptable for shipping.
+- Treat unresolved QA evidence gaps from `qa-evidence-review.md` as residual
+  risk inputs. They block only when they survive the findings lifecycle and
+  materially affect this diff's ship-readiness.
 - The gate ends in one verdict: **READY TO SHIP**, **NEEDS REVISION**, or **BLOCKED**, with a short justification.
 
 Gate: a verdict is produced. `BLOCKED` or `NEEDS REVISION` means the change is *not* presented as shippable — surface what must be fixed.
@@ -521,6 +535,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/error-handling-review.md` | Phase 4 (+6) | Resilience lane for retries, recovery logic, degraded paths, and replay/retry visibility on changed flows |
 | `references/accessibility-review.md` | Phase 4 (+6 +8) | Specialty accessibility audit + verification lane for changed UI surfaces, with evidence expectations and limited safe fixes |
 | `references/browser-qa.md` | Phase 4 (+6) | Browser smoke, interaction, visual, and accessibility checks for runnable UI changes |
+| `references/qa-evidence-review.md` | Phase 4 (+6 +7) | Review Forge QA intent, Playwright/API artifacts, exploratory browser evidence, and QA capability matrix states as evidence rather than regenerating the QA plan |
 | `references/appstore-review.md` | Phase 4 (+5 +8) | Specialty App Store / reviewer-facing lane for metadata, purchase, privacy, and submission-readiness surfaces |
 | `references/post-deploy-monitoring.md` | Phase 4 (+6 +7) | Post-deploy canary verification, thresholds, compare mode, and regression reporting |
 | `references/infra-security-review.md` | Phase 4 security review (+7 +8) | Security-owned specialty route for Docker/Kubernetes/Terraform/cloud config, exposure paths, and least-privilege defaults |
