@@ -3,6 +3,10 @@
 Use this lane for UI, UX, visual, interaction, layout, onboarding, dashboard,
 form, and other user-facing changes.
 
+Before doing substantial UI work, load `source-integration.md` and the relevant
+`design-studio/reference/*.md` file. This adapter names the `forge` phase; the
+design-studio payload contains the detailed command discipline.
+
 ## Entry criteria
 
 Run this lane when classification marks the task as `ui-or-flow` or
@@ -13,6 +17,8 @@ journey.
 
 ### Shape
 
+Source: `design-studio/reference/shape.md`.
+
 - clarify the intended user journey
 - define hierarchy, state, and interaction priorities
 - identify the screens and states Playwright must cover
@@ -20,6 +26,8 @@ journey.
 - decide what should be visually dominant, secondary, and quiet
 
 ### Critique
+
+Source: `design-studio/reference/critique.md`.
 
 - inspect the implemented UI against the spec and shaping direction
 - check visual hierarchy, spacing, copy density, affordances, empty states,
@@ -30,6 +38,8 @@ journey.
 
 ### Audit
 
+Source: `design-studio/reference/audit.md`.
+
 - check accessibility, keyboard flow, labels, focus states, contrast, and error
   announcement
 - check responsiveness across relevant viewports
@@ -39,12 +49,16 @@ journey.
 
 ### Harden
 
+Source: `design-studio/reference/harden.md`.
+
 - fix high-confidence design or accessibility defects with clear user impact
 - rerun the relevant UI or browser checks after changes
 - pause for product or brand judgment when the right fix is not mechanical
 - do not redesign opportunistically once the agreed direction is working
 
 ### Polish
+
+Source: `design-studio/reference/polish.md`.
 
 - apply small, safe refinements that improve readability or interaction quality
 - avoid speculative redesign once the UI meets the spec and checks

@@ -2,6 +2,9 @@
 
 Specification defines the behavior `forge` is about to build.
 
+For collaborative discovery or design-doc work, load
+`methodology/skills/brainstorming/SKILL.md` through `source-integration.md`.
+
 ## Goals
 
 - turn the discovered intent into explicit requirements

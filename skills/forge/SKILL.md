@@ -27,6 +27,8 @@ specification, planning, implementation routing, Playwright QA, and the final
 ## Operating rules
 
 - Start with `references/preflight.md`.
+- Use `references/source-integration.md` to resolve the internal methodology
+  and design-studio source payloads.
 - Classify the task using `references/classification.md`.
 - Route the rest of the run through `references/workflow-routing.md`.
 - Use `references/discovery.md` to gather project context and requirements.
@@ -44,6 +46,8 @@ specification, planning, implementation routing, Playwright QA, and the final
 - Use `references/reporting.md` to produce the final handoff.
 - Enter the final hardening phase through `references/temper/SKILL.md`.
 - Do not present `temper` as a second public skill or separate user command.
+- When the compact `forge` adapters are too thin for the situation, load the
+  matching source payload file before acting.
 
 ## Quality contracts
 
@@ -56,6 +60,8 @@ specification, planning, implementation routing, Playwright QA, and the final
   delegated work.
 - Treat user-facing polish as part of the workflow, not an optional afterthought
   when the task affects UI or product flow.
+- Preserve the one-command user experience even when internal references still
+  carry upstream names, examples, or license text.
 
 ## User experience
 

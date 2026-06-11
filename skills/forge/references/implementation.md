@@ -2,6 +2,11 @@
 
 Implementation turns the approved plan into working changes.
 
+Before substantial implementation, load `source-integration.md` and the
+applicable methodology source file. Use `test-driven-development/SKILL.md` for
+behavior changes, `systematic-debugging/SKILL.md` for failures, and
+`subagent-driven-development/SKILL.md` when cross-agent execution is available.
+
 ## Operating rules
 
 - Work on a feature branch or explicitly approved working branch.

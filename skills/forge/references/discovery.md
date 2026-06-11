@@ -3,6 +3,9 @@
 Discovery turns the request into grounded project context before any design or
 implementation work starts.
 
+For non-trivial requests, load `methodology/skills/brainstorming/SKILL.md`
+through `source-integration.md` before finalizing the discovery output.
+
 ## Required inputs
 
 - the user request and any linked issue, handoff, or product note

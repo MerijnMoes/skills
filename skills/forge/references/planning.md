@@ -2,6 +2,9 @@
 
 Planning turns the approved spec into executable work.
 
+Before writing a non-trivial plan, load
+`methodology/skills/writing-plans/SKILL.md` through `source-integration.md`.
+
 ## Goals
 
 - choose the smallest implementation path that satisfies the spec

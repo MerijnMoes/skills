@@ -26,6 +26,10 @@ Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality
 `temper` remains part of the system, but it is an internal hardening subsystem
 inside `forge`, not a separate public command.
 
+Internally, `forge` vendors the full methodology and frontend design-quality
+payloads it routes through, so a single install carries the workflow guidance,
+design references, detector scripts, and final hardening gate.
+
 ### Runtime conventions
 
 - `forge` uses a repo-local `.forge/` folder in target app repos for ephemeral
