@@ -55,5 +55,6 @@ recovery, and operator visibility introduced or changed by the diff.
 
 ## Output
 
-Use this lane for resilience findings and verification notes about the changed
-failure and recovery paths only.
+Fold resilience findings into the Phase-4 punch list. Use verification notes
+only for evidence gathered about the changed failure and recovery paths in
+Phase 6.

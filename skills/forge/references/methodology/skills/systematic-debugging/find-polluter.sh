@@ -18,15 +18,23 @@ echo "🔍 Searching for test that creates: $POLLUTION_CHECK"
 echo "Test pattern: $TEST_PATTERN"
 echo ""
 
-# Get list of test files
-TEST_FILES=$(find . -path "$TEST_PATTERN" | sort)
-TOTAL=$(echo "$TEST_FILES" | wc -l | tr -d ' ')
+# Get list of test files. Translate common recursive globs such as
+# src/**/*.test.ts into find-compatible path patterns, and keep results in an
+# array so spaces are safe.
+FIND_PATTERN="${TEST_PATTERN#./}"
+FIND_PATTERN="${FIND_PATTERN//\*\*\//}"
+
+TEST_FILES=()
+while IFS= read -r -d '' TEST_FILE; do
+  TEST_FILES+=("$TEST_FILE")
+done < <(find . -path "./$FIND_PATTERN" -print0)
+TOTAL=${#TEST_FILES[@]}
 
 echo "Found $TOTAL test files"
 echo ""
 
 COUNT=0
-for TEST_FILE in $TEST_FILES; do
+for TEST_FILE in "${TEST_FILES[@]}"; do
   COUNT=$((COUNT + 1))
 
   # Skip if pollution already exists
@@ -52,8 +60,8 @@ for TEST_FILE in $TEST_FILES; do
     ls -la "$POLLUTION_CHECK"
     echo ""
     echo "To investigate:"
-    echo "  npm test $TEST_FILE    # Run just this test"
-    echo "  cat $TEST_FILE         # Review test code"
+    printf "  npm test %q    # Run just this test\n" "$TEST_FILE"
+    printf "  cat %q         # Review test code\n" "$TEST_FILE"
     exit 1
   fi
 done

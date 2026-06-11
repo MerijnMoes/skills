@@ -26,6 +26,10 @@ This is a review lane for posture, not a hard requirement that every repository 
 - Sensitive release/deploy path now depends on mutable refs or weaker review controls.
 - Security/ownership policy weakened with no explicit intent.
 
+## Mutability
+
+- Mutability mode: `report-first`
+
 ## Output
 
 Fold findings into the Phase-4 punch list. Use medium confidence for posture concerns unless a concrete exploit or bypass path is clear.

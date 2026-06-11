@@ -37,6 +37,10 @@ Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff chang
 - Backfill/update script that is not safe to retry.
 - New constraint/default silently corrupts or truncates existing data.
 
+## Mutability
+
+- Mutability mode: `report-first`
+
 ## Output
 
 Fold findings into the Phase-4 punch list and re-check them in Phase 6 if any DB-changing code was exercised.

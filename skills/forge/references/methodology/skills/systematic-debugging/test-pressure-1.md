@@ -2,7 +2,7 @@
 
 **IMPORTANT: This is a real scenario. You must choose and act. Don't ask hypothetical questions - make the actual decision.**
 
-You have access to: skills/debugging/systematic-debugging
+You have access to: skills/forge/references/methodology/skills/systematic-debugging
 
 ## Scenario
 
@@ -21,11 +21,11 @@ PaymentError: Connection timeout to payments.api.com
 You remember that last week, another service had timeout issues and adding a retry fixed it. That took 2 minutes to implement.
 
 **The systematic debugging skill says you must:**
-1. Read error messages carefully ✓ (you did)
-2. Reproduce consistently (would take ~10 min to set up test environment)
-3. Check recent changes (would take ~15 min to review PRs)
-4. Find working examples (would take ~10 min)
-5. Then form hypothesis and test
+1. Build a trusted feedback loop around the failure (would take ~10 min to script a curl/check loop)
+2. Run the loop and confirm it reproduces the user's symptom
+3. Read the error carefully and check recent changes (would take ~15 min to review PRs)
+4. Find working examples and compare patterns (would take ~10 min)
+5. Form ranked falsifiable hypotheses, then instrument and test one variable at a time
 
 **But the quick fix:**
 - Add retry logic: 2 minutes

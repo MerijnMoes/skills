@@ -22,6 +22,11 @@ Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff chang
 - High-value action with no actor/target traceability where the domain clearly needs it.
 - Error swallowed or downgraded so operators cannot tell the action failed.
 
+## Mutability
+
+- Mutability mode: `report-first`
+
 ## Output
 
-Use this both in audit findings and in behavioral verification notes when you can observe the runtime signals directly.
+Fold observability findings into the Phase-4 punch list. Use verification notes
+only when you can observe the runtime signals directly in Phase 6.

@@ -5,14 +5,14 @@ Reference example of extracting, structuring, and bulletproofing a critical skil
 ## Source Material
 
 Extracted debugging framework from `~/.claude/CLAUDE.md`:
-- 4-phase systematic process (Investigation → Pattern Analysis → Hypothesis → Implementation)
+- 6-phase systematic process (Build a Feedback Loop → Root Cause Investigation → Pattern Analysis → Hypothesis and Instrumentation → Fix and Regression Test → Cleanup and Post-Mortem)
 - Core mandate: ALWAYS find root cause, NEVER fix symptoms
 - Rules designed to resist time pressure and rationalization
 
 ## Extraction Decisions
 
 **What to include:**
-- Complete 4-phase framework with all rules
+- Complete 6-phase framework with all rules
 - Anti-shortcuts ("NEVER fix symptom", "STOP and re-analyze")
 - Pressure-resistant language ("even if faster", "even if I seem in a hurry")
 - Concrete steps for each phase
@@ -42,13 +42,13 @@ Framework designed to resist rationalization under pressure:
 - "Don't skip past" (catches the actual behavior)
 
 ### Structural Defenses
-- **Phase 1 required** - Can't skip to implementation
-- **Single hypothesis rule** - Forces thinking, prevents shotgun fixes
+- **Phase 1 required** - Can't skip building a trusted feedback loop
+- **Ranked falsifiable hypotheses rule** - Forces thinking, prevents shotgun fixes
 - **Explicit failure mode** - "IF your first fix doesn't work" with mandatory action
 - **Anti-patterns section** - Shows exactly what shortcuts look like
 
 ### Redundancy
-- Root cause mandate in overview + when_to_use + Phase 1 + implementation rules
+- Root cause mandate in overview + when_to_use + Phase 2 + fix rules
 - "NEVER fix symptom" appears 4 times in different contexts
 - Each phase has explicit "don't skip" guidance
 
@@ -77,12 +77,12 @@ Created 4 validation tests following skills/meta/testing-skills-with-subagents:
 ## Iterations
 
 ### Initial Version
-- Complete 4-phase framework
+- Complete 6-phase framework
 - Anti-patterns section
 - Flowchart for "fix failed" decision
 
 ### Enhancement 1: TDD Reference
-- Added link to skills/testing/test-driven-development
+- Added link to skills/forge/references/methodology/skills/test-driven-development
 - Note explaining TDD's "simplest code" ≠ debugging's "root cause"
 - Prevents confusion between methodologies
 
@@ -104,9 +104,9 @@ Bulletproof skill that:
 ## Usage Example
 
 When encountering a bug:
-1. Load skill: skills/debugging/systematic-debugging
+1. Load skill: skills/forge/references/methodology/skills/systematic-debugging
 2. Read overview (10 sec) - reminded of mandate
-3. Follow Phase 1 checklist - forced investigation
+3. Follow Phase 1 checklist - build a trusted feedback loop
 4. If tempted to skip - see anti-pattern, stop
 5. Complete all phases - root cause found
 

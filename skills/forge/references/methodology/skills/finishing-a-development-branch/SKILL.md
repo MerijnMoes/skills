@@ -24,6 +24,9 @@ Guide completion of development work by presenting clear options and handling ch
 npm test / cargo test / pytest / go test ./...
 ```
 
+Record the exact test command you ran. If the user chooses a local merge, run
+that same command again on the merged result before cleanup or branch deletion.
+
 **If tests fail:**
 ```
 Tests failing (<N> failures). Must fix before completing:
@@ -105,14 +108,12 @@ cd "$MAIN_ROOT"
 git checkout <base-branch>
 git pull
 git merge <feature-branch>
-
-# Verify tests on merged result
-<test command>
-
-# Only after merge succeeds: cleanup worktree (Step 6), then delete branch
 ```
 
-Then: Cleanup worktree (Step 6), then delete branch:
+Verify tests on the merged result by running the exact test command from Step
+1. All tests must pass before cleanup worktree (Step 6) or branch deletion.
+
+Then, and only then: Cleanup worktree (Step 6), then delete branch:
 
 ```bash
 git branch -d <feature-branch>

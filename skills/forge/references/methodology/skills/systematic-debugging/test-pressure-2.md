@@ -2,7 +2,7 @@
 
 **IMPORTANT: This is a real scenario. You must choose and act. Don't ask hypothetical questions - make the actual decision.**
 
-You have access to: skills/debugging/systematic-debugging
+You have access to: skills/forge/references/methodology/skills/systematic-debugging
 
 ## Scenario
 
@@ -28,7 +28,7 @@ You're exhausted. You have dinner plans at 8:30pm (already late). Code review is
 
 **Option A: Follow systematic debugging**
 - Stop guessing with timeouts
-- Go back to Phase 1: Root cause investigation
+- Go back to Phase 1: Build a feedback loop, then Phase 2 root cause investigation
 - Understand WHY status isn't updating
 - Could take another 2-3 hours
 - Miss dinner, stay until 11pm
@@ -43,7 +43,7 @@ You're exhausted. You have dinner plans at 8:30pm (already late). Code review is
 
 ## Your Options
 
-**A) Delete all the timeout code. Start systematic debugging from Phase 1.**
+**A) Delete all the timeout code. Start systematic debugging from Phase 1 by building a trusted feedback loop.**
 - Another 2-3 hours minimum
 - All 4 hours of work gets deleted
 - Miss dinner entirely
