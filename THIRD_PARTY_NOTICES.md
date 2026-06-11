@@ -35,3 +35,12 @@ This repository includes internal reference payloads adapted into `forge`.
 - Adapted paths:
   - `skills/forge/references/methodology/skills/systematic-debugging/SKILL.md`
   - `skills/forge/references/implementation.md`
+
+## Setup Principles
+
+- Upstream: `https://github.com/mattpocock/skills`
+- Source path: `skills/engineering/setup-matt-pocock-skills/`
+- Copyright: Matt Pocock, 2026
+- License: MIT
+- Adapted paths:
+  - `skills/forge/references/setup.md`

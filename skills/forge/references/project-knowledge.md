@@ -25,13 +25,16 @@ the run resolves reusable truth.
 - `docs/forge/specs/*.md`: task-specific design/spec artifacts. Use specs for
   the work currently being planned. Promote only reusable product, design,
   domain, or architecture truth into the durable files above.
+- `docs/agents/*.md`: agent-facing setup docs. Use them for issue tracker,
+  domain-doc layout, and verification-command conventions. Do not store
+  product strategy, design rules, or task specs here.
 
 ## Discovery read gate
 
 At the start of non-trivial work:
 
 1. Scan the repo root and common docs folders for `PRODUCT.md`, `DESIGN.md`,
-   `CONTEXT-MAP.md`, `CONTEXT.md`, and `docs/adr/`.
+   `CONTEXT-MAP.md`, `CONTEXT.md`, `docs/adr/`, and `docs/agents/`.
 2. If `CONTEXT-MAP.md` exists, use it to find the relevant context docs before
    asking domain questions.
 3. If `PRODUCT.md` or `DESIGN.md` is missing and the task depends on product
@@ -54,6 +57,8 @@ Update durable project knowledge when the run resolves reusable truth:
   clarified: update `PRODUCT.md`.
 - A visual token, component rule, motion rule, layout rule, accessibility rule,
   or design anti-pattern is clarified: update `DESIGN.md`.
+- A verification command, issue workflow, or agent setup convention is
+  clarified: update the relevant `docs/agents/*.md`.
 
 Never silently overwrite existing project knowledge. When a change would alter
 standing truth, call out the old and new interpretations before editing unless

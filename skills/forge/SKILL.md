@@ -1,14 +1,14 @@
 ---
 name: forge
-description: The single public command for this repo's integrated development workflow. Use it to take a change from discovery and specification through implementation, Playwright-guided QA, and the internal temper hardening gate. Invoke only when the user explicitly asks to use forge or clearly wants the repo's full development workflow.
+description: The single public command for this repo's integrated development workflow. Use it to set up project memory for a repo or take a change from discovery and specification through implementation, Playwright-guided QA, and the internal temper hardening gate. Invoke when the user explicitly asks to use forge or clearly wants the repo's full development workflow.
 ---
 
 # Forge
 
 `forge` is the public front door to this repository's development workflow
 system. It owns the flow from request to final readiness, including discovery,
-specification, planning, implementation routing, Playwright QA, and the final
-`temper` hardening gate.
+setup, specification, planning, implementation routing, Playwright QA, and the
+final `temper` hardening gate.
 
 ## When to use
 
@@ -16,13 +16,14 @@ specification, planning, implementation routing, Playwright QA, and the final
   one-off review.
 - Use it for new features, substantial refactors, workflow-level bug fixes, or
   any change where browser QA and final readiness matter.
+- Use it to set up project memory for a repo before substantial Forge work.
 - Do not use it for trivial factual questions or unrelated repo audits.
 
 ## Phase model
 
 `forge` runs this phase order:
 
-`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author -> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author -> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report`
 
 ## Operating rules
 
@@ -32,6 +33,9 @@ specification, planning, implementation routing, Playwright QA, and the final
 - Use `references/project-knowledge.md` to read and maintain durable repo
   memory such as `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
   `CONTEXT-MAP.md`, and ADRs.
+- Use `references/setup.md` when the user asks to initialize, onboard,
+  configure, or prepare a repo for Forge, or when required project context is
+  missing.
 - Classify the task using `references/classification.md`.
 - Route the rest of the run through `references/workflow-routing.md`.
 - Use `references/discovery.md` to gather project context and requirements.
@@ -59,6 +63,8 @@ specification, planning, implementation routing, Playwright QA, and the final
 - Treat durable project knowledge as part of grounding: read it before asking
   questions and update it when reusable product, design, domain, or decision
   truth is resolved.
+- Keep setup idempotent and selective: create first-version markdown files only
+  when they will be read by later Forge phases.
 - For behavior changes, prefer a red-green-refactor loop and prove tests fail
   for the intended reason before implementing.
 - For bugs or broken checks, find root cause before fixing symptoms.
@@ -72,6 +78,8 @@ specification, planning, implementation routing, Playwright QA, and the final
 ## User experience
 
 - `forge` is the only public entrypoint in this repo.
+- Setup is an internal lane of `forge`; users may ask for `/forge setup`, but
+  there is no separate public setup skill.
 - `temper` is internal to the workflow even though its guidance lives in
   references.
 - The workflow should pause at explicit approval or judgment points rather than

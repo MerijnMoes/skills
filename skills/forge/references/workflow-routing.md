@@ -8,7 +8,7 @@ The compact files in this directory route the workflow; the payloads under
 
 ## Default order
 
-`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author (if classification requires it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> Temper -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author (if classification requires it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> Temper -> Report`
 
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
@@ -20,6 +20,7 @@ lane or otherwise affects a user-facing flow.
 
 For non-trivial work, load the matching source payloads:
 
+- Repo setup and first-version project memory: `setup.md`
 - Discovery and product shaping: `methodology/skills/brainstorming/SKILL.md`
 - Domain language and durable project memory:
   `methodology/skills/brainstorming/domain-grilling.md`

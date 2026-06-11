@@ -18,9 +18,10 @@ and the internal `temper` final hardening gate.
 ### What `forge` covers
 
 ```
-Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality
-(if needed) -> Playwright Author -> Playwright Verify -> Playwright Explore
-(conditional) -> Temper -> Report
+Setup (if requested or blocking context is missing) -> Discover -> Spec ->
+Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) ->
+Playwright Author -> Playwright Verify -> Playwright Explore (conditional) ->
+Temper -> Report
 ```
 
 `temper` remains part of the system, but it is an internal hardening subsystem
@@ -36,6 +37,8 @@ design references, detector scripts, and final hardening gate.
   run state, pause points, and resume metadata.
 - `forge` treats `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
   `CONTEXT-MAP.md`, and ADRs as durable project memory when those files exist.
+- `forge setup` initializes that project memory selectively, including
+  `docs/agents/` setup docs when they are useful for later runs.
 - Playwright is a first-class QA lane, and durable browser tests are created or
   updated by default for affected flows when that lane is active.
 
