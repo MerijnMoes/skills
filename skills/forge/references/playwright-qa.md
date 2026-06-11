@@ -1,8 +1,18 @@
 # Forge Playwright QA
 
-Playwright is a first-class lane in `forge`, not an optional afterthought.
+Playwright is a first-class lane in `forge`, but it is still routed by
+classification rather than forced on every run.
 
-## Default contract
+## Routing contract
+
+- `required`: author or update durable Playwright coverage, then run verify and
+  any exploratory QA the route expects
+- `optional`: use Playwright when the implementation touches important user
+  journeys or when browser evidence materially reduces risk
+- `skipped`: do not invent Playwright work for docs-only or other runs that the
+  classifier explicitly routes around QA authoring
+
+When Playwright is required or chosen, the default expectation is:
 
 - create or update durable Playwright tests for affected user-facing or flow
   changes
@@ -19,7 +29,7 @@ Playwright is a first-class lane in `forge`, not an optional afterthought.
 
 ## Execution evidence
 
-Capture when available:
+Capture when available when Playwright runs:
 
 - changed or generated test paths
 - screenshots

@@ -7,7 +7,7 @@ tool outputs.
 
 - request summary
 - phase outcome summary
-- changed skill files or migrated structures
+- changed deliverables
 - Playwright coverage created or updated
 - QA evidence gathered
 - `temper` verdict or blockers
