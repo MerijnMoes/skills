@@ -24,8 +24,10 @@ Always consider these:
 
 - `PRODUCT.md`: strategic who/what/why for the product.
 - `CONTEXT.md`: single-context glossary and canonical domain language.
-- `docs/agents/verification.md`: build, lint, typecheck, test, Playwright, and
-  release-check commands agents should use.
+- `docs/agents/verification.md`: build, lint, typecheck, test, Playwright,
+  API-contract, accessibility, visual, performance, coverage, CI artifact, and
+  release-check commands agents should use. This should record local/free
+  capabilities and explicitly avoid paid QA-provider requirements.
 - `AGENTS.md` or `CLAUDE.md`: whichever already exists, with a Forge pointer
   block. If neither exists, ask which one to create.
 
@@ -64,7 +66,9 @@ Inspect before asking:
 - Domain evidence: module names, route names, database schemas, API resources,
   bounded-context directories, and glossary-like docs.
 - Verification evidence: package scripts, Makefile targets, CI jobs,
-  Playwright config, test folders, linters, typecheckers, and build commands.
+  Playwright config, test folders, API test setup, linters, typecheckers,
+  build commands, accessibility tooling, visual snapshot tooling, Lighthouse,
+  k6, coverage tooling, and artifact upload/reporting conventions.
 
 ## Decision flow
 
@@ -207,6 +211,9 @@ This repo uses [single-context / multi-context] domain docs.
 - Read `docs/adr/` before changing architecture or cross-context boundaries.
 - Update domain docs when reusable terms, boundaries, or decisions are
   clarified.
+- Keep `docs/agents/verification.md` aligned with local/free QA capabilities:
+  Playwright E2E, Playwright API, accessibility, visual smoke, performance,
+  coverage, and CI artifacts.
 ```
 
 ### docs/agents/issue-tracker.md

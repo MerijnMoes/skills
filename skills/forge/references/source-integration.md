@@ -70,6 +70,43 @@ For `forge`, the public phase names are:
 - `Playwright QA`: runs after design quality so durable browser tests reflect
   the hardened UI
 
+## QA source synthesis
+
+Forge's QA lane adapts external QA-skill practices as principles, not runtime
+dependencies. The default executable layer remains repo-local Playwright.
+
+Useful practices for Forge QA:
+
+- Playwright E2E: user-centric flows, semantic selectors, auto-waiting,
+  isolation, readable tests, fixtures, auth state, traces, screenshots, and
+  videos.
+- Playwright API: request-context tests, lifecycle-managed data, response body
+  validation, auth/error contracts, and API side-effect checks.
+- Browser automation skills: navigate, inspect, interact, re-inspect, and
+  capture artifacts as an exploratory rhythm.
+- Cypress: network-control mindset, clean auth state, request assertions, and
+  test isolation.
+- Storybook: component interaction checks only when the target repo already
+  uses Storybook.
+
+Useful practices for `temper`:
+
+- CI/CD pipeline guidance: fast feedback, fail fast, reproducible builds,
+  parallelism where safe, and artifact preservation.
+- Jest, Vitest, Pytest, React Testing Library, and Vue Testing Utils: behavior
+  over implementation, AAA shape, descriptive names, fixtures,
+  parametrization, async discipline, and independence.
+- Lighthouse and k6: conditional local/free performance evidence when risk and
+  environment justify it.
+- Coverage tools: risk signal only, never a reason for vacuous tests.
+
+Mostly not adopted:
+
+- Selenium and Puppeteer do not become first-class Forge paths while Playwright
+  is the default. Borrow general wait, isolation, and data discipline only.
+- Thin placeholder skills with little actionable content should not expand
+  Forge scope.
+
 ## Naming boundary
 
 Public user flow stays `/forge`. Internal files may retain upstream naming,

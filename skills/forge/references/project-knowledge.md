@@ -26,8 +26,9 @@ the run resolves reusable truth.
   the work currently being planned. Promote only reusable product, design,
   domain, or architecture truth into the durable files above.
 - `docs/agents/*.md`: agent-facing setup docs. Use them for issue tracker,
-  domain-doc layout, and verification-command conventions. Do not store
-  product strategy, design rules, or task specs here.
+  domain-doc layout, verification-command conventions, and local/free QA
+  capability conventions. Do not store product strategy, design rules, or task
+  specs here.
 
 ## Discovery read gate
 
@@ -57,8 +58,8 @@ Update durable project knowledge when the run resolves reusable truth:
   clarified: update `PRODUCT.md`.
 - A visual token, component rule, motion rule, layout rule, accessibility rule,
   or design anti-pattern is clarified: update `DESIGN.md`.
-- A verification command, issue workflow, or agent setup convention is
-  clarified: update the relevant `docs/agents/*.md`.
+- A verification command, issue workflow, agent setup convention, or local/free
+  QA capability is clarified: update the relevant `docs/agents/*.md`.
 
 Never silently overwrite existing project knowledge. When a change would alter
 standing truth, call out the old and new interpretations before editing unless
@@ -116,3 +117,4 @@ Every final Forge report for non-trivial work should name:
 - project knowledge files updated
 - relevant project knowledge files intentionally left unchanged
 - contradictions, stale docs, or missing docs that affected confidence
+- local/free QA capabilities used, missing, or intentionally deferred
