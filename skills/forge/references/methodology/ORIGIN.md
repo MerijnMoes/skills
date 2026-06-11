@@ -9,3 +9,7 @@ This directory vendors the portable skills payload from:
 
 The payload is integrated as internal `forge` reference material. `forge`
 remains the only public entrypoint in this repository.
+
+Adaptation note: `brainstorming/visual-companion.md` is replaced with a
+`forge` router into `references/design-studio/`, and the old standalone
+brainstorming HTML-server scripts are intentionally omitted.
