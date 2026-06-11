@@ -14,6 +14,8 @@ forms, or visual hierarchy.
 - a short design direction
 - the key flows or surfaces that Playwright must later cover
 - any approvals needed before implementation proceeds
+- whether the downstream design-quality lane should run critique, audit,
+  harden, polish, or live review passes
 
 ## Avoid
 

@@ -18,8 +18,9 @@ and the internal `temper` final hardening gate.
 ### What `forge` covers
 
 ```
-Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Playwright Author
--> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report
+Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality
+(if needed) -> Playwright Author -> Playwright Verify -> Playwright Explore
+(conditional) -> Temper -> Report
 ```
 
 `temper` remains part of the system, but it is an internal hardening subsystem

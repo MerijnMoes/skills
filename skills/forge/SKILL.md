@@ -22,20 +22,40 @@ specification, planning, implementation routing, Playwright QA, and the final
 
 `forge` runs this phase order:
 
-`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Playwright Author -> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report`
+`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author -> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report`
 
 ## Operating rules
 
 - Start with `references/preflight.md`.
 - Classify the task using `references/classification.md`.
 - Route the rest of the run through `references/workflow-routing.md`.
+- Use `references/discovery.md` to gather project context and requirements.
+- Use `references/specification.md` to define the approved behavior before
+  planning.
+- Use `references/planning.md` to create a concrete implementation plan.
 - Use `references/shaping.md` when the task touches UI, UX, layout, flows, or
   visual hierarchy.
+- Use `references/implementation.md` to execute with test-first discipline,
+  branch hygiene, and review checkpoints.
+- Use `references/design-quality.md` for UI critique, accessibility,
+  responsiveness, hardening, and polish before QA.
 - Use `references/playwright-qa.md` for the QA lane before `temper`.
 - Use `references/pause-resume.md` to manage `.forge/` state and resume points.
 - Use `references/reporting.md` to produce the final handoff.
 - Enter the final hardening phase through `references/temper/SKILL.md`.
 - Do not present `temper` as a second public skill or separate user command.
+
+## Quality contracts
+
+- Ground first, then specify, then plan; do not jump from request to edits when
+  scope is unclear.
+- For behavior changes, prefer a red-green-refactor loop and prove tests fail
+  for the intended reason before implementing.
+- For bugs or broken checks, find root cause before fixing symptoms.
+- Use fresh-context review at meaningful checkpoints for broad, risky, or
+  delegated work.
+- Treat user-facing polish as part of the workflow, not an optional afterthought
+  when the task affects UI or product flow.
 
 ## User experience
 
