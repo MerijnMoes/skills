@@ -1,6 +1,6 @@
 # FastAPI best-practices
 
-Loaded in `/finalize` Phase 1 when the diff lives in a FastAPI project (`fastapi` in deps, `FastAPI()` app setup, router modules, Pydantic API schemas). Layers on top of `python.md` — every generic Python rule still applies. This file adds FastAPI-specific route, dependency, validation, and async guidance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 when the diff lives in a FastAPI project (`fastapi` in deps, `FastAPI()` app setup, router modules, Pydantic API schemas). Layers on top of `python.md` — every generic Python rule still applies. This file adds FastAPI-specific route, dependency, validation, and async guidance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Routes and dependencies
 - Keep route handlers thin. Parsing, persistence, authorization checks, and business rules should live behind dependencies or services, not inline in the route body.

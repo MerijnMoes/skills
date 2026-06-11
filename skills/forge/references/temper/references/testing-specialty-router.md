@@ -1,7 +1,7 @@
 # Testing specialty router
 
 Load this when generic `testing.md` is not enough for the changed risk surface
-and `/finalize` needs a stack-specific testing handoff rather than more generic
+and `temper` needs a stack-specific testing handoff rather than more generic
 test-quality advice.
 
 ## Suggested handoffs
@@ -14,4 +14,4 @@ test-quality advice.
 - **Pytest specialty** — route to `testing-pytest.md` when fixture scoping,
   parametrization, async behavior, or Python-specific isolation matter.
 - **Other repo-specific references** — when the project already has stronger
-  house guidance for a stack and `/finalize` only needs to hand off cleanly.
+  house guidance for a stack and `temper` only needs to hand off cleanly.

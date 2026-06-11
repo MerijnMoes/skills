@@ -1,6 +1,6 @@
 # Architecture docs review
 
-Phase 4 and Phase 5 support for `/finalize`, conditional. Apply when the diff
+Phase 4 and Phase 5 support for `temper`, conditional. Apply when the diff
 changes a public API, system boundary, component responsibility split, or other
 architecture-facing contract that may require more than a routine README/API
 sync.

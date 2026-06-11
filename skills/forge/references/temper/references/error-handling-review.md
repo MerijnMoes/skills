@@ -1,6 +1,6 @@
 # Error-handling review
 
-Phase 4 and Phase 6 support for `/finalize`, conditional. Apply when the diff
+Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff
 changes retries, jobs, async flows, side effects, recovery logic, or
 user-visible failure paths.
 

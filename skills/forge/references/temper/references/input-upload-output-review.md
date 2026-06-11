@@ -1,6 +1,6 @@
 # Input, upload, and output review
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff accepts untrusted input, parses files, builds commands/queries/URLs, renders rich output, redirects users, or handles uploads/downloads.
+Phase 4 support for `temper`, conditional. Apply when the diff accepts untrusted input, parses files, builds commands/queries/URLs, renders rich output, redirects users, or handles uploads/downloads.
 
 ## What to check
 

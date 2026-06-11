@@ -1,6 +1,6 @@
 # Evidence pack
 
-Used in `/finalize` Phase 0 and then carried into every later phase. This is the
+Used in `temper` Phase 0 and then carried into every later phase. This is the
 single compact artifact that explains what changed, why it matters, where the
 risk is, and what evidence exists before deeper review begins.
 

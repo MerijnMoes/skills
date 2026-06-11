@@ -1,6 +1,6 @@
 # React best-practices
 
-Loaded in `/finalize` Phase 1 when the diff touches React files or a React app (`.jsx`, `.tsx`, React in deps, client components, hooks). Applies to the changed React code in the diff, not the whole app. Layers on top of `javascript.md`, `typescript.md`, and `frontend-a11y-i18n.md` where relevant. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 when the diff touches React files or a React app (`.jsx`, `.tsx`, React in deps, client components, hooks). Applies to the changed React code in the diff, not the whole app. Layers on top of `javascript.md`, `typescript.md`, and `frontend-a11y-i18n.md` where relevant. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Hooks and state
 - Hooks must be called unconditionally at component top level. No hooks in branches, loops, nested helpers, or callbacks.

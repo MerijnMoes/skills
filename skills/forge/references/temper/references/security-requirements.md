@@ -6,7 +6,7 @@ requirement framing before Phase 7 can carry it cleanly into the verdict.
 ## Purpose
 
 Convert the changed-surface threat into requirements that are specific enough
-to test, defer, or hand back for a decision without expanding `/finalize` into
+to test, defer, or hand back for a decision without expanding `temper` into
 an architecture rewrite.
 
 ## Requirement types
@@ -36,7 +36,7 @@ For each escalated threat:
 - `Fix` — the requirement is local to the changed diff and has a safe,
   well-bounded remediation now.
 - `Plan` — the requirement is real but needs broader architecture, rollout, or
-  policy work than `/finalize` should perform.
+  policy work than `temper` should perform.
 - `Investigate` — the requirement is plausible but evidence is incomplete;
   state the first concrete verification step.
 - `Decide` — the requirement depends on product, compliance, release, or risk

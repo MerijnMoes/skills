@@ -1,6 +1,6 @@
 # Dependency & license audit
 
-Phase 4 of `/finalize`, conditional. Run **only** when the diff adds or bumps dependencies — i.e. it touches a manifest or lockfile. Audit only the dependencies that **changed in the diff**, not the whole tree (the existing tree was vetted before; re-auditing it is noise and slows shipping). If the Phase-0 project context capsule or a documented project policy specifies allowed licenses, audit tools, or version rules, that wins over everything here — follow it and note the override.
+Phase 4 of `temper`, conditional. Run **only** when the diff adds or bumps dependencies — i.e. it touches a manifest or lockfile. Audit only the dependencies that **changed in the diff**, not the whole tree (the existing tree was vetted before; re-auditing it is noise and slows shipping). If the Phase-0 project context capsule or a documented project policy specifies allowed licenses, audit tools, or version rules, that wins over everything here — follow it and note the override.
 
 ## When to run
 Trigger when the diff modifies any of:

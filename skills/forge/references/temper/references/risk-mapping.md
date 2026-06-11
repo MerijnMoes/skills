@@ -1,6 +1,6 @@
 # Risk mapping
 
-Used in `/finalize` Phase 0 and then carried into Phases 4, 6, and 7. Build it
+Used in `temper` Phase 0 and then carried into Phases 4, 6, and 7. Build it
 after the project context capsule in `project-context.md`, so repo-specific
 architecture boundaries and domain rules inform the risks. Before you start
 polishing or reviewing, build a small map of **what kind of change this is** and

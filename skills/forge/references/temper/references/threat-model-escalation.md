@@ -11,7 +11,7 @@ required.
 - Record enough structure to explain why the finding matters or why the
   boundary change or abuse path needs follow-up.
 - Feed compact outputs into the shared `Finding Set` and the Phase 7
-  `Decision Packet`; do not redesign the architecture inside `/finalize`.
+  `Decision Packet`; do not redesign the architecture inside `temper`.
 
 ## Compact threat model
 

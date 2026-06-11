@@ -1,6 +1,6 @@
 # Browser QA
 
-Phase 4 and Phase 6 support for `/finalize`, conditional. Apply this
+Phase 4 and Phase 6 support for `temper`, conditional. Apply this
 `browser-qa.md` lane when the diff changes important runnable web UI,
 multi-step browser flows, responsive layout behavior, or pre-release staging
 behavior.

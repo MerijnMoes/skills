@@ -1,7 +1,7 @@
 # Common bugs checklist
 
 Fast quick-scan for recurring defect classes that are easy to miss in a long
-review. Use this in `/finalize` Phase 4 before or alongside `code-review.md`,
+review. Use this in `temper` Phase 4 before or alongside `code-review.md`,
 then let `bug-hunting.md` generate the deeper, risk-led probes. Do not turn
 this into duplicate reporting: if an issue is already captured more precisely in
 another lane, keep the sharper finding and skip the duplicate.

@@ -1,6 +1,6 @@
 # Validation gate
 
-Phase 7 of `/finalize`. You are critically evaluating a completed code change before it is considered shippable. This is the final sign-off — apply real engineering scrutiny, not a rubber stamp.
+Phase 7 of `temper`. You are critically evaluating a completed code change before it is considered shippable. This is the final sign-off — apply real engineering scrutiny, not a rubber stamp.
 
 Its job is to answer **"given the evidence and the remaining gaps, what is the
 right verdict?"** It should judge the results of `risk-mapping.md`,
@@ -188,11 +188,11 @@ After the checklist, you must also:
 - Revisit the Phase-0 risk map and state which top risks were actually disproven, which remain open, and whether any of those open risks materially affect the verdict.
 - Revisit the Phase-0 project context capsule and state whether any project-specific boundary, convention, domain rule, tooling norm, docs/release convention, or unknown materially affects the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
-- **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `/finalize` does not implement the gap itself). Unrequested scope creep is at least a flagged item.
+- **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `temper` does not implement the gap itself). Unrequested scope creep is at least a flagged item.
 - State the verdict explicitly, with a short justification:
 
 > **READY TO SHIP** — no blocking concerns; safe to merge as-is.
 > **NEEDS REVISION** — works but has issues that should be fixed first (list them).
 > **BLOCKED** — a serious correctness, security, or integration problem prevents shipping (state it).
 
-A `NEEDS REVISION` or `BLOCKED` verdict means `/finalize` does **not** present the change as shippable. Surface exactly what must be fixed, then the change can be re-run through the relevant phases.
+A `NEEDS REVISION` or `BLOCKED` verdict means `temper` does **not** present the change as shippable. Surface exactly what must be fixed, then the change can be re-run through the relevant phases.

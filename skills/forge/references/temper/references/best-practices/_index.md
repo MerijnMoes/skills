@@ -1,6 +1,6 @@
 # Best-practices router
 
-Phase 1 of `/finalize` loads only the best-practices files relevant to what changed. Match the languages/frameworks detected in Phase 0 (from changed file extensions and manifests) to the files below, then read just those. Loading everything would waste context — progressive disclosure keeps the pass focused.
+Phase 1 of `temper` loads only the best-practices files relevant to what changed. Match the languages/frameworks detected in Phase 0 (from changed file extensions and manifests) to the files below, then read just those. Loading everything would waste context — progressive disclosure keeps the pass focused.
 
 ## Routing table
 

@@ -1,6 +1,6 @@
 # Repo hygiene and supply-chain posture
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff changes dependency manifests, lockfiles, release config, action references, security policy files, or other repo-level trust surfaces.
+Phase 4 support for `temper`, conditional. Apply when the diff changes dependency manifests, lockfiles, release config, action references, security policy files, or other repo-level trust surfaces.
 
 This is a review lane for posture, not a hard requirement that every repository already has perfect governance.
 

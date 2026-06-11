@@ -1,6 +1,6 @@
 # Django / DRF best-practices
 
-Loaded in `/finalize` Phase 1 when the diff lives in a Django or Django REST Framework project (`django` / `djangorestframework` in deps, models/views/serializers/viewsets/settings changes). Layers on top of `python.md`. This file adds Django-specific ORM, serializer, view, and security guidance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 when the diff lives in a Django or Django REST Framework project (`django` / `djangorestframework` in deps, models/views/serializers/viewsets/settings changes). Layers on top of `python.md`. This file adds Django-specific ORM, serializer, view, and security guidance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## ORM and query shaping
 - Shape queries intentionally. Use `select_related` for single-value relations and `prefetch_related` for collections when the changed path would otherwise introduce N+1 behavior.

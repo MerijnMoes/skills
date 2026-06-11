@@ -1,11 +1,11 @@
 # Accessibility review
 
-Phase 4 and Phase 6 support for `/finalize`, conditional. Apply when the diff
+Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff
 changes UI, markup, forms, dialogs, navigation, interactions, or visual tokens.
 
 This is the audit and verification companion to
 `best-practices/frontend-a11y-i18n.md`. That best-practices file remains the
-Phase 1 implementation guide; this lane is where `/finalize` checks whether the
+Phase 1 implementation guide; this lane is where `temper` checks whether the
 changed surface was actually built and verified accessibly.
 
 ## What to check

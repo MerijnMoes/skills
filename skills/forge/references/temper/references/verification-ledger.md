@@ -1,6 +1,6 @@
 # Verification ledger
 
-Used in `/finalize` Phase 6. Every verification action must produce an explicit
+Used in `temper` Phase 6. Every verification action must produce an explicit
 record of what was exercised and what remained unproven.
 
 ## Record fields

@@ -1,6 +1,6 @@
 # Performance profiling
 
-Phase 6 of `/finalize`, applied to the changed code in the diff. **Conditional** — run only when the change touches a hot path or performance-sensitive code (see *When to run*). Measure against real-ish data; never optimize on a hunch. Stated targets in the Phase-0 project context capsule or the project's perf budget always win over the guidance here — if they conflict, say so and follow the project.
+Phase 6 of `temper`, applied to the changed code in the diff. **Conditional** — run only when the change touches a hot path or performance-sensitive code (see *When to run*). Measure against real-ish data; never optimize on a hunch. Stated targets in the Phase-0 project context capsule or the project's perf budget always win over the guidance here — if they conflict, say so and follow the project.
 
 ## When to run
 

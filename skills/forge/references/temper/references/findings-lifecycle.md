@@ -1,6 +1,6 @@
 # Findings lifecycle
 
-Used in `/finalize` Phases 4, 7, and 8. This is the single source of truth
+Used in `temper` Phases 4, 7, and 8. This is the single source of truth
 for how candidate findings are emitted, challenged, classified, carried into
 the verdict, and projected into final reporting.
 
@@ -53,7 +53,7 @@ challenger coverage or extra verification is needed. Refer to
    they are allowed to block.
 3. Surviving findings are given severity, confidence, reachability, action,
    and status.
-4. Localized `Fix` findings may be fixed inside `/finalize`; anything else is
+4. Localized `Fix` findings may be fixed inside `temper`; anything else is
    reported forward.
 5. Phase 7 carries the surviving findings into the `Decision Packet`.
 6. Phase 8 projects those findings into user-facing report statuses.
@@ -102,11 +102,11 @@ Otherwise say you could not verify it and lower confidence accordingly.
 
 After verification, assign one next action:
 
-| Action | Use when | Effect on `/finalize` |
+| Action | Use when | Effect on `temper` |
 |--------|----------|------------------------|
 | **Fix** | High-confidence, localized defect with a clear safe fix inside the finalized diff | Fix it now, then re-run the relevant verification. |
 | **Investigate** | Plausible issue but missing evidence, unclear cause, or environment-dependent behavior | Surface as non-blocking unless the unknown itself creates unacceptable risk. State the first concrete check. |
-| **Plan** | Systemic architecture, migration, cross-module, or policy work that exceeds finalize scope | Do not refactor broadly in `/finalize`; report as follow-up or `NEEDS REVISION` if it blocks the current change. |
+| **Plan** | Systemic architecture, migration, cross-module, or policy work that exceeds temper scope | Do not refactor broadly in `temper`; report as follow-up or `NEEDS REVISION` if it blocks the current change. |
 | **Decide** | Product, domain, security, release, or policy trade-off needing human judgment | Surface the decision point. Do not invent policy. |
 
 Decision flow:
@@ -123,9 +123,9 @@ Decision flow:
 - `candidate`: found by a lane, not yet challenged
 - `blocking`: survives trigger-test verification and should affect the verdict
 - `non-blocking`: real but not verdict-changing
-- `deferred`: real follow-up, intentionally not solved inside `/finalize`
+- `deferred`: real follow-up, intentionally not solved inside `temper`
 - `contested`: important disagreement or uncertainty remains after challenge
-- `fixed`: resolved during the finalize run
+- `fixed`: resolved during the temper run
 - `dropped`: failed verification or duplicate of a stronger finding
 
 ## Label every surviving finding
@@ -208,7 +208,7 @@ Map the internal statuses into final-report terms like this:
       evidence, and status.
 - [ ] Speculative issues are marked `Investigate`, not inflated to blockers.
 - [ ] Systemic issues are not solved by broad surprise refactors during
-      `/finalize`.
+      `temper`.
 - [ ] Human trade-offs are surfaced as `Decide`, not guessed.
 - [ ] The `Decision Packet` reflects verified findings and actual coverage, not
       optimistic narration.

@@ -1,6 +1,6 @@
 # Configuration review
 
-Phase 4, Phase 5, and Phase 7 support for `/finalize`, conditional. Apply when the diff changes env vars, feature flags, defaults, deployment config, debug settings, or production-vs-dev behavior.
+Phase 4, Phase 5, and Phase 7 support for `temper`, conditional. Apply when the diff changes env vars, feature flags, defaults, deployment config, debug settings, or production-vs-dev behavior.
 
 ## What to check
 

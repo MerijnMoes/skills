@@ -1,6 +1,6 @@
 # Observability review
 
-Phase 4 and Phase 6 support for `/finalize`, conditional. Apply when the diff changes logging, tracing, audit events, alerts, error reporting, or sensitive state transitions that must be diagnosable.
+Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff changes logging, tracing, audit events, alerts, error reporting, or sensitive state transitions that must be diagnosable.
 
 ## What to check
 

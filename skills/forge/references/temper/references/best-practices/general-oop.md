@@ -1,6 +1,6 @@
 # General OOP & backend best-practices
 
-Loaded in `/finalize` Phase 1 for any backend/business-logic change, regardless of language (a language-specific file may load alongside this one). Applies to the changed code in the diff, not the whole repo. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 for any backend/business-logic change, regardless of language (a language-specific file may load alongside this one). Applies to the changed code in the diff, not the whole repo. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Implementation guidelines
 

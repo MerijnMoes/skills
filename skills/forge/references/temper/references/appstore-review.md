@@ -1,6 +1,6 @@
 # App Store review
 
-Phase 4, Phase 5, and Phase 8 support for `/finalize`, conditional. Apply when
+Phase 4, Phase 5, and Phase 8 support for `temper`, conditional. Apply when
 the diff touches iOS metadata, entitlements, privacy manifests, purchase flows,
 account rules that affect App Store policy, or reviewer-facing setup/submission
 surfaces.

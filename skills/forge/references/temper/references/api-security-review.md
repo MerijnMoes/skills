@@ -1,6 +1,6 @@
 # API security review
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff adds or changes HTTP APIs, RPC endpoints, webhooks, or machine-consumable request/response surfaces.
+Phase 4 support for `temper`, conditional. Apply when the diff adds or changes HTTP APIs, RPC endpoints, webhooks, or machine-consumable request/response surfaces.
 
 Grounded in the **OWASP API Security Top 10 (2023)** and meant to be loaded from `security-review.md` / `security-cheat-sheets.md`.
 

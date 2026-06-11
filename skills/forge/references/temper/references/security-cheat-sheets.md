@@ -1,6 +1,6 @@
 # Security cheat-sheet router
 
-Phase 4 support for `/finalize`. This file turns broad security review into targeted, surface-aware checks. It is not a separate verdict lane by itself; it tells you which narrower references to load so the audit is complete without becoming noisy.
+Phase 4 support for `temper`. This file turns broad security review into targeted, surface-aware checks. It is not a separate verdict lane by itself; it tells you which narrower references to load so the audit is complete without becoming noisy.
 
 All routes chosen here stay under `security-review.md` ownership. Keep them in
 the specialty lane registry for traceability, but normalize their findings

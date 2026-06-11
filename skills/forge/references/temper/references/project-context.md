@@ -1,6 +1,6 @@
 # Project context
 
-Used in `/finalize` Phase 0, then carried into Phases 1, 4, 6, 7, and 8. This is the repo-specific layer: architecture boundaries, team conventions, domain rules, tooling norms, and release/documentation expectations that generic best practices cannot know.
+Used in `temper` Phase 0, then carried into Phases 1, 4, 6, 7, and 8. This is the repo-specific layer: architecture boundaries, team conventions, domain rules, tooling norms, and release/documentation expectations that generic best practices cannot know.
 
 The goal is a small **project context capsule** that makes later checks sharper. Do not turn this into a whole-repo archaeology project. Read enough to understand the rules that apply to the diff, then stop.
 
@@ -56,7 +56,7 @@ When project context conflicts with generic best practices, project context wins
 
 ## Durable learning
 
-If `/finalize` discovers a useful project rule that is not documented, do not silently write it into standing instructions during the pipeline. Note it in the retro and ask whether to save it to `CLAUDE.md` / `AGENTS.md` or another project doc. The user owns durable project policy.
+If `temper` discovers a useful project rule that is not documented, do not silently write it into standing instructions during the pipeline. Note it in the retro and ask whether to save it to `CLAUDE.md` / `AGENTS.md` or another project doc. The user owns durable project policy.
 
 ## Quick checklist
 

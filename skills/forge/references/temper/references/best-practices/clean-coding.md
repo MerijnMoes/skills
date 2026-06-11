@@ -1,6 +1,6 @@
 # Clean coding best-practices
 
-Loaded in `/finalize` Phase 1 for backend/business-logic changes alongside
+Loaded in `temper` Phase 1 for backend/business-logic changes alongside
 `general-oop.md`. Applies to the changed code in the diff, not the whole repo.
 The Phase-0 project context capsule and standing project instructions always
 override these generic rules.

@@ -1,7 +1,7 @@
 # Focused bug hunting
 
-Used primarily in `/finalize` Phase 4, then carried into Phases 6 and 7. The
-goal is to find **real bugs the checklists may miss** without turning finalize
+Used primarily in `temper` Phase 4, then carried into Phases 6 and 7. The
+goal is to find **real bugs the checklists may miss** without turning temper
 into an open-ended research project. Start from the actual diff and generate a
 **small number of high-value bug hypotheses** plus the cheapest probes that
 could falsify them. This is a risk-led complement to `code-review.md`,
@@ -24,7 +24,7 @@ it does **not** execute the final verification plan (`verify.md`), and it does
   unit/integration test, a focused harness, a repeated command, or a single
   browser flow.
 - Do **not** install new dependencies or build a large new test framework inside
-  `/finalize`.
+  `temper`.
 
 ## 1. Generate bug hypotheses from the diff
 
@@ -107,7 +107,7 @@ in Phase 6.
 ## 4. Make the probe deterministic
 
 The most valuable bug-finding setups turn weird failures into replayable ones.
-You can borrow that discipline even in an ordinary `/finalize` run:
+You can borrow that discipline even in an ordinary `temper` run:
 
 - freeze or inject the clock when the project already supports it;
 - seed randomness and record the seed;
@@ -138,7 +138,7 @@ skill mentions it.
 ## 6. Deterministic bug-finding habits
 
 You probably won't have deterministic simulation tooling in an ordinary
-`/finalize` run. You can still borrow the parts that matter:
+`temper` run. You can still borrow the parts that matter:
 
 - **Control what you can** — time, randomness, fixtures, dependency responses.
 - **Assert continuously** — bake invariants into tests/harnesses instead of

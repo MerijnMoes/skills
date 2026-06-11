@@ -1,6 +1,6 @@
 # Docker and deployment review
 
-Phase 4, Phase 6, and Phase 7 support for `/finalize`, conditional. Apply when
+Phase 4, Phase 6, and Phase 7 support for `temper`, conditional. Apply when
 the diff changes Dockerfiles, Compose, image build logic, container runtime
 behavior, health checks, deployment strategy, or release sequencing.
 

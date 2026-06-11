@@ -1,6 +1,6 @@
 # Agent security review
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff calls an LLM, builds agent behavior, stores embeddings, exposes tools, or uses model output in downstream actions.
+Phase 4 support for `temper`, conditional. Apply when the diff calls an LLM, builds agent behavior, stores embeddings, exposes tools, or uses model output in downstream actions.
 
 Grounded in the **OWASP Top 10 for LLM Applications (2025)** and **AISVS-style** verification thinking: verify the control, not just the intention.
 

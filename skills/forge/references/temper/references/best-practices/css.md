@@ -1,6 +1,6 @@
 # CSS best-practices
 
-Loaded in `/finalize` Phase 1 when the diff changes `.css`, `.scss`, `.sass`, `.less`, CSS modules, or substantial style blocks in components/templates. Layers on top of `frontend-a11y-i18n.md`, which still owns accessibility and i18n concerns. This file focuses on maintainability, cascade discipline, responsiveness, and style performance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 when the diff changes `.css`, `.scss`, `.sass`, `.less`, CSS modules, or substantial style blocks in components/templates. Layers on top of `frontend-a11y-i18n.md`, which still owns accessibility and i18n concerns. This file focuses on maintainability, cascade discipline, responsiveness, and style performance. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Tokens, reuse, and scope
 - Prefer the project's design tokens or CSS variables for shared colors, spacing, radii, typography, and motion values. Repeated hard-coded values are usually a maintainability smell.

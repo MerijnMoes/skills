@@ -1,6 +1,6 @@
 # Migration safety
 
-Phase 4 and Phase 6 support for `/finalize`, conditional. Apply when the diff changes schemas, migrations, data backfills, persistence formats, or rollout-sensitive data transforms.
+Phase 4 and Phase 6 support for `temper`, conditional. Apply when the diff changes schemas, migrations, data backfills, persistence formats, or rollout-sensitive data transforms.
 
 ## What to check
 

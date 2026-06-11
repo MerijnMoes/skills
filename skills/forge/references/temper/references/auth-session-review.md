@@ -1,6 +1,6 @@
 # Auth and session review
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff touches authentication, sessions, cookies, tokens, logout, password reset, MFA, account recovery, or authorization boundaries.
+Phase 4 support for `temper`, conditional. Apply when the diff touches authentication, sessions, cookies, tokens, logout, password reset, MFA, account recovery, or authorization boundaries.
 
 ## What to check
 

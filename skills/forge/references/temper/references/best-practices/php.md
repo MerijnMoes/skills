@@ -1,6 +1,6 @@
 # PHP best-practices
 
-Applies to the changed PHP code in `/finalize` Phase 1 (the diff, not the whole repo). The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Applies to the changed PHP code in `temper` Phase 1 (the diff, not the whole repo). The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Implementation guidelines
 

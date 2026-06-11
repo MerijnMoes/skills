@@ -1,6 +1,6 @@
 # Post-Deploy Monitoring
 
-Phase 4, Phase 6, and Phase 7 support for `/finalize`, conditional. Apply when the diff changes production-facing web behavior, release-critical flows, rollout-sensitive config, or a deployed environment is available for canary verification.
+Phase 4, Phase 6, and Phase 7 support for `temper`, conditional. Apply when the diff changes production-facing web behavior, release-critical flows, rollout-sensitive config, or a deployed environment is available for canary verification.
 
 This lane owns compact runtime release verification after deploy or during canary observation. It does not replace `observability-review.md` for signal quality or `security-review.md` for security findings.
 

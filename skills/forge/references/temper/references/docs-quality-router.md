@@ -1,6 +1,6 @@
 # Docs quality router
 
-Phase 5 support for `/finalize`, conditional. Use this router when the diff
+Phase 5 support for `temper`, conditional. Use this router when the diff
 changed behavior that may need documentation but it is not yet obvious which
 doc type owns the update.
 

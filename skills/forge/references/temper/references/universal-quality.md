@@ -1,7 +1,7 @@
 # Universal quality anti-patterns
 
 Cross-language design and implementation smells that often survive lints but
-still make a diff harder to trust. Use in `/finalize` during Phase 1 when a
+still make a diff harder to trust. Use in `temper` during Phase 1 when a
 local improvement is clearly safe, and again in Phase 4 as a compact review aid
 beside `codebase-fit.md` and `refactoring.md`. The Phase-0 project context
 capsule and standing project instructions always override these generic rules.

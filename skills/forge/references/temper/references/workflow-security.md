@@ -1,6 +1,6 @@
 # Workflow security
 
-Phase 4 support for `/finalize`, conditional. Apply when the diff changes `.github/workflows/**`, CI/CD config, release automation, deploy scripts, or secrets handling in automation.
+Phase 4 support for `temper`, conditional. Apply when the diff changes `.github/workflows/**`, CI/CD config, release automation, deploy scripts, or secrets handling in automation.
 
 ## What to check
 

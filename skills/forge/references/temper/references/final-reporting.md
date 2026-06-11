@@ -1,6 +1,6 @@
 # Final reporting
 
-Phase 8 of `/finalize`. The job of the final report is not just to "summarize
+Phase 8 of `temper`. The job of the final report is not just to "summarize
 the work." It is to make the outcome **easy to trust** and **easy to hand off**
 into a commit, PR, or review conversation.
 
@@ -35,7 +35,7 @@ a decision-ready format.
 
 ## Canonical layout
 
-The canonical Phase 8 section layout lives in `skills/finalize/SKILL.md` under
+The canonical Phase 8 section layout lives in `skills/forge/references/temper/SKILL.md` under
 `### Phase 8 — Final report & retro`. Use that template as-is. This reference
 is guidance for filling that template well, not a second competing output
 contract.
@@ -71,7 +71,7 @@ contract.
 - **Recommended next step** — tailor it to the verdict. For `READY TO SHIP`,
   suggest commit/PR framing, reviewer attention points, and any rollout note
   worth carrying forward. For `NEEDS REVISION` or `BLOCKED`, state the exact
-  fixes required before rerunning `/finalize`.
+  fixes required before rerunning `temper`.
 - **Threat-model escalation** — if the run triggered a red-lane trust-boundary
   escalation, say whether it produced a blocking finding, a follow-up plan, or
   no additional action.

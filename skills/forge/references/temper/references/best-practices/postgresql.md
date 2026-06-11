@@ -1,6 +1,6 @@
 # PostgreSQL (ORM) best-practices
 
-Applies to the changed entities, migrations, and DB access in `/finalize` Phase 1 (the diff, not the whole schema). Targets PostgreSQL behind an ORM (TypeORM or Prisma, common in NestJS-style apps) and layers on `sql.md` for generic query-shape discipline; this file stays focused on PostgreSQL-specific indexing, RLS, queueing, and operational review. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Applies to the changed entities, migrations, and DB access in `temper` Phase 1 (the diff, not the whole schema). Targets PostgreSQL behind an ORM (TypeORM or Prisma, common in NestJS-style apps) and layers on `sql.md` for generic query-shape discipline; this file stays focused on PostgreSQL-specific indexing, RLS, queueing, and operational review. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Implementation guidelines
 

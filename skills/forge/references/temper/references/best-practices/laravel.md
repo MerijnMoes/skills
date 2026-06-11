@@ -1,6 +1,6 @@
 # Laravel best-practices
 
-Loaded in `/finalize` Phase 1 when the diff lives in a Laravel project. Layers on top of `php.md` — every generic PHP rule (PSR-12, `declare(strict_types=1)`, typing, prepared statements, password hashing) still applies; this file adds only the Laravel-specific guidance. Applies to the changed code in the diff, not the whole app. The Phase-0 project context capsule and standing project instructions always override these generic rules.
+Loaded in `temper` Phase 1 when the diff lives in a Laravel project. Layers on top of `php.md` — every generic PHP rule (PSR-12, `declare(strict_types=1)`, typing, prepared statements, password hashing) still applies; this file adds only the Laravel-specific guidance. Applies to the changed code in the diff, not the whole app. The Phase-0 project context capsule and standing project instructions always override these generic rules.
 
 ## Architecture & layering
 - Keep controllers thin — a controller method coordinates request → service → response, nothing more. Delegate business logic to a service class or a single-purpose action / invokable class so it's reusable and unit-testable in isolation.

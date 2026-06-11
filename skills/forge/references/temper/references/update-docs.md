@@ -1,6 +1,6 @@
 # Update docs
 
-Phase 5 of `/finalize`. Sync documentation with the change you just made. Update
+Phase 5 of `temper`. Sync documentation with the change you just made. Update
 **only** what the diff actually affects — never invent docs, never pad with
 narration, never document behavior that isn't there. A stale or fictional doc is
 worse than no doc, because it actively misleads the next reader.

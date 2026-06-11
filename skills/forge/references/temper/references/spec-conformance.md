@@ -1,6 +1,6 @@
 # Spec & intent conformance
 
-Used in `/finalize` Phase 0 (pin the spec) and Phase 4 (check the diff against it). A change can be correct, clean, and idiomatic yet still be the *wrong* change — it implements something other than what was asked, leaves a requirement half-built, or quietly adds behavior nobody requested. Every other phase asks "is this code good?"; this one asks "is this the change we were supposed to make?" Those are different questions, and code that passes the first can fail the second.
+Used in `temper` Phase 0 (pin the spec) and Phase 4 (check the diff against it). A change can be correct, clean, and idiomatic yet still be the *wrong* change — it implements something other than what was asked, leaves a requirement half-built, or quietly adds behavior nobody requested. Every other phase asks "is this code good?"; this one asks "is this the change we were supposed to make?" Those are different questions, and code that passes the first can fail the second.
 
 ## Pinning the spec (Phase 0)
 
@@ -18,7 +18,7 @@ Record the pinned intent (and its source) so Phase 4 can cite it.
 
 Compare the diff against the pinned intent. Report findings in three buckets:
 
-1. **Missing or partial requirements** — something the spec asked for that the diff does not deliver, or delivers only part of. Quote the spec line and name what is absent. **This is a blocking finding → NEEDS REVISION.** `/finalize` *flags* the gap; it does **not** implement the missing feature itself — closing it is new feature work, outside a QA pipeline's remit.
+1. **Missing or partial requirements** — something the spec asked for that the diff does not deliver, or delivers only part of. Quote the spec line and name what is absent. **This is a blocking finding → NEEDS REVISION.** `temper` *flags* the gap; it does **not** implement the missing feature itself — closing it is new feature work, outside a QA pipeline's remit.
 2. **Scope creep** — behavior in the diff that the spec did not ask for. This is the spec-side mirror of the minimality principle. Usually non-blocking (flag it, and note if it carries its own risk or maintenance cost), but escalate if the unrequested behavior is risky, changes a public contract, or buries the actual change.
 3. **Implemented-but-wrong** — a requirement that looks handled but where the implementation doesn't actually satisfy what was asked (off-by-one against the stated rule, wrong default, the happy path only, a misread of the acceptance criteria). Quote the spec line and the diverging code. Blocking if it means the feature doesn't meet its stated bar.
 
