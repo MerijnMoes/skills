@@ -4,7 +4,10 @@ This file decides what happens after classification.
 
 ## Default order
 
-`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Playwright Author -> Playwright Verify -> Playwright Explore (conditional) -> Temper -> Report`
+`Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Playwright Author (if classification requires it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> Temper -> Report`
+
+Use `classification.md` to decide whether Playwright is skipped, optional, or
+required for the run.
 
 ## Loopbacks
 
