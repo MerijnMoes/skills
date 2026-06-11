@@ -1,6 +1,7 @@
-# merijn-skills
+# forge
 
-A personal developer workflow system for AI coding agents, installable across
+`forge` is the public workflow system in this repository: a personal skills repo
+from Merijn Moes for AI coding agents, installable across
 [Claude Code](https://code.claude.com), [OpenAI Codex CLI](https://developers.openai.com/codex),
 [GitHub Copilot CLI](https://docs.github.com/en/copilot), and [50+ other
 agents](https://github.com/vercel-labs/skills) with a single `npx skills`
