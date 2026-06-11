@@ -259,13 +259,38 @@ This repo uses [single-context / multi-context] domain docs.
 
 `[test command]`
 
-## Playwright
+## Browser E2E / Playwright
 
 `[playwright command or "not configured"]`
 
+## API Contract
+
+`[api contract command or "not configured"]`
+
+## Accessibility
+
+`[accessibility command or "not configured"]`
+
+## Visual Smoke
+
+`[visual smoke command or "not configured"]`
+
+## Performance
+
+`[performance command or "not configured"]`
+
+## Coverage
+
+`[coverage command or "not configured"]`
+
+## CI / Release Artifacts
+
+`[artifact/report command or "not configured"]`
+
 ## Notes
 
-[Known baseline failures, required services, env vars, or setup caveats.]
+[Known baseline failures, required services, env vars, deferred QA capability
+gaps, or setup caveats.]
 ```
 
 ### ADR
