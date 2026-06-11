@@ -1,13 +1,13 @@
 # forge
 
-`forge` is the public workflow system in this repository: a personal skills repo
-from Merijn Moes for AI coding agents, installable across
+`forge` is the public workflow system in this repository: an integrated forge
+workflow from Merijn Moes for AI coding agents, installable across
 [Claude Code](https://code.claude.com), [OpenAI Codex CLI](https://developers.openai.com/codex),
 [GitHub Copilot CLI](https://docs.github.com/en/copilot), and [50+ other
 agents](https://github.com/vercel-labs/skills) with a single `npx skills`
 command.
 
-Currently ships one public skill:
+The repo exposes one public entrypoint:
 
 ## `forge`
 
@@ -66,12 +66,6 @@ Then invoke it:
         ├── SKILL.md
         └── references/   # progressive-disclosure guidance loaded on demand
 ```
-
-## Adding another skill
-
-Create `skills/<name>/SKILL.md` (plus an optional folder of reference files
-beside it) and commit it. `npx skills add merijnmoes/skills` will discover and
-offer it automatically.
 
 ## License
 
