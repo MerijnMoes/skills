@@ -8,10 +8,15 @@ The compact files in this directory route the workflow; the payloads under
 
 ## Default order
 
-`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> Playwright Author (if classification requires it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> Temper -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA Intent Draft (when Playwright is required or meaningful) -> Playwright Author (if classification requires it or QA draft selects it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> QA Capability Matrix -> Temper -> Report`
 
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
+
+Use `playwright-qa.md`, `qa-intent-draft.md`, and
+`qa-capability-matrix.md` for the local/free QA lane. The QA lane may learn
+from external QA practices, but it must not require paid QA providers, hosted AI
+testing services, provider-owned model subscriptions, or vendor dashboards.
 
 Use `discovery.md`, `specification.md`, `planning.md`, and
 `implementation.md` for the core development workflow. Use
@@ -52,10 +57,14 @@ internal final hardening phase before reporting out.
   and QA checks.
 - If Playwright authoring or verification exposes an implementation defect,
   return to `Implement`.
+- If the QA intent draft exposes ambiguous product behavior, pause before
+  authoring durable tests.
 - If exploratory QA finds a high-confidence, low-blast-radius issue, fix and
   rerun QA before moving on.
 - If exploratory QA reveals ambiguous product or UX concerns, pause for user
   guidance.
+- If the capability matrix marks a relevant check `not configured` or
+  `deferred`, carry that residual risk into `temper` rather than hiding it.
 - If `temper` returns blockers, route back to the earliest phase needed to
   resolve them, then rerun downstream checks.
 

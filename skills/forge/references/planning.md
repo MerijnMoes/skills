@@ -18,9 +18,12 @@ Before writing a non-trivial plan, load
 2. Identify boundaries, dependencies, migrations, routes, components, and tests.
 3. Choose the implementation order that gives fast feedback.
 4. Prefer test-first steps for behavior changes.
-5. Include Playwright authoring when classification requires browser-flow QA.
-6. Include documentation updates when user-facing behavior or setup changes.
-7. Add pause points for ambiguous product, UX, data, or rollout decisions.
+5. Include a QA intent draft when classification requires Playwright or when
+   browser/API evidence materially reduces risk.
+6. Include Playwright authoring and capability-matrix evidence when
+   classification requires browser-flow or API-contract QA.
+7. Include documentation updates when user-facing behavior or setup changes.
+8. Add pause points for ambiguous product, UX, data, QA, or rollout decisions.
 
 ## Work package rules
 
@@ -50,7 +53,9 @@ Record:
 - plan path or inline plan summary
 - task list
 - test strategy
-- Playwright scope
+- QA intent draft scope
+- Playwright/API scope
+- QA capability matrix expectations
 - expected pause points
 - review checkpoints
 - delegation candidates, if any
