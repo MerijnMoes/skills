@@ -7,6 +7,31 @@ of a refactor, also see `universal-quality.md`.
 
 Local clarity fixes — flattening with guard clauses, deleting dead code, naming magic numbers, renaming a local — belong to **Phase 2** (`simplify.md`), whose equivalence is visible on inspection. This phase is for *structural* change whose behavior preservation needs the test suite to prove it.
 
+## Architecture vocabulary
+
+Use these terms consistently when naming structural findings:
+
+- **Module** — anything with an interface and an implementation: function,
+  class, package, subsystem, or slice.
+- **Interface** — everything a caller must know to use a module correctly:
+  types, invariants, ordering, error modes, required config, and performance
+  expectations.
+- **Implementation** — the code inside a module.
+- **Depth** — leverage at the interface. A **deep** module hides substantial
+  behavior behind a small interface; a **shallow** module exposes an interface
+  nearly as complex as its implementation.
+- **Seam** — where a module's interface lives; a place behavior can vary
+  without editing the caller.
+- **Adapter** — a concrete implementation satisfying an interface at a seam.
+- **Leverage** — what callers get from depth: more behavior per interface fact
+  they must learn.
+- **Locality** — what maintainers get from depth: change, bugs, knowledge, and
+  verification concentrate in one module.
+
+Prefer this vocabulary over vague claims like "cleaner architecture" or
+"easier to maintain." If `CONTEXT.md` defines domain terms for the changed
+surface, combine that vocabulary with these architecture terms.
+
 ## The discipline (non-negotiable)
 Refactoring preserves behavior. It changes structure — never what the code does. The two are separate activities; mixing them hides bugs.
 - A passing test suite is the safety net that proves behavior held. If there are no tests covering the code you want to restructure, you are *editing*, not refactoring — either add a characterization test that pins the current behavior first, or flag the gap and defer the change.
@@ -38,6 +63,10 @@ DRY is about a single source of truth for a piece of *knowledge*, not about elim
 - **Don't add speculative flexibility** for imagined future needs (YAGNI). Generality you don't need today is cost you pay today.
 - **Don't bundle unrelated cleanup** into a feature change. It bloats the diff, muddies review, and entangles a revert. Note it and leave it.
 - **Don't refactor untested code** without first establishing a safety net (see the discipline above).
+- **Don't turn `temper` into repo-wide architecture review.** If the changed
+  code reveals a broader deepening opportunity outside the diff, record it as a
+  `Plan` or `Investigate` finding only when it materially affects the changed
+  work. Do not fix it inside final hardening.
 
 ## Code-smell catalog
 Each: what it is → the fix.
@@ -54,6 +83,9 @@ Three heuristics for judging whether an abstraction earns its place — and whet
 - **Prefer deep modules.** A module earns its keep by hiding real complexity behind a small interface. A *shallow* module — whose interface is about as large as its implementation — is mostly indirection: it adds a hop without hiding anything. When a change introduces a wrapper or layer, check it actually hides complexity rather than just forwarding calls.
 - **The deletion test.** Imagine deleting the abstraction. If the complexity simply vanishes, it was a pass-through — inline it. If the complexity reappears, duplicated across several callers, it was doing real work — keep it. This separates indirection-worth-removing from duplication-worth-abstracting without guessing.
 - **One adapter is a hypothetical seam; two are a real one.** Don't introduce an interface/port for an *imagined* second implementation — that's speculative flexibility (YAGNI, see above). Add the seam when the second real implementation actually arrives; until then the concrete dependency reads clearer.
+- **The interface is the test surface.** If useful tests must reach past the
+  interface into implementation details, the module may be the wrong shape.
+  Treat that as a deepening signal, not a reason to add test-only hooks.
 
 ## Structural regression (diff-scoped) — the Phase 4 lane
 Separate from "is there a pre-existing smell worth fixing" (above), ask the sharper question: **did *this change* leave the structure worse than it found it?** A diff can be locally correct and still degrade the codebase. Flag these as findings:
@@ -73,5 +105,14 @@ Separate from "is there a pre-existing smell worth fixing" (above), ask the shar
 
 ## Assessment output
 Produce a short assessment, not a wall of text. List each candidate with its **priority** (Critical/High/Nice/Skip), a **DECISION** (fix now / defer / skip), and a one-line reason. Then act only on the "fix now" items.
+
+When a candidate is broader than the current diff, phrase it as a scoped future
+deepening opportunity:
+
+- **Module / files** — where the friction appeared
+- **Problem** — what shallow interface, seam leak, or locality loss the diff
+  exposed
+- **Why not now** — why it is broader than final hardening
+- **Next action** — `Plan`, `Investigate`, or `Decide`
 
 It is a valid — and common — outcome to conclude **"no refactor needed."** Say so plainly and move on. Reporting clean code honestly is more useful than inventing changes.

@@ -10,6 +10,11 @@ component doc, and checks whether existing public-API or boundary documentation
 became stale. It should keep escalation narrow: not every refactor or internal
 cleanup deserves architecture paperwork.
 
+If final hardening reveals a broader deepening opportunity, do not create a new
+architecture doc by default. Escalate only when the diff changed a real
+interface, seam, responsibility, or durable decision that future contributors
+would otherwise misunderstand.
+
 ## What to check
 
 - **ADR required?** — the diff introduces, reverses, or materially changes a
@@ -38,6 +43,8 @@ cleanup deserves architecture paperwork.
   about data flow or ownership?
 - Is an existing README/API reference enough, or would that hide a boundary or
   responsibility shift that deserves its own doc?
+- Did this diff change a module interface or seam, or did it merely reveal a
+  broader architecture opportunity that belongs in a future plan?
 
 ## Common blockers
 
@@ -69,3 +76,6 @@ cleanup deserves architecture paperwork.
   required, emit a normalized `Finding Set` entry naming the required doc
   target, the boundary/decision gap, and the action type that should carry it
   into Phase 5 and Phase 7.
+- If the lane only finds a broader architecture opportunity, emit it as
+  `Plan`, `Investigate`, or `Decide`; do not treat it as a Phase 5 docs
+  blocker unless the current diff made the documentation false.

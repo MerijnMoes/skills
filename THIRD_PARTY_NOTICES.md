@@ -44,3 +44,13 @@ This repository includes internal reference payloads adapted into `forge`.
 - License: MIT
 - Adapted paths:
   - `skills/forge/references/setup.md`
+
+## Architecture Deepening Principles
+
+- Upstream: `https://github.com/mattpocock/skills`
+- Source path: `skills/engineering/improve-codebase-architecture/`
+- Copyright: Matt Pocock, 2026
+- License: MIT
+- Adapted paths:
+  - `skills/forge/references/temper/references/refactoring.md`
+  - `skills/forge/references/temper/references/architecture-docs-review.md`
