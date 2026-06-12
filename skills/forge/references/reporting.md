@@ -8,10 +8,13 @@ tool outputs.
 - request summary
 - phase outcome summary
 - changed deliverables
-- QA intent draft summary: accepted, revised, or agent-selected
-- Playwright/API coverage created or updated
-- QA capability matrix: `run`, `N/A`, `not configured`, and `deferred` states
-- QA evidence gathered: commands, screenshots, traces, videos, reports, or logs
+- QA intent draft summary when the run included QA authoring: accepted,
+  revised, or agent-selected
+- Playwright/API coverage created or updated when applicable
+- QA capability matrix when applicable: `run`, `N/A`, `not configured`, and
+  `deferred` states
+- QA evidence gathered when applicable: commands, screenshots, traces, videos,
+  reports, or logs
 - local/free QA note when relevant: no paid provider was required
 - project knowledge files read, updated, or intentionally left unchanged
 - contradictions, stale docs, or missing docs that affected confidence

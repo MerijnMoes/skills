@@ -3,9 +3,14 @@
 Discovery turns the request into grounded project context before any design or
 implementation work starts.
 
-For non-trivial requests, load `project-knowledge.md` and
-`methodology/skills/brainstorming/SKILL.md` through `source-integration.md`
-before finalizing the discovery output.
+For any request that is not purely mechanical after repo context is read, load
+`project-knowledge.md` and `methodology/skills/brainstorming/SKILL.md`
+through `source-integration.md` before finalizing the discovery output.
+
+Treat "purely mechanical" narrowly: existing behavior and placement are already
+clear from repo context, no product/copy/UX/default/data-shape choice remains,
+and another agent could implement the change without needing a confirmation
+pause.
 
 ## Required inputs
 
@@ -30,6 +35,9 @@ before finalizing the discovery output.
 6. For domain-heavy work, run the brainstorming `domain-grilling.md` subroutine
    to resolve terms, context boundaries, and durable decisions.
 7. Ask only the questions needed to remove material ambiguity.
+8. If repo evidence leaves even modest uncertainty about copy, UX placement,
+   defaults, states, serialization, or approval-worthy tradeoffs, run a compact
+   brainstorming pass instead of treating the request as implementation-ready.
 
 ## Investigation rules
 
@@ -42,6 +50,10 @@ before finalizing the discovery output.
 - Separate facts, assumptions, and open questions in the run notes.
 - Surface contradictions between code, user statements, and project knowledge
   docs instead of silently choosing one.
+- Default to a compact brainstorm/spec approval when the request is concrete
+  but still mixes implementation detail with product or UX intent.
+- Skip brainstorming only when the remaining work is truly mechanical after
+  reading the relevant code and project knowledge.
 
 ## Output
 

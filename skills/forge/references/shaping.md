@@ -3,6 +3,10 @@
 Use this phase when the work affects UI, UX, layout, onboarding, dashboards,
 forms, or visual hierarchy.
 
+Shaping may be compact for small or mostly-clear requests, but it should still
+create an explicit direction/approval checkpoint unless the change is already
+fully determined by repo context and requires no real product judgment.
+
 ## Goals
 
 - clarify the intended user journey

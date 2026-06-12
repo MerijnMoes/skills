@@ -11,15 +11,20 @@ Run this before any deeper phase work.
 3. If the user asks to set up, initialize, onboard, or configure the repo for
    Forge, route to `setup.md` before normal discovery. Also route there when
    missing project context blocks confident work.
-4. Identify whether the request needs a written spec, an implementation plan,
+4. If the user explicitly asks for `temper` through `forge`, route directly to
+   `references/temper/SKILL.md` after preflight instead of running the full
+   discovery-to-implementation workflow. Treat phrases such as `against base`,
+   `against develop`, or `against <branch>` as a requested comparison base for
+   the `temper` run.
+5. Identify whether the request needs a written spec, an implementation plan,
    or both before edits begin.
-5. Map the task to one primary class from `classification.md`:
+6. Map the task to one primary class from `classification.md`:
    `docs-only`, `backend-only`, `ui-or-flow`, or `mixed-feature`.
-6. Confirm whether the `high-risk` overlay applies in addition to the primary
+7. Confirm whether the `high-risk` overlay applies in addition to the primary
    class.
-7. Confirm the repo is on an isolated feature branch or an explicitly approved
+8. Confirm the repo is on an isolated feature branch or an explicitly approved
    working branch.
-8. Confirm whether Playwright already exists in the target application repo
+9. Confirm whether Playwright already exists in the target application repo
    before planning QA authoring.
 
 ## Output
@@ -30,6 +35,8 @@ Capture:
 - project knowledge inventory: relevant files found, missing-but-relevant
   files, and any obvious stale or conflicting docs
 - whether setup is required or explicitly requested
+- whether a direct `temper` lane was explicitly requested, and any base-branch
+  override supplied by the user
 - chosen primary class and any overlays
 - whether spec and plan artifacts are required
 - obvious blockers before planning

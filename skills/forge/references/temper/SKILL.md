@@ -28,6 +28,18 @@ The pipeline is ordered so that **code-modifying phases run first against a know
   first. `temper` is not the tool for recovering an already-red starting
   point.
 
+## Entering temper through forge
+
+`temper` is still internal to `forge`, but users may explicitly request this
+lane through the public entrypoint when they only want the final hardening
+pass, for example:
+
+- `/forge temper`
+- `/forge temper against base`
+- `/forge temper against develop`
+
+Treat those as scoped `forge` requests, not as a second public skill.
+
 ## Operating stance
 
 - Prefer the **smallest justified improvement** to the changed code. Do not
@@ -98,7 +110,11 @@ Establish exactly what `temper` is hardening and confirm it starts from a known-
 
 **Precondition — checkpoint before you enter `temper`.** The modifying phases (best-practices, simplify, refactor) edit the working tree in place, but this pipeline makes no git writes of its own. So the user's completed feature work should be committed (or stashed) *before* `temper` runs — that checkpoint is the clean rollback point if a phase has to be backed out (`git restore` / `git checkout`). If there is uncommitted feature work, say so and recommend a checkpoint commit first; proceed without one only with the user's go-ahead, and warn that auto-applied fixes won't be individually reversible.
 
-1. **Determine the base branch.** Try `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`; fall back to `main`, then `master`, then `develop`. Identify the current branch with `git rev-parse --abbrev-ref HEAD`.
+1. **Determine the base branch.** If the user explicitly requested a base
+   override through `forge` (`against <branch>`), use that first. Otherwise try
+   `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`; fall back
+   to `main`, then `master`, then `develop`. Identify the current branch with
+   `git rev-parse --abbrev-ref HEAD`.
 2. **Branch safety.** If the current branch *is* the base branch (e.g. on `main`), warn the user — `temper` assumes feature work on a branch. Continue only if they confirm.
 3. **Compute the diff.** `git diff <base>...HEAD` for committed work, plus `git status` / `git diff` for uncommitted work. This combined diff is your source of truth for every later phase.
 4. **Detect languages & frameworks** from changed file extensions and manifests (`package.json`, `composer.json`, `pyproject.toml`, `*.csproj`, etc.). This decides which best-practices references load in Phase 1.

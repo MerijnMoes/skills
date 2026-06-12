@@ -10,6 +10,25 @@ The compact files in this directory route the workflow; the payloads under
 
 `Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA Intent Draft (when Playwright is required or meaningful) -> Playwright Author (if classification requires it or QA draft selects it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> QA Capability Matrix -> Temper -> Report`
 
+## Explicit lane requests
+
+When the user explicitly asks for an internal lane through `forge`, honor that
+request instead of forcing the full default order.
+
+- `forge setup`: route to `setup.md`.
+- `forge temper`: run preflight, then enter `references/temper/SKILL.md`
+  directly on the current branch diff.
+- `forge temper against base`: same as above, with base branch auto-detected by
+  the `temper` phase.
+- `forge temper against <branch>`: same as above, but treat `<branch>` as the
+  requested comparison base for the diff and carry that override into
+  `temper` Phase 0.
+
+Direct `temper` routing skips discovery/spec/plan/implementation lanes because
+the user is asking for the final hardening pass only, not a fresh build cycle.
+If `temper` later finds blockers, report them and recommend the earliest phase
+that should be re-entered afterward.
+
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
 
@@ -23,10 +42,14 @@ Use `discovery.md`, `specification.md`, `planning.md`, and
 `design-quality.md` after implementation when the task activates the shaping
 lane or otherwise affects a user-facing flow.
 
-For non-trivial work, load the matching source payloads:
+For any work that is not purely mechanical after discovery, load the matching
+source payloads:
 
 - Repo setup and first-version project memory: `setup.md`
 - Discovery and product shaping: `methodology/skills/brainstorming/SKILL.md`
+  Default to this whenever copy, UX, defaults, data behavior, or state
+  expectations are part of the ask and repo context does not make the answer
+  fully obvious.
 - Domain language and durable project memory:
   `methodology/skills/brainstorming/domain-grilling.md`
 - Planning: `methodology/skills/writing-plans/SKILL.md`

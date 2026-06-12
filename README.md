@@ -15,6 +15,9 @@ The repo exposes one public entrypoint:
 work from discovery and planning through implementation, Playwright-guided QA,
 and the internal `temper` final hardening gate.
 
+The same entrypoint can also route directly into selected internal lanes when
+the user asks for them explicitly, such as `forge setup` or `forge temper`.
+
 ### What `forge` covers
 
 ```
@@ -26,6 +29,14 @@ Temper -> Report
 
 `temper` remains part of the system, but it is an internal hardening subsystem
 inside `forge`, not a separate public command.
+
+Examples:
+
+- `forge`
+- `forge setup`
+- `forge temper`
+- `forge temper against base`
+- `forge temper against develop`
 
 Internally, `forge` vendors the full methodology and frontend design-quality
 payloads it routes through, so a single install carries the workflow guidance,
@@ -39,6 +50,9 @@ design references, detector scripts, and final hardening gate.
   `CONTEXT-MAP.md`, and ADRs as durable project memory when those files exist.
 - `forge setup` initializes that project memory selectively, including
   `docs/agents/` setup docs when they are useful for later runs.
+- `forge temper` runs only the final hardening lane against the current branch
+  diff. `against base` means auto-detect the repository default branch;
+  `against <branch>` overrides the comparison base.
 - Playwright is a first-class QA lane, and durable browser tests are created or
   updated by default for affected flows when that lane is active.
 

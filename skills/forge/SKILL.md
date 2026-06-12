@@ -10,6 +10,9 @@ system. It owns the flow from request to final readiness, including discovery,
 setup, specification, planning, implementation routing, Playwright QA, and the
 final `temper` hardening gate.
 
+Users may also invoke specific internal lanes through `forge` when they want a
+scoped run, for example `/forge setup` or `/forge temper`.
+
 ## When to use
 
 - Use `forge` when the user wants this repo's full workflow, not a narrow
@@ -52,7 +55,9 @@ final `temper` hardening gate.
 - Use `references/pause-resume.md` to manage `.forge/` state and resume points.
 - Use `references/reporting.md` to produce the final handoff.
 - Enter the final hardening phase through `references/temper/SKILL.md`.
-- Do not present `temper` as a second public skill or separate user command.
+- Do not present `temper` as a second public skill or separate public workflow.
+  It may still be requested explicitly as an internal lane of `forge`, for
+  example `/forge temper` or `/forge temper against develop`.
 - When the compact `forge` adapters are too thin for the situation, load the
   matching source payload file before acting.
 
@@ -60,6 +65,10 @@ final `temper` hardening gate.
 
 - Ground first, then specify, then plan; do not jump from request to edits when
   scope is unclear.
+- If repo evidence still leaves even modest ambiguity about copy, UX, defaults,
+  data behavior, or another approval-worthy tradeoff, pause for a compact
+  brainstorming/spec step before planning instead of treating the request as
+  implementation-ready.
 - Treat durable project knowledge as part of grounding: read it before asking
   questions and update it when reusable product, design, domain, or decision
   truth is resolved.
@@ -80,6 +89,9 @@ final `temper` hardening gate.
 - `forge` is the only public entrypoint in this repo.
 - Setup is an internal lane of `forge`; users may ask for `/forge setup`, but
   there is no separate public setup skill.
+- `temper` is also an internal lane of `forge`; users may ask for
+  `/forge temper`, `/forge temper against base`, or `/forge temper against
+  <branch>` when they want only the final hardening pass on the current diff.
 - `temper` is internal to the workflow even though its guidance lives in
   references.
 - The workflow should pause at explicit approval or judgment points rather than
