@@ -3,10 +3,16 @@
 The final report should summarize the run as one workflow, not as unrelated
 tool outputs.
 
+When `.forge/state.json` exists, use `state-contract.md` as the evidence index
+for the final report. Do not rely only on chat memory for paths, QA status, or
+the `temper` verdict.
+
 ## Required sections
 
 - request summary
 - phase outcome summary
+- spec path or inline spec summary
+- plan path or inline plan summary
 - changed deliverables
 - QA intent draft summary when the run included QA authoring: accepted,
   revised, or agent-selected
@@ -18,10 +24,10 @@ tool outputs.
 - local/free QA note when relevant: no paid provider was required
 - project knowledge files read, updated, or intentionally left unchanged
 - contradictions, stale docs, or missing docs that affected confidence
-- `temper` verdict or blockers
+- temper verdict or blockers
 - note that the verdict comes from `temper`, the internal final phase inside
   `forge`
-- next recommended step
+- next recommended step from `.forge/state.json` when available
 
 ## Tone
 

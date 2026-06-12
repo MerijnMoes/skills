@@ -1,0 +1,120 @@
+# Forge state contract
+
+Forge keeps current-run state in `.forge/state.json` in the target application
+repo. This file is a small resume and evidence index, not a project-management
+database.
+
+## Operating rules
+
+- Create `.forge/` only when a run needs pause/resume, written spec/plan
+  tracking, QA evidence, or a non-trivial final report.
+- Keep `.forge/` gitignored by default unless the user explicitly wants to
+  commit run evidence.
+- Update `.forge/state.json` after every phase transition, pause point,
+  Playwright verification result, and `temper` verdict.
+- Prefer atomic writes: write a complete temporary JSON file in `.forge/`, then
+  move it into place. Never leave partial JSON behind.
+- If a tool or host cannot write files safely, report the fields that would
+  have changed and continue with chat-visible state.
+
+## Required shape
+
+```json
+{
+  "schema_version": 1,
+  "run_id": "2026-06-12T09-30-00Z-account-settings",
+  "request_summary": "Add account settings page with deletion flow",
+  "current_phase": "playwright-verify",
+  "classification": {
+    "primary": "ui-or-flow",
+    "rationale": "Touches a user-facing settings flow",
+    "risk_overlays": ["high-risk"]
+  },
+  "project_knowledge": {
+    "read": ["PRODUCT.md", "DESIGN.md"],
+    "updated": [],
+    "unchanged": ["CONTEXT.md"],
+    "gaps": []
+  },
+  "spec": {
+    "mode": "file",
+    "path": "docs/forge/specs/2026-06-12-account-settings.md",
+    "approval": "approved"
+  },
+  "plan": {
+    "mode": "file",
+    "path": ".forge/current-plan.md",
+    "approval": "approved"
+  },
+  "shaping": {
+    "active": true,
+    "artifacts": []
+  },
+  "qa": {
+    "playwright": "required",
+    "intent_path": ".forge/qa-intent.md",
+    "authored_tests": ["tests/e2e/account-settings.spec.ts"],
+    "verification_status": "passed",
+    "capability_matrix_path": ".forge/qa-capability-matrix.md",
+    "evidence": []
+  },
+  "temper": {
+    "base": "main",
+    "verdict": "ready",
+    "blockers": [],
+    "residual_risks": []
+  },
+  "blocker": null,
+  "pause_required": false,
+  "next_recommended_step": "report"
+}
+```
+
+Use `null`, empty arrays, or `"not-started"` for unknown or future fields; do
+not omit top-level keys once the file exists.
+
+## Field rules
+
+- `schema_version`: integer. Start at `1`; increment only for incompatible
+  shape changes.
+- `run_id`: stable id for this Forge run. Use timestamp plus a short slug.
+- `current_phase`: one of `setup`, `discover`, `spec`, `plan`, `shape`,
+  `implement`, `design-quality`, `qa-intent`, `playwright-author`,
+  `playwright-verify`, `playwright-explore`, `qa-capability-matrix`, `temper`,
+  `report`, `paused`, or `blocked`.
+- `classification.primary`: one of `docs-only`, `backend-only`, `ui-or-flow`,
+  or `mixed-feature`.
+- `spec` and `plan`: record either a file path or compact inline summary via
+  `mode: "file"` or `mode: "inline"`.
+- `qa.playwright`: one of `required`, `optional`, or `skipped`.
+- `qa.verification_status`: one of `not-started`, `passed`, `failed`,
+  `blocked`, `deferred`, or `not-configured`.
+- `qa.evidence`: list commands, screenshots, traces, reports, logs, videos, or
+  manual probes that support the final report.
+- `temper.verdict`: one of `not-run`, `ready`, `blocked`, or `needs-decision`.
+- `blocker`: `null` when clear; otherwise include `phase`, `summary`, `needs`,
+  and `earliest_resume_phase`.
+- `next_recommended_step`: one short action the next Forge invocation should
+  take.
+
+## Resume behavior
+
+At startup, after preflight and project-knowledge discovery:
+
+1. If `.forge/state.json` exists, read it before asking questions.
+2. If `blocker` is set, summarize the blocker and ask only for the missing
+   decision or dependency.
+3. If `pause_required` is true, resume at `current_phase` only after the
+   relevant approval or judgment is clear.
+4. If the recorded `spec.path`, `plan.path`, authored tests, or QA artifacts no
+   longer exist, mark the state stale and return to the earliest phase needed
+   to rebuild trustworthy evidence.
+5. If the user's new request conflicts with the saved run, ask whether to
+   replace the run state or continue it.
+
+## Final report evidence
+
+The final report should be traceable to `.forge/state.json` when the file
+exists. At minimum, report the spec path or inline spec summary, plan path or
+inline plan summary, Playwright status, QA capability matrix status, `temper`
+verdict, blockers or residual risks, and `next_recommended_step`.

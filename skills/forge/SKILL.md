@@ -52,7 +52,8 @@ scoped run, for example `/forge setup` or `/forge temper`.
 - Use `references/design-quality.md` for UI critique, accessibility,
   responsiveness, hardening, and polish before QA.
 - Use `references/playwright-qa.md` for the QA lane before `temper`.
-- Use `references/pause-resume.md` to manage `.forge/` state and resume points.
+- Use `references/pause-resume.md` and `references/state-contract.md` to manage
+  `.forge/` state, evidence, and resume points.
 - Use `references/reporting.md` to produce the final handoff.
 - Enter the final hardening phase through `references/temper/SKILL.md`.
 - Do not present `temper` as a second public skill or separate public workflow.
