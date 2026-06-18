@@ -8,6 +8,13 @@ async function read(path) {
   return readFile(new URL(path, root), 'utf8');
 }
 
+function assertIncludesIgnoringCase(actual, expected) {
+  assert.ok(
+    actual.toLowerCase().includes(expected.toLowerCase()),
+    `Expected text to include ${expected}`,
+  );
+}
+
 test('forge exposes a structured run-state contract', async () => {
   const skill = await read('skills/forge/SKILL.md');
   const pauseResume = await read('skills/forge/references/pause-resume.md');
@@ -45,7 +52,7 @@ test('forge final reporting is backed by structured evidence', async () => {
     'plan path',
     'Playwright',
     'QA capability matrix',
-    'temper verdict',
+    'review verdict',
     'next recommended step',
   ]) {
     assert.match(reporting, new RegExp(phrase, 'i'));
@@ -53,4 +60,101 @@ test('forge final reporting is backed by structured evidence', async () => {
 
   assert.match(stateContract, /evidence/i);
   assert.match(stateContract, /final report/i);
+});
+
+test('forge exposes the simplified public command surface and workflow overview', async () => {
+  const skill = await read('skills/forge/SKILL.md');
+  const routing = await read('skills/forge/references/workflow-routing.md');
+  const preflight = await read('skills/forge/references/preflight.md');
+
+  for (const command of ['/forge:setup', '/forge:build', '/forge:review']) {
+    assert.match(skill, new RegExp(command.replace('/', '\\/')));
+    assert.match(routing, new RegExp(command.replace('/', '\\/')));
+  }
+
+  assert.match(skill, /Design Quality \(if needed\) -> QA -> Review -> Report/);
+  assert.doesNotMatch(skill, /Playwright Author -> Playwright Verify -> Playwright Explore/);
+  assert.match(preflight, /\/forge:review against <branch>/);
+  assert.match(preflight, /comparison base/i);
+});
+
+test('forge setup distinguishes existing and new project modes while preserving setup behavior', async () => {
+  const setup = await read('skills/forge/references/setup.md');
+
+  for (const phrase of [
+    'existing-project setup',
+    'new-project setup',
+    '/forge:setup existing',
+    '/forge:setup new',
+    'PRODUCT.md',
+    'DESIGN.md',
+    'CONTEXT.md',
+    'docs/agents/verification.md',
+    'preferred local E2E mode',
+    'security',
+  ]) {
+    assertIncludesIgnoringCase(setup, phrase);
+  }
+
+  assert.match(setup, /should not become.*generator/i);
+});
+
+test('forge offers visual plans as an opt-in rendered planning review surface', async () => {
+  const skill = await read('skills/forge/SKILL.md');
+  const routing = await read('skills/forge/references/workflow-routing.md');
+  const planning = await read('skills/forge/references/planning.md');
+  const visualPlan = await read('skills/forge/references/visual-plan.md');
+
+  assert.match(skill, /references\/visual-plan\.md/);
+  assert.match(routing, /Visual Plan Review/);
+  assert.match(planning, /visual plan/i);
+
+  for (const phrase of [
+    'ask the user',
+    'do not assume',
+    'dependency-light',
+    'static HTML',
+    'browser-openable',
+    'without Agent-Native',
+    'without new npm dependencies',
+    'after planning',
+    'before implementation',
+  ]) {
+    assertIncludesIgnoringCase(visualPlan, phrase);
+  }
+
+  assert.doesNotMatch(visualPlan, /local-files mode/i);
+  assert.doesNotMatch(visualPlan, /plan\.mdx/i);
+});
+
+test('forge qa is one umbrella with durable watched and ci-equivalent playwright verification', async () => {
+  const skill = await read('skills/forge/SKILL.md');
+  const routing = await read('skills/forge/references/workflow-routing.md');
+  const qa = await read('skills/forge/references/qa.md');
+  const playwright = await read('skills/forge/references/playwright-qa.md');
+  const matrix = await read('skills/forge/references/qa-capability-matrix.md');
+  const reporting = await read('skills/forge/references/reporting.md');
+
+  assert.match(skill, /-> QA -> Review -> Report/);
+  assert.match(routing, /QA umbrella/i);
+
+  for (const phrase of [
+    'QA Intent Draft',
+    'Capability Check',
+    'Playwright Author',
+    'Watched Local Verify',
+    'CI-Equivalent Verify',
+    'Exploratory QA',
+    'Capability Matrix',
+  ]) {
+    assert.match(qa, new RegExp(phrase, 'i'));
+  }
+
+  assert.match(playwright, /@playwright\/test/);
+  assert.match(playwright, /npx playwright test <changed-tests> --headed/);
+  assert.match(playwright, /^npx playwright test <changed-tests>$/m);
+  assert.match(playwright, /same durable tests/i);
+  assert.match(matrix, /Security checks/);
+  assert.match(reporting, /watched local E2E/i);
+  assert.match(reporting, /CI-equivalent E2E/i);
 });

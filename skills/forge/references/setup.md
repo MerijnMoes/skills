@@ -3,6 +3,14 @@
 Setup creates the first durable project-memory files that later Forge phases
 read. It is an internal lane of `/forge`, not a separate public skill.
 
+Public forms:
+
+- `/forge:setup`: inspect the repo and infer existing-project or new-project
+  mode; ask one short confirmation question when ambiguous.
+- `/forge:setup existing`: prepare Forge for an existing codebase.
+- `/forge:setup new`: seed Forge memory and quality rails for an empty, tiny,
+  or pre-implementation repo.
+
 Use setup when the user asks to initialize, onboard, configure, or prepare a
 repo for Forge, or when preflight finds missing context that blocks confident
 work.
@@ -17,6 +25,39 @@ work.
 - Create only justified files. A setup graveyard is worse than no setup.
 - Ask decisions one at a time when repo evidence cannot answer them.
 - Prefer repo evidence over generic defaults.
+
+## Existing-project setup
+
+Use existing-project setup when the repo already has meaningful code, scripts,
+routes, docs, users, or deployment conventions.
+
+Existing-project setup preserves the current setup behavior: inspect first,
+draft before writing, update existing docs in place, and create only justified
+project-memory files.
+
+During existing-project setup, preserve and record these priority capability
+signals from the exploration checklist:
+
+- browser E2E setup, including Playwright config, scripts, and test folders
+- API contract test setup
+- accessibility, visual, performance, coverage, and CI artifact capabilities
+- security signals such as package-manager audit commands, dependency scanning,
+  secret scanning, SAST/static analysis, lint security plugins, and
+  vulnerability-alert workflows
+- preferred local E2E mode when the user has one; otherwise default watched
+  local verification to headed mode during `/forge:build`
+
+## New-project setup
+
+Use new-project setup when the repo is empty, tiny, or pre-implementation.
+
+For product-shaping questions, ask only for product intent, target users, stack
+preference, and quality baseline where repo evidence cannot answer, while still
+running the normal setup decisions below. New-project setup may seed
+`PRODUCT.md`, `CONTEXT.md`, `DESIGN.md`, and `docs/agents/verification.md`,
+marking commands as `not configured` until real project commands exist.
+
+Do not silently scaffold application structure. Forge setup should not become an app generator unless the user explicitly asks for app scaffolding.
 
 ## What setup may create
 
@@ -36,8 +77,10 @@ Create conditionally:
 - `DESIGN.md`: create when the repo has UI/design surfaces or the user wants a
   pre-implementation visual seed.
 - `CONTEXT-MAP.md`: create only for multi-context repos.
+- `docs/agents/domain.md`: create only when the repo needs agent-facing
+  domain-doc consumer rules beyond the Forge pointer block.
 - `docs/adr/0001-adopt-forge-workflow.md`: create only when the user wants the
-  adoption of Forge, Playwright QA, or docs-as-memory recorded as a durable
+  adoption of Forge, QA, or docs-as-memory recorded as a durable
   decision.
 - `docs/agents/issue-tracker.md`: create only when Forge should interact with
   issues or work items.
@@ -75,6 +118,11 @@ Inspect before asking:
 After exploration, present what exists and what is missing. Then handle only
 the decisions that are unresolved:
 
+0. **Setup mode**
+   - If the repo clearly has application code, use existing-project mode.
+   - If the repo is empty, tiny, or pre-implementation, use new-project mode.
+   - If ambiguous, ask whether to run existing-project or new-project setup.
+
 1. **Agent instruction target**
    - If `CLAUDE.md` exists, update it.
    - Else if `AGENTS.md` exists, update it.
@@ -107,7 +155,7 @@ the decisions that are unresolved:
 
 5. **ADR**
    - Offer an ADR only if setup records a real durable decision: adopting
-     Forge, standardizing Playwright QA, choosing docs-as-memory, or changing
+     Forge, standardizing QA, choosing docs-as-memory, or changing
      agent workflow conventions.
 
 ## Draft before writing
@@ -139,8 +187,8 @@ This repo uses Forge as its AI development workflow.
 - Agent setup: see `docs/agents/`.
 - Verification commands: see `docs/agents/verification.md`.
 
-Use `/forge` for substantial changes so discovery, spec, implementation,
-Playwright QA, and final hardening stay connected.
+Use `/forge:build` for substantial changes so discovery, spec, implementation,
+QA, and Review stay connected.
 ```
 
 ## Minimal seed templates
@@ -263,9 +311,21 @@ This repo uses [single-context / multi-context] domain docs.
 
 `[playwright command or "not configured"]`
 
+## Browser E2E / Playwright - Local Watched
+
+`[headed or ui command, or "not configured"]`
+
+## Browser E2E / Playwright - CI Equivalent
+
+`[headless CI-equivalent command, or "not configured"]`
+
 ## API Contract
 
 `[api contract command or "not configured"]`
+
+## Security
+
+`[audit/secret/static-analysis command or "not configured"]`
 
 ## Accessibility
 
@@ -299,10 +359,10 @@ gaps, or setup caveats.]
 # 0001-adopt-forge-workflow
 
 We use Forge as the repo's AI development workflow so discovery, specification,
-implementation, Playwright QA, and final hardening happen as one connected
-process. Project knowledge lives in durable markdown files so future agents can
-reuse product, design, domain, verification, and decision context instead of
-rediscovering it each run.
+implementation, QA, and Review happen as one connected process. Project
+knowledge lives in durable markdown files so future agents can reuse product,
+design, domain, verification, and decision context instead of rediscovering it
+each run.
 ```
 
 ## Done report

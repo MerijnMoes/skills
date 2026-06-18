@@ -6,8 +6,8 @@ description: Internal final hardening and readiness gate for the forge workflow.
 # Temper
 
 `temper` is the final hardening phase inside `forge`. It takes a functionally
-complete change that has already passed through implementation and Playwright QA
-and decides whether it is ready to ship.
+complete change that has already passed through implementation and QA and
+decides whether it is ready to ship.
 
 It is a **self-contained review operating system**: it carries its own
 instructions for every phase, builds shared evidence artifacts up front, routes
@@ -28,17 +28,17 @@ The pipeline is ordered so that **code-modifying phases run first against a know
   first. `temper` is not the tool for recovering an already-red starting
   point.
 
-## Entering temper through forge
+## Entering review through forge
 
-`temper` is still internal to `forge`, but users may explicitly request this
-lane through the public entrypoint when they only want the final hardening
-pass, for example:
+`temper` is still the internal review payload behind `forge`, but users request
+it through the public `/forge:review` command when they only want the final
+hardening pass, for example:
 
-- `/forge temper`
-- `/forge temper against base`
-- `/forge temper against develop`
+- `/forge:review`
+- `/forge:review against base`
+- `/forge:review against develop`
 
-Treat those as scoped `forge` requests, not as a second public skill.
+Treat those as scoped `forge` review requests, not as a second public skill.
 
 ## Operating stance
 

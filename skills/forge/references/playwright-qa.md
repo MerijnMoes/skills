@@ -1,14 +1,28 @@
 # Forge Playwright QA
 
-Playwright is the primary executable QA lane in `forge`. It is local-first:
-durable tests and evidence live in the target app repo, and Forge must not
-depend on paid QA providers, hosted AI testing services, provider-owned model
-subscriptions, or vendor dashboards.
+Playwright is the primary durable browser and API automation sub-lane inside
+Forge QA. Durable tests and evidence live in the target app repo, and Forge
+must not depend on paid QA providers, hosted AI testing services,
+provider-owned model subscriptions, or vendor dashboards.
 
 Load these references when Playwright is `required` or chosen:
 
 - `qa-intent-draft.md` before substantial test authoring
 - `qa-capability-matrix.md` for local/free capability coverage
+
+## Availability check
+
+Before authoring or running E2E tests, check for:
+
+- `@playwright/test` in project dependencies
+- `playwright.config.*`
+- existing E2E folders such as `tests/e2e/`
+- scripts such as `test:e2e`
+- installed browsers where practical
+- CI jobs that already run E2E tests
+
+If Playwright is missing and E2E coverage is required or useful, ask before
+installing or configuring it. Do not silently add project dependencies.
 
 ## Routing contract
 
@@ -80,13 +94,46 @@ for behavior better pinned by unit, integration, or API tests.
 - Coverage: use existing coverage tooling as a gap signal, never as a reason to
   write vacuous tests.
 
+## Watched local verify
+
+When Forge runs locally and the user can benefit from seeing the flow, default
+to headed mode for changed durable tests:
+
+```bash
+npx playwright test <changed-tests> --headed
+```
+
+Use UI mode for step debugging or authoring visibility:
+
+```bash
+npx playwright test <changed-tests> --ui
+```
+
+The watched run must use the same durable tests that will run in CI. It is not
+a separate QA system.
+
+## CI-equivalent verify
+
+After watched verification passes or is skipped for a documented reason, run
+the same relevant tests in normal headless mode:
+
+```bash
+npx playwright test <changed-tests>
+```
+
+If headed passes but headless fails, treat QA as failing until the
+implementation, test, or environment blocker is resolved.
+
 ## Execution evidence
 
 Capture when available:
 
 - accepted or agent-selected QA intent draft
 - changed or generated test paths
-- commands run and observed results
+- watched local E2E command and observed result
+- CI-equivalent E2E command and observed result
+- whether both runs used the same durable tests
+- other relevant commands run and observed results
 - capability matrix states and reasons
 - screenshots
 - traces
