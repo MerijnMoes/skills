@@ -208,6 +208,7 @@ Inputs:
 
 - evidence-pack summary
 - surviving findings
+- design-quality notes with `report`, `finding`, or meaningful `defer`
 - verification-ledger summary
 - residual unknowns
 - project-fit and spec-fit judgment
@@ -219,6 +220,7 @@ Outputs:
 - evidence summary
 - blocking findings
 - non-blocking / deferred findings
+- report-facing design strengths and design-risk notes
 - verification coverage summary
 - residual risk and unknowns
 - learning notes for the most instructive findings or non-findings

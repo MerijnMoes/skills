@@ -69,6 +69,18 @@ test('forge review teaches design quality without replacing the verdict', async 
   const designQuality = await read('skills/forge/references/temper/references/design-quality.md');
 
   assert.match(temper, /references\/design-quality\.md/);
+  assert.match(
+    temper,
+    /\| 4 — Audit \|[^\n]*`Finding Set`, `Design Quality Notes`, specialty lane registry/,
+  );
+  assert.match(
+    temper,
+    /\| 7 — Validation gate \|[^\n]*`Evidence Pack`, `Finding Set`, `Design Quality Notes`, `Verification Ledger`/,
+  );
+  assert.match(
+    temper,
+    /\[Conditional: include only when meaningful design strengths exist\][\s\S]*## What went right/,
+  );
 
   for (const doc of [temper, finalReporting, findingsLifecycle, designQuality]) {
     assert.match(doc, /Learning notes?/i);
@@ -95,6 +107,13 @@ test('forge review teaches design quality without replacing the verdict', async 
   ]) {
     assertIncludesIgnoringCase(finalReporting, phrase);
     assertIncludesIgnoringCase(designQuality, phrase);
+  }
+
+  for (const phrase of [
+    'design-quality notes with `report`, `finding`, or meaningful `defer`',
+    'report-facing design strengths and design-risk notes',
+  ]) {
+    assertIncludesIgnoringCase(findingsLifecycle, phrase);
   }
 
   for (const phrase of [

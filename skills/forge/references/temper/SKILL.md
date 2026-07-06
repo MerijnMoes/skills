@@ -60,10 +60,10 @@ Treat those as scoped `forge` review requests, not as a second public skill.
 | 1 — Best-practices pass | Apply idiomatic and codebase-fit improvements to changed code | `Evidence Pack`, best-practice references | improved diff | Yes | idiomatic changed code or noted deviations |
 | 2 — Simplify | Remove local accidental complexity without changing behavior | changed diff, `simplify.md` | simpler diff | Yes | simplest clear equivalent form |
 | 3 — Refactor assessment | Fix only worthwhile structural issues, test-gated | changed diff, `refactoring.md`, tests | refactored diff | Yes | structural issues fixed or consciously deferred |
-| 4 — Audit | Register the maximal audit lane set, run every applicable lane, consolidate verified findings, and apply only safe localized post-consolidation fixes | `Evidence Pack`, audit references, diff | `Finding Set`, specialty lane registry | Limited, post-consolidation only | lane registry complete; no speculative blockers remain |
+| 4 — Audit | Register the maximal audit lane set, run every applicable lane, consolidate verified findings, and apply only safe localized post-consolidation fixes | `Evidence Pack`, audit references, diff | `Finding Set`, `Design Quality Notes`, specialty lane registry | Limited, post-consolidation only | lane registry complete; no speculative blockers remain |
 | 5 — Update docs | Align docs with the ship-ready change | `Evidence Pack`, risk lane, changed surfaces | updated docs | Docs only | affected docs aligned |
 | 6 — Verify | Gather post-edit evidence from static, test, and runtime checks | tests, runtime flows, risk map | `Verification Ledger` | No | sufficient post-edit evidence gathered |
-| 7 — Validation gate | Turn evidence and surviving findings into a verdict | `Evidence Pack`, `Finding Set`, `Verification Ledger` | `Decision Packet` | No | verdict justified from evidence |
+| 7 — Validation gate | Turn evidence and surviving findings into a verdict | `Evidence Pack`, `Finding Set`, `Design Quality Notes`, `Verification Ledger` | `Decision Packet` | No | verdict justified from evidence |
 | 8 — Final report & retro | Present verdict, evidence, residual risk, and next steps | `Decision Packet` | user-facing summary | No | concise decision-ready report complete |
 
 The table above is the quick interface to the pipeline. The phase sections
@@ -481,8 +481,9 @@ Present a concise report:
 - Blocking: <none, or list with severity/confidence/action/trigger/report status>
 - Non-blocking: <deferred items, coverage gaps, low-confidence notes, planned follow-ups, decision points, with report status>
 
+[Conditional: include only when meaningful design strengths exist]
 ## What went right
-- <optional; include only meaningful design strengths from `Design Quality Notes`; omit this section entirely when there are no evidence-backed examples worth preserving>
+- <meaningful design strengths from `Design Quality Notes`; omit this entire section when there are no evidence-backed examples worth preserving>
 
 ## Learning notes
 - <for the most instructive findings, fixes, positive design notes, or rejected recommendations: principle/source lens, mechanism, why it matters here, trade-off or drawback, when not to apply, and an alternative>
