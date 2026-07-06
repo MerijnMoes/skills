@@ -7,36 +7,39 @@ workflow from Merijn Moes for AI coding agents, installable across
 agents](https://github.com/vercel-labs/skills) with a single `npx skills`
 command.
 
-The repo exposes one public entrypoint:
+The repo exposes one public skill with three command forms:
 
 ## `forge`
 
 `forge` is the public front door for this repo's integrated workflow. It takes
-work from discovery and planning through implementation, Playwright-guided QA,
-and the internal `temper` final hardening gate.
+work from discovery and planning through implementation, QA, and the final
+hardening review.
 
-The same entrypoint can also route directly into selected internal lanes when
-the user asks for them explicitly, such as `forge setup` or `forge temper`.
+The public command surface is:
+
+- `/forge:setup`: prepare Forge for a new or existing repo.
+- `/forge:build`: run the full change workflow.
+- `/forge:review`: run the final hardening and readiness review on the current
+  diff, optionally against a chosen base.
 
 ### What `forge` covers
 
 ```
 Setup (if requested or blocking context is missing) -> Discover -> Spec ->
-Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) ->
-Playwright Author -> Playwright Verify -> Playwright Explore (conditional) ->
-Temper -> Report
+Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement ->
+Design Quality (if needed) -> QA -> Review -> Report
 ```
 
 `temper` remains part of the system, but it is an internal hardening subsystem
-inside `forge`, not a separate public command.
+behind `/forge:review`, not a separate public command.
 
 Examples:
 
-- `forge`
-- `forge setup`
-- `forge temper`
-- `forge temper against base`
-- `forge temper against develop`
+- `/forge:setup`
+- `/forge:build`
+- `/forge:review`
+- `/forge:review against base`
+- `/forge:review against develop`
 
 Internally, `forge` vendors the full methodology and frontend design-quality
 payloads it routes through, so a single install carries the workflow guidance,
@@ -48,13 +51,13 @@ design references, detector scripts, and final hardening gate.
   run state, pause points, and resume metadata.
 - `forge` treats `PRODUCT.md`, `DESIGN.md`, `CONTEXT.md`,
   `CONTEXT-MAP.md`, and ADRs as durable project memory when those files exist.
-- `forge setup` initializes that project memory selectively, including
+- `/forge:setup` initializes that project memory selectively, including
   `docs/agents/` setup docs when they are useful for later runs.
-- `forge temper` runs only the final hardening lane against the current branch
+- `/forge:review` runs only the final hardening lane against the current branch
   diff. `against base` means auto-detect the repository default branch;
   `against <branch>` overrides the comparison base.
-- Playwright is a first-class QA lane, and durable browser tests are created or
-  updated by default for affected flows when that lane is active.
+- QA is the top-level quality phase. Playwright remains the durable browser and
+  API automation sub-lane when that capability is active.
 
 ## Install
 

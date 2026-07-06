@@ -38,7 +38,9 @@ test('forge exposes a structured run-state contract', async () => {
     'classification',
     'spec',
     'plan',
+    'visual_plan',
     'qa',
+    'review',
     'temper',
     'blocker',
     'next_recommended_step',
@@ -49,6 +51,20 @@ test('forge exposes a structured run-state contract', async () => {
   assert.match(stateContract, /\.forge\/state\.json/);
   assert.match(stateContract, /atomic/i);
   assert.match(stateContract, /resume/i);
+
+  for (const phase of ['visual-plan', 'qa', 'review']) {
+    assert.match(stateContract, new RegExp(`\\b${phase}\\b`));
+  }
+
+  for (const phrase of [
+    'visual plan artifact path',
+    'watched local E2E result',
+    'CI-equivalent E2E result',
+    'review verdict',
+  ]) {
+    assertIncludesIgnoringCase(stateContract, phrase);
+    assertIncludesIgnoringCase(pauseResume, phrase);
+  }
 });
 
 test('forge final reporting is backed by structured evidence', async () => {
@@ -171,16 +187,20 @@ test('forge exposes the simplified public command surface and workflow overview'
   const skill = await read('skills/forge/SKILL.md');
   const routing = await read('skills/forge/references/workflow-routing.md');
   const preflight = await read('skills/forge/references/preflight.md');
+  const readme = await read('README.md');
 
   for (const command of ['/forge:setup', '/forge:build', '/forge:review']) {
     assert.match(skill, new RegExp(command.replace('/', '\\/')));
     assert.match(routing, new RegExp(command.replace('/', '\\/')));
+    assert.match(readme, new RegExp(command.replace('/', '\\/')));
   }
 
   assert.match(skill, /Design Quality \(if needed\) -> QA -> Review -> Report/);
   assert.doesNotMatch(skill, /Playwright Author -> Playwright Verify -> Playwright Explore/);
   assert.match(preflight, /\/forge:review against <branch>/);
   assert.match(preflight, /comparison base/i);
+  assert.doesNotMatch(readme, /forge temper/);
+  assert.doesNotMatch(readme, /forge setup/);
 });
 
 test('forge setup distinguishes existing and new project modes while preserving setup behavior', async () => {

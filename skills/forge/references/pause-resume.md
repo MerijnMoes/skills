@@ -23,13 +23,17 @@ must be recorded.
 - risk overlays
 - spec path
 - plan path
+- visual plan status
+- visual plan artifact path
 - whether shaping is active
 - whether Playwright is `required`, `optional`, or `skipped`
 - Playwright authored test paths
 - Playwright verification status
+- watched local E2E result
+- CI-equivalent E2E result
 - QA capability matrix path
 - QA evidence
-- `temper` base, verdict, blockers, and residual risks
+- review base, review verdict, blockers, and residual risks
 - whether extra pause points are expected
 - blocker or approval requirement
 - next recommended step
@@ -41,8 +45,9 @@ project-knowledge discovery. Resume from `next_recommended_step` unless the
 user asks for a different lane, the saved state is stale, or the saved run
 conflicts with the new request.
 
-Treat missing spec, plan, authored test, or QA artifact paths as stale state.
-Route back to the earliest phase that can recreate trustworthy evidence.
+Treat missing spec, plan, visual plan artifact path, authored test, or QA
+artifact paths as stale state. Route back to the earliest phase that can
+recreate trustworthy evidence.
 
 ## Pause points
 
@@ -50,5 +55,6 @@ Route back to the earliest phase that can recreate trustworthy evidence.
 - after plan approval when scope changed
 - before large Playwright generation when Playwright is in scope and the flow
   target is ambiguous
+- after visual plan review when approval or feedback is needed
 - after QA when judgment is needed
-- after `temper` when the verdict is not clean
+- after `/forge:review` when the verdict is not clean
