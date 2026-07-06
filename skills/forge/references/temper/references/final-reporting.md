@@ -21,6 +21,10 @@ The user should not need to reconstruct:
 - **Show project fit.** If the verdict relies on repo-specific architecture,
   domain, tooling, or release conventions, name what was checked and any
   unknowns.
+- **Show design quality when it teaches something real.** Use `Design Quality
+  Notes` to call out meaningful examples of good design and concrete design
+  risks. A "What went right" section is optional and must be omitted when there
+  are no evidence-backed examples worth preserving.
 - **Reviewer-ready, not diary-like.** Keep chronology out unless it matters for
   risk or debugging.
 - **Separate facts from confidence from gaps.** What you know, how sure you are,
@@ -61,12 +65,19 @@ contract.
   include severity, confidence, action type, concrete trigger or violated spec
   line, and current status. Order findings by business impact, not by phase or
   file order.
+- **What went right** — include this only for meaningful examples from `Design
+  Quality Notes`. Tie each note to a changed surface and explain the mechanism:
+  what knowledge became hidden, which interface became deeper, what coupling or
+  change amplification fell, or which unknown unknowns became explicit. Do not
+  include generic praise, morale filler, or a default empty section; if no
+  meaningful examples exist, the section must be omitted.
 - **Learning notes** — include compact teaching notes for the most instructive
-  findings, fixes, and rejected recommendations. Explain why it matters,
-  the drawback or trade-off, when not to apply it, and a plausible alternative.
-  Use sources such as Patterns.dev, project conventions, or Ousterhout-style
-  complexity/design lenses only when they clarify the judgment; never present
-  them as rules to obey blindly.
+  findings, fixes, positive design notes, and rejected recommendations. Explain
+  the principle/source lens, the mechanism, why it matters, the drawback or
+  trade-off, when not to apply it, and a plausible alternative. Use sources such
+  as Patterns.dev, project conventions, SOLID, clean architecture, or
+  Ousterhout-style complexity/design lenses only when they clarify the judgment;
+  never present them as rules to obey blindly.
 - **What each phase did** — keep this terse. It is a handoff aid, not a second
   narrative report.
 - **Residual risk / open questions** — this section is mandatory even when
@@ -114,8 +125,10 @@ it, but the report should make that description easy to derive.
 - [ ] Project-specific context that mattered is stated clearly.
 - [ ] Evidence is listed per relevant lane, not implied.
 - [ ] Findings carry severity/confidence/action/trigger/status.
-- [ ] Learning notes explain the why, trade-off, when-not-to-apply, and
-      alternative for instructive advice.
+- [ ] Learning notes explain the mechanism, why, trade-off, when-not-to-apply,
+      and alternative for instructive advice.
+- [ ] Optional "What went right" section appears only for meaningful examples
+      backed by `Design Quality Notes`; otherwise it is omitted.
 - [ ] Residual risk/open questions are explicit, even if empty.
 - [ ] Recommended next step matches the verdict.
 - [ ] Output is concise but reusable in a PR or review handoff.

@@ -25,6 +25,8 @@ Every lane that emits a finding into the shared `Finding Set` should provide:
 - current status
 - recommended action: `Fix` | `Investigate` | `Plan` | `Decide`
 - learning note, when the finding teaches a reusable lesson
+- related `Design Quality Notes` item, when the finding came from the
+  design-quality review
 
 ## Lane contract
 
@@ -46,6 +48,20 @@ emitted result from each lane must still be normalized into the shared
 Use the `risk lane` assigned in the `Evidence Pack` when deciding whether
 challenger coverage or extra verification is needed. Refer to
 `risk-mapping.md` for the deeper risk map behind that lane.
+
+## Design Quality Notes
+
+`Design Quality Notes` are the companion artifact for design strengths and
+design risks. They are not automatically findings. A strength can become a
+report-facing "what went right" item; a risk becomes a finding only when it
+creates a concrete future bug, maintenance hazard, or delivery risk for the
+current diff.
+
+When a design-quality risk becomes a finding, preserve the mechanism in the
+finding: what knowledge moved, which interface became deeper or shallower, what
+coupling changed, or how change amplification, cognitive load, locality, or
+unknown unknowns changed. Label-only claims such as "violates SOLID" or "not
+clean architecture" are not sufficient.
 
 ## Lifecycle
 
@@ -147,15 +163,17 @@ own.
 
 ## Learning notes
 
-Add a learning note for findings, fixes, and rejected recommendations that
-would help the user become a better developer. Keep it short and tied to this
-diff; do not turn the report into a tutorial.
+Add a learning note for findings, fixes, positive `Design Quality Notes`, and
+rejected recommendations that would help the user become a better developer.
+Keep it short and tied to this diff; do not turn the report into a tutorial.
 
 A useful learning note answers:
 
 - **Principle:** the review lens in play, such as project fit, information
   hiding, deep interfaces, change amplification, reuse before reinvention,
   rendering/performance patterns, or test quality.
+- **Mechanism:** how the choice changes knowledge hiding, interface depth,
+  coupling, locality, change amplification, cognitive load, or unknown unknowns.
 - **Why it matters:** the concrete complexity, correctness, maintenance, or
   product risk this principle reduces here.
 - **Trade-off / drawback:** what the recommendation costs or could make worse.
