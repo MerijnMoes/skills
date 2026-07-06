@@ -14,12 +14,14 @@ model subscriptions, or vendor dashboards for pass/fail evidence.
 
 | Capability | State | Evidence | Reason |
 |---|---|---|---|
-| Browser E2E | run / N/A / not configured / deferred | paths, command, artifacts | why |
+| Browser E2E - watched local | run / N/A / not configured / deferred | headed/ui command, artifacts | why |
+| Browser E2E - CI equivalent | run / N/A / not configured / deferred | headless command, artifacts | why |
 | API contract | run / N/A / not configured / deferred | paths, command, artifacts | why |
 | Accessibility | run / N/A / not configured / deferred | axe/manual/browser evidence | why |
 | Visual smoke | run / N/A / not configured / deferred | screenshots/snapshots | why |
 | Performance smoke | run / N/A / not configured / deferred | Lighthouse/k6/build metrics | why |
 | Coverage signal | run / N/A / not configured / deferred | coverage summary | why |
+| Security checks | run / N/A / not configured / deferred | audit/secret/static-analysis evidence | why |
 | CI artifacts | run / N/A / not configured / deferred | reports/traces/logs | why |
 ```
 
@@ -32,7 +34,7 @@ model subscriptions, or vendor dashboards for pass/fail evidence.
   explicit user decision.
 
 `not configured` and `deferred` are not failures by themselves, but they are
-residual-risk inputs for `temper`.
+residual-risk inputs for `/forge:review`.
 
 ## Capability guidance
 
@@ -54,6 +56,10 @@ residual-risk inputs for `temper`.
   environment justify it. Performance checks need explicit thresholds.
 - **Coverage signal**: use existing coverage tooling to find suspicious changed
   behavior gaps. Never add vacuous tests to improve a number.
+- **Security checks**: start by detecting existing package-manager audit,
+  dependency scanning, secret scanning, static analysis, lint security plugins,
+  vulnerability alerts, or CI security jobs. Suggest new tools only after
+  recording what already exists.
 - **CI artifacts**: prefer cheap-to-expensive order: lint/typecheck, unit,
   integration, build, API, E2E, performance. Preserve traces, screenshots,
   videos, coverage, and logs when available.

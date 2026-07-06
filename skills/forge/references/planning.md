@@ -23,7 +23,9 @@ Before writing a non-trivial plan, load
 6. Include Playwright authoring and capability-matrix evidence when
    classification requires browser-flow or API-contract QA.
 7. Include documentation updates when user-facing behavior or setup changes.
-8. Add pause points for ambiguous product, UX, data, QA, or rollout decisions.
+8. Offer visual plan review when the work is multi-file, risky, UI-heavy,
+   architecture-heavy, data-heavy, or otherwise expensive to misunderstand.
+9. Add pause points for ambiguous product, UX, data, QA, or rollout decisions.
 
 ## Work package rules
 
@@ -35,6 +37,8 @@ Before writing a non-trivial plan, load
 - Mark tasks that can be delegated to another agent without shared mutable
   context.
 - Add a review checkpoint after broad, risky, or delegated tasks.
+- Do not create a visual plan automatically. Ask the user first, then use
+  `visual-plan.md` only if they accept or explicitly requested it.
 
 ## Plan shape
 
@@ -58,6 +62,7 @@ Record:
 - QA capability matrix expectations
 - expected pause points
 - review checkpoints
+- visual plan offer status, if applicable
 - delegation candidates, if any
 
 ## Quality bar

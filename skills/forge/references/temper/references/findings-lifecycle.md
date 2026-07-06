@@ -24,6 +24,9 @@ Every lane that emits a finding into the shared `Finding Set` should provide:
 - violated invariant or spec point
 - current status
 - recommended action: `Fix` | `Investigate` | `Plan` | `Decide`
+- learning note, when the finding teaches a reusable lesson
+- related `Design Quality Notes` item, when the finding came from the
+  design-quality review
 
 ## Lane contract
 
@@ -45,6 +48,20 @@ emitted result from each lane must still be normalized into the shared
 Use the `risk lane` assigned in the `Evidence Pack` when deciding whether
 challenger coverage or extra verification is needed. Refer to
 `risk-mapping.md` for the deeper risk map behind that lane.
+
+## Design Quality Notes
+
+`Design Quality Notes` are the companion artifact for design strengths and
+design risks. They are not automatically findings. A strength can become a
+report-facing "what went right" item; a risk becomes a finding only when it
+creates a concrete future bug, maintenance hazard, or delivery risk for the
+current diff.
+
+When a design-quality risk becomes a finding, preserve the mechanism in the
+finding: what knowledge moved, which interface became deeper or shallower, what
+coupling changed, or how change amplification, cognitive load, locality, or
+unknown unknowns changed. Label-only claims such as "violates SOLID" or "not
+clean architecture" are not sufficient.
 
 ## Lifecycle
 
@@ -144,6 +161,32 @@ Attach these labels to every finding that reaches the report or verdict:
 Low-confidence items may still be surfaced, but they should not block on their
 own.
 
+## Learning notes
+
+Add a learning note for findings, fixes, positive `Design Quality Notes`, and
+rejected recommendations that would help the user become a better developer.
+Keep it short and tied to this diff; do not turn the report into a tutorial.
+
+A useful learning note answers:
+
+- **Principle:** the review lens in play, such as project fit, information
+  hiding, deep interfaces, change amplification, reuse before reinvention,
+  rendering/performance patterns, or test quality.
+- **Mechanism:** how the choice changes knowledge hiding, interface depth,
+  coupling, locality, change amplification, cognitive load, or unknown unknowns.
+- **Why it matters:** the concrete complexity, correctness, maintenance, or
+  product risk this principle reduces here.
+- **Trade-off / drawback:** what the recommendation costs or could make worse.
+- **When not to apply:** the situation where this advice would become cargo
+  culting.
+- **Alternative:** the next-best option if the recommended change is not worth
+  its cost.
+
+Use source lenses as context, not authority. It is fine to cite Patterns.dev,
+language/framework guidance, project conventions, or ideas from John
+Ousterhout's *A Philosophy of Software Design*, but the note must still explain
+why the advice fits this codebase and this diff.
+
 ## Challenger behavior
 
 The challenger is selective:
@@ -165,6 +208,7 @@ Inputs:
 
 - evidence-pack summary
 - surviving findings
+- design-quality notes with `report`, `finding`, or meaningful `defer`
 - verification-ledger summary
 - residual unknowns
 - project-fit and spec-fit judgment
@@ -176,8 +220,10 @@ Outputs:
 - evidence summary
 - blocking findings
 - non-blocking / deferred findings
+- report-facing design strengths and design-risk notes
 - verification coverage summary
 - residual risk and unknowns
+- learning notes for the most instructive findings or non-findings
 - recommended next step
 
 When relevant, note provenance such as:

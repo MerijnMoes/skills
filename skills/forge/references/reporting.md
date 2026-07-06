@@ -5,7 +5,7 @@ tool outputs.
 
 When `.forge/state.json` exists, use `state-contract.md` as the evidence index
 for the final report. Do not rely only on chat memory for paths, QA status, or
-the `temper` verdict.
+the `/forge:review` verdict stored in internal state.
 
 ## Required sections
 
@@ -21,13 +21,17 @@ the `temper` verdict.
   `deferred` states
 - QA evidence gathered when applicable: commands, screenshots, traces, videos,
   reports, or logs
+- watched local E2E result when applicable
+- CI-equivalent E2E result when applicable
+- exploratory QA findings when applicable
 - local/free QA note when relevant: no paid provider was required
 - project knowledge files read, updated, or intentionally left unchanged
 - contradictions, stale docs, or missing docs that affected confidence
-- temper verdict or blockers
-- note that the verdict comes from `temper`, the internal final phase inside
-  `forge`
+- review verdict or blockers
 - next recommended step from `.forge/state.json` when available
+
+Use `/forge:review` in public reports. Treat legacy `temper verdict` and state
+language as internal migration terminology only.
 
 ## Tone
 

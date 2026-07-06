@@ -26,7 +26,7 @@ behavior changes, `systematic-debugging/SKILL.md` for failures, and
 - Watch new or changed tests fail for the intended reason before writing the
   production change.
 - Run focused tests after each meaningful change.
-- Run broader checks before Playwright QA or `temper`.
+- Run broader checks before QA or Review.
 - If the baseline is already red, record that explicitly and avoid hiding the
   difference between pre-existing failures and new regressions.
 - Do not satisfy tests by weakening assertions unless the spec changed and that
@@ -89,7 +89,7 @@ Record:
 - tests added or updated
 - verification commands and results
 - known limitations or deferred work
-- whether the work is ready for design quality and Playwright QA
+- whether the work is ready for design quality and QA
 
 ## Quality bar
 

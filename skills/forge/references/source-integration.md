@@ -61,14 +61,14 @@ quality:
   live-browser support scripts
 - `agents/`: supporting agent prompts/configuration where a host supports them
 
-For `forge`, the public phase names are:
+For `forge`, the public UI and design phase names are:
 
 - `Shape`: use `reference/shape.md` and the matching register reference
 - `Design Quality`: route to `critique`, `audit`, `harden`, `polish`, or a
   targeted command such as `layout`, `typeset`, `colorize`, `adapt`, `animate`,
   `clarify`, `optimize`, or `onboard`
-- `Playwright QA`: runs after design quality so durable browser tests reflect
-  the hardened UI
+- `QA`: runs after design quality; Playwright authoring and verification are
+  internal QA sub-lanes so durable browser tests reflect the hardened UI
 
 ## QA source synthesis
 
@@ -107,8 +107,18 @@ Mostly not adopted:
 - Thin placeholder skills with little actionable content should not expand
   Forge scope.
 
+## Visual plan source synthesis
+
+Forge owns the default visual-plan lane. It is a dependency-light local review
+artifact generated after planning and before implementation only when the user
+accepts it.
+
+Do not require Agent-Native, hosted sharing, MDX renderers, or vendor dashboards
+for the default Forge flow.
+
 ## Naming boundary
 
-Public user flow stays `/forge`. Internal files may retain upstream naming,
-license text, command examples, and comments where preserving source fidelity is
-more valuable than cosmetic renaming.
+Public user flow uses `/forge:setup`, `/forge:build`, and `/forge:review`.
+Internal files may retain upstream naming, license text, command examples, and
+comments where preserving source fidelity is more valuable than cosmetic
+renaming.

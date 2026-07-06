@@ -8,36 +8,36 @@ The compact files in this directory route the workflow; the payloads under
 
 ## Default order
 
-`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA Intent Draft (when Playwright is required or meaningful) -> Playwright Author (if classification requires it or QA draft selects it) -> Playwright Verify (when Playwright is required or authored) -> Playwright Explore (conditional) -> QA Capability Matrix -> Temper -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA -> Review -> Report`
 
 ## Explicit lane requests
 
-When the user explicitly asks for an internal lane through `forge`, honor that
-request instead of forcing the full default order.
+When the user explicitly asks for a public `/forge:*` command, honor that
+command route instead of forcing the full default order.
 
-- `forge setup`: route to `setup.md`.
-- `forge temper`: run preflight, then enter `references/temper/SKILL.md`
-  directly on the current branch diff.
-- `forge temper against base`: same as above, with base branch auto-detected by
-  the `temper` phase.
-- `forge temper against <branch>`: same as above, but treat `<branch>` as the
-  requested comparison base for the diff and carry that override into
-  `temper` Phase 0.
+- `/forge:setup`: route to `setup.md`.
+- `/forge:build`: run the full default workflow.
+- `/forge:review`: run preflight, then enter the internal review payload
+  (`references/temper/SKILL.md`) directly on the current branch diff.
+- `/forge:review against base`: same as above, with base branch auto-detected.
+- `/forge:review against <branch>`: same as above, but carry `<branch>` as the
+  requested comparison base.
 
-Direct `temper` routing skips discovery/spec/plan/implementation lanes because
+Direct `/forge:review` routing skips discovery/spec/plan/implementation lanes because
 the user is asking for the final hardening pass only, not a fresh build cycle.
-If `temper` later finds blockers, report them and recommend the earliest phase
+If the internal review later finds blockers, report them and recommend the earliest phase
 that should be re-entered afterward.
 
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
 
-Use `playwright-qa.md`, `qa-intent-draft.md`, and
-`qa-capability-matrix.md` for the local/free QA lane. The QA lane may learn
-from external QA practices, but it must not require paid QA providers, hosted AI
-testing services, provider-owned model subscriptions, or vendor dashboards.
+Use `qa.md` for the QA umbrella. It coordinates `qa-intent-draft.md`,
+`playwright-qa.md`, `qa-capability-matrix.md`, and exploratory QA evidence.
+The QA lane may learn from external QA practices, but it must not require paid
+QA providers, hosted AI testing services, provider-owned model subscriptions,
+or vendor dashboards.
 
-Use `discovery.md`, `specification.md`, `planning.md`, and
+Use `discovery.md`, `specification.md`, `planning.md`, `visual-plan.md`, and
 `implementation.md` for the core development workflow. Use
 `design-quality.md` after implementation when the task activates the shaping
 lane or otherwise affects a user-facing flow.
@@ -53,6 +53,7 @@ source payloads:
 - Domain language and durable project memory:
   `methodology/skills/brainstorming/domain-grilling.md`
 - Planning: `methodology/skills/writing-plans/SKILL.md`
+- Optional visual plan review: `visual-plan.md`
 - Branch/workspace setup: `methodology/skills/using-git-worktrees/SKILL.md`
 - Implementation loop: `methodology/skills/test-driven-development/SKILL.md`
 - Debugging: `methodology/skills/systematic-debugging/SKILL.md`
@@ -61,6 +62,10 @@ source payloads:
 - Review checkpoints: `methodology/skills/requesting-code-review/SKILL.md`
   and `methodology/skills/receiving-code-review/SKILL.md`
 - Completion claims: `methodology/skills/verification-before-completion/SKILL.md`
+- QA umbrella: `qa.md`
+- QA intent draft: `qa-intent-draft.md`
+- Playwright QA sub-lane: `playwright-qa.md`
+- QA capability matrix: `qa-capability-matrix.md`
 - UI shaping: `design-studio/reference/shape.md`
 - UI building/craft: `design-studio/reference/craft.md`
 - UI critique/audit/polish: `design-studio/reference/critique.md`,
@@ -68,13 +73,16 @@ source payloads:
 - UI hardening: `design-studio/reference/harden.md`
 - Live browser design iteration: `design-studio/reference/live.md`
 
-After Playwright verification and any exploratory QA, move into `temper` as the
-internal final hardening phase before reporting out.
+After the QA umbrella completes, move into Review. Until the internal payload
+is renamed, Review is backed by `references/temper/SKILL.md` as the final
+hardening phase before reporting out.
 
 ## Loopbacks
 
 - If shaping changes the intended UI direction materially, return to `Spec` or
   `Plan` before implementation.
+- If visual plan feedback changes the intended behavior or implementation
+  order materially, return to `Spec` or `Plan` before implementation.
 - If design quality review finds a high-confidence usability, accessibility, or
   responsiveness defect, return to `Implement` and rerun the relevant design
   and QA checks.
@@ -87,8 +95,8 @@ internal final hardening phase before reporting out.
 - If exploratory QA reveals ambiguous product or UX concerns, pause for user
   guidance.
 - If the capability matrix marks a relevant check `not configured` or
-  `deferred`, carry that residual risk into `temper` rather than hiding it.
-- If `temper` returns blockers, route back to the earliest phase needed to
+  `deferred`, carry that residual risk into Review rather than hiding it.
+- If Review returns blockers, route back to the earliest phase needed to
   resolve them, then rerun downstream checks.
 
 ## Stop conditions
