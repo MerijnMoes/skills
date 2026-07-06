@@ -43,6 +43,67 @@ Ask these about the changed code:
 - Is the change strategic simplification, or tactical patching that solves
   today's request while making the next change harder?
 
+## Pattern Fit
+
+Use Pattern Fit when the diff exposes a recurring design problem, a likely
+change point, or a half-formed pattern that could be made clearer. The job is
+not to find a pattern for every change; it is to decide whether a known pattern
+would make this code deeper, more local, easier to extend, or easier to reason
+about.
+
+Source lenses:
+
+- Use Patterns.dev for frontend, web-app, JavaScript, React, Vue, rendering, and
+  performance patterns. Treat it as especially strong for web architecture,
+  component structure, rendering strategy, loading, splitting, and performance
+  trade-offs.
+- Use broader architecture and design patterns where relevant, including
+  Strategy, Adapter, Repository, Factory, Observer, Provider, Command, Unit of
+  Work, CQRS, state machines, ports/adapters, and composition-oriented
+  patterns.
+- Use project conventions first. A pattern recommendation must not introduce a
+  second competing way to solve a problem the repo already solves consistently.
+
+Ask:
+
+- What recurring design problem or likely change point does this diff expose?
+- Is the code already half-implementing a known pattern without naming or
+  completing it?
+- Would a pattern make the module deeper, improve locality, reduce coupling, or
+  reduce change amplification?
+- Would the pattern add ceremony without hiding real complexity?
+- Does the pattern match the stack and the codebase's existing conventions?
+- What trade-off does the pattern introduce?
+- When would this recommendation become over-engineering?
+
+Pattern recommendations must be mechanism-level, not label-level. A useful note
+explains:
+
+- pattern name and source lens when helpful;
+- problem in the diff;
+- why the pattern fits this problem;
+- how it changes coupling, knowledge hiding, interface depth, locality, or
+  change amplification;
+- trade-off or drawback;
+- when not to apply it;
+- a simpler alternative if the pattern is not worth its cost.
+
+Positive Pattern Fit notes are allowed when the diff already uses a pattern
+well. Explain why the pattern is appropriate here, not just that the pattern is
+present.
+
+Reject:
+
+- pattern shopping: recommending a pattern because it is recognizable rather
+  than because it solves this diff's problem;
+- generic advice such as "use Strategy" or "this is clean architecture" without
+  a mechanism;
+- pattern recommendations that ignore existing project conventions;
+- broad rewrites during final hardening;
+- treating Patterns.dev as universal authority outside its strongest web,
+  frontend, rendering, and performance context;
+- pattern-shaped ceremony that adds indirection without hiding complexity.
+
 ## Positive design notes
 
 Emit a positive `Design Quality Notes` item only for meaningful examples. A
@@ -104,7 +165,8 @@ Each `Design Quality Notes` item should carry:
 
 - kind: `strength` or `risk`
 - surface: file, module, function, command, or behavior area
-- principle: the lens in play
+- principle: the lens in play; for pattern guidance use
+  `Pattern Fit / <pattern name>`
 - evidence: what the diff actually did
 - mechanism: how complexity, knowledge, coupling, locality, or change
   amplification changed

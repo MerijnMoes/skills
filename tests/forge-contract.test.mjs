@@ -15,6 +15,14 @@ function assertIncludesIgnoringCase(actual, expected) {
   );
 }
 
+function assertIncludesIgnoringCaseAndWhitespace(actual, expected) {
+  const normalize = (text) => text.toLowerCase().replace(/\s+/g, ' ').trim();
+  assert.ok(
+    normalize(actual).includes(normalize(expected)),
+    `Expected text to include ${expected}`,
+  );
+}
+
 test('forge exposes a structured run-state contract', async () => {
   const skill = await read('skills/forge/SKILL.md');
   const pauseResume = await read('skills/forge/references/pause-resume.md');
@@ -140,6 +148,22 @@ test('forge review teaches design quality without replacing the verdict', async 
     'not authority',
   ]) {
     assertIncludesIgnoringCase(designQuality, phrase);
+  }
+
+  for (const phrase of [
+    'Pattern Fit',
+    'Patterns.dev',
+    'frontend, web-app, JavaScript, React, Vue, rendering, and performance patterns',
+    'Strategy, Adapter, Repository, Factory, Observer, Provider, Command, Unit of Work, CQRS',
+    'pattern shopping',
+    'pattern-shaped ceremony',
+    'pattern recommendations must be mechanism-level',
+    'problem in the diff',
+    'why the pattern fits this problem',
+    'a simpler alternative if the pattern is not worth its cost',
+    'for pattern guidance use `Pattern Fit / <pattern name>`',
+  ]) {
+    assertIncludesIgnoringCaseAndWhitespace(designQuality, phrase);
   }
 });
 
