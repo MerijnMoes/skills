@@ -89,8 +89,8 @@ Read these before starting. They explain *why* the pipeline is shaped the way it
 - **Evidence beats narration.** The final report should make it easy for a reviewer to see what changed, what was verified, what remains risky, what project-specific rules were checked, and why the verdict is justified. Prefer concrete evidence — commands run, flows exercised, files updated, triggers reproduced, docs checked — over generic reassurance.
 - **Artifacts beat rediscovery.** Build the shared evidence once, then let later
   phases consume it. The pipeline's core internal artifacts are the `Evidence
-  Pack`, `Finding Set`, `Verification Ledger`, and `Decision Packet`; later
-  phases should enrich them, not start from scratch.
+  Pack`, `Finding Set`, `Design Quality Notes`, `Verification Ledger`, and
+  `Decision Packet`; later phases should enrich them, not start from scratch.
 - **Check current library docs when unsure.** Training data drifts and APIs change. When the change uses a library or framework and you're not certain an API is current, non-deprecated, and used the way maintainers now recommend, consult docs rather than memory — if a documentation MCP such as **Context7** is available, resolve the library and query the specific topic. If none is available, say so and lower your confidence instead of guessing. Most relevant in Phases 1, 4, and 7.
 
 ## Setup
@@ -334,6 +334,15 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   leak. Diff-scoped only: flag degradation the change caused; do not flag or
   rewrite untouched neighboring code. If the same problem is already best owned
   by codebase fit, report it once there instead of duplicating it.
+- **Design-quality review:** follow `references/design-quality.md` to produce
+  compact `Design Quality Notes` for changed surfaces where the design lesson is
+  meaningful. Capture both strengths worth preserving and design risks worth
+  surfacing, but require mechanism-level evidence: what knowledge moved, what
+  callers now need to know, whether the interface became deeper or shallower,
+  and whether change amplification, cognitive load, locality, or unknown
+  unknowns improved or worsened. Do not emit generic praise or block on
+  aesthetics; design risks that become findings still flow through
+  `references/findings-lifecycle.md`.
 
 Consolidate the lanes into one punch list. **Before marking anything blocking,
 run it through `references/findings-lifecycle.md`** — require a concrete
@@ -404,6 +413,11 @@ Apply the critical, structured validation review to the final diff and produce a
 - Phase 7 produces the `Decision Packet` following
   `references/findings-lifecycle.md`: evidence summary, surviving findings,
   verification coverage, residual unknowns, and verdict rationale.
+- Carry `Design Quality Notes` into the `Decision Packet` only when their
+  disposition is `report`, `finding`, or a meaningful `defer`. Positive
+  strengths support learning and reviewer handoff; risks affect the verdict
+  only when they survive the same evidence and action-typing discipline as
+  other findings.
 
 - Follow `references/validation-gate.md` exactly — it is a 12-section checklist (including business-risk lanes for data integrity, idempotency/concurrency, and financial correctness) plus a required final risk pass. Reason about each item against the diff, the Phase-0 project context capsule, the Phase-0 risk map, and the evidence gathered in Phase 6; flag issues rather than assuming correctness. Use the checklist as a floor; bring forward any residual bug hypotheses from `references/bug-hunting.md` that the checklist doesn't name explicitly.
 - Apply the same `references/findings-lifecycle.md` discipline as Phase 4:
@@ -467,8 +481,11 @@ Present a concise report:
 - Blocking: <none, or list with severity/confidence/action/trigger/report status>
 - Non-blocking: <deferred items, coverage gaps, low-confidence notes, planned follow-ups, decision points, with report status>
 
+## What went right
+- <optional; include only meaningful design strengths from `Design Quality Notes`; omit this section entirely when there are no evidence-backed examples worth preserving>
+
 ## Learning notes
-- <for the most instructive findings, fixes, or rejected recommendations: principle/source lens, why it matters here, trade-off or drawback, when not to apply, and an alternative>
+- <for the most instructive findings, fixes, positive design notes, or rejected recommendations: principle/source lens, mechanism, why it matters here, trade-off or drawback, when not to apply, and an alternative>
 
 ## Verification coverage
 - Directly verified: <what was run and observed>
@@ -533,6 +550,7 @@ Do not commit, push, or open a PR. If the verdict is READY TO SHIP, you may sugg
 | `references/spec-conformance.md` | Phase 0 (+4) | Pin the originating intent; check the diff for missing requirements, scope creep, wrong implementation |
 | `references/risk-mapping.md` | Phase 0 (+4 +6 +7) | Classify the change, define invariants/boundaries/side effects, and choose the highest-value risks to probe |
 | `references/refactoring.md` | Phase 3 (+4) | Refactor priority model, behavior-preservation discipline & the diff-scoped structural-regression lane |
+| `references/design-quality.md` | Phase 4 (+7 +8) | Diff-scoped design-quality notes: meaningful strengths, concrete design risks, Ousterhout/SOLID/project-fit lenses, mechanism-level explanations, and optional positive reporting |
 | `references/findings-lifecycle.md` | Phase 4 (+7 +8) | Shared lifecycle for normalized findings, blocker verification, action typing, report-status mapping, and the `Decision Packet` |
 | `references/code-review.md` | Phase 4 | Correctness/bug review of the diff (logic, edges, error paths, concurrency, resource leaks, API misuse) |
 | `references/common-bugs-checklist.md` | Phase 4 | Fast sweep of recurring defect classes so boring-but-reachable bugs are not missed before deeper review |
