@@ -62,13 +62,17 @@ test('forge final reporting is backed by structured evidence', async () => {
   assert.match(stateContract, /final report/i);
 });
 
-test('forge review teaches without replacing the verdict', async () => {
+test('forge review teaches design quality without replacing the verdict', async () => {
   const temper = await read('skills/forge/references/temper/SKILL.md');
   const finalReporting = await read('skills/forge/references/temper/references/final-reporting.md');
   const findingsLifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
+  const designQuality = await read('skills/forge/references/temper/references/design-quality.md');
 
-  for (const doc of [temper, finalReporting, findingsLifecycle]) {
+  assert.match(temper, /references\/design-quality\.md/);
+
+  for (const doc of [temper, finalReporting, findingsLifecycle, designQuality]) {
     assert.match(doc, /Learning notes?/i);
+    assert.match(doc, /Design Quality Notes/i);
   }
 
   for (const phrase of [
@@ -77,14 +81,37 @@ test('forge review teaches without replacing the verdict', async () => {
     'drawback',
     'when not to apply',
     'alternative',
+    'mechanism',
   ]) {
     assertIncludesIgnoringCase(finalReporting, phrase);
     assertIncludesIgnoringCase(findingsLifecycle, phrase);
   }
 
-  assert.match(findingsLifecycle, /Patterns\.dev/);
-  assert.match(findingsLifecycle, /A Philosophy of Software Design/);
-  assert.match(findingsLifecycle, /not authority/i);
+  for (const phrase of [
+    'meaningful examples',
+    'generic praise',
+    'what went right',
+    'must be omitted',
+  ]) {
+    assertIncludesIgnoringCase(finalReporting, phrase);
+    assertIncludesIgnoringCase(designQuality, phrase);
+  }
+
+  for (const phrase of [
+    'A Philosophy of Software Design',
+    'deep module',
+    'shallow module',
+    'information hiding',
+    'change amplification',
+    'cognitive load',
+    'unknown unknowns',
+    'tactical',
+    'strategic',
+    'SOLID',
+    'not authority',
+  ]) {
+    assertIncludesIgnoringCase(designQuality, phrase);
+  }
 });
 
 test('forge exposes the simplified public command surface and workflow overview', async () => {
