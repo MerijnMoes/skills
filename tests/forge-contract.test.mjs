@@ -109,12 +109,14 @@ test('forge review teaches design quality without replacing the verdict', async 
     assertIncludesIgnoringCase(designQuality, phrase);
   }
 
-  for (const phrase of [
-    'design-quality notes with `report`, `finding`, or meaningful `defer`',
-    'report-facing design strengths and design-risk notes',
-  ]) {
-    assertIncludesIgnoringCase(findingsLifecycle, phrase);
-  }
+  assert.match(
+    findingsLifecycle,
+    /## Decision packet[\s\S]*Inputs:[\s\S]*design-quality notes with `report`, `finding`, or meaningful `defer`/,
+  );
+  assert.match(
+    findingsLifecycle,
+    /## Decision packet[\s\S]*Outputs:[\s\S]*report-facing design strengths and design-risk notes/,
+  );
 
   for (const phrase of [
     'A Philosophy of Software Design',
