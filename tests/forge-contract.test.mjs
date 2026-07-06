@@ -62,6 +62,31 @@ test('forge final reporting is backed by structured evidence', async () => {
   assert.match(stateContract, /final report/i);
 });
 
+test('forge review teaches without replacing the verdict', async () => {
+  const temper = await read('skills/forge/references/temper/SKILL.md');
+  const finalReporting = await read('skills/forge/references/temper/references/final-reporting.md');
+  const findingsLifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
+
+  for (const doc of [temper, finalReporting, findingsLifecycle]) {
+    assert.match(doc, /Learning notes?/i);
+  }
+
+  for (const phrase of [
+    'why it matters',
+    'trade-off',
+    'drawback',
+    'when not to apply',
+    'alternative',
+  ]) {
+    assertIncludesIgnoringCase(finalReporting, phrase);
+    assertIncludesIgnoringCase(findingsLifecycle, phrase);
+  }
+
+  assert.match(findingsLifecycle, /Patterns\.dev/);
+  assert.match(findingsLifecycle, /A Philosophy of Software Design/);
+  assert.match(findingsLifecycle, /not authority/i);
+});
+
 test('forge exposes the simplified public command surface and workflow overview', async () => {
   const skill = await read('skills/forge/SKILL.md');
   const routing = await read('skills/forge/references/workflow-routing.md');

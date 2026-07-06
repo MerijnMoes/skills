@@ -61,6 +61,12 @@ contract.
   include severity, confidence, action type, concrete trigger or violated spec
   line, and current status. Order findings by business impact, not by phase or
   file order.
+- **Learning notes** — include compact teaching notes for the most instructive
+  findings, fixes, and rejected recommendations. Explain why it matters,
+  the drawback or trade-off, when not to apply it, and a plausible alternative.
+  Use sources such as Patterns.dev, project conventions, or Ousterhout-style
+  complexity/design lenses only when they clarify the judgment; never present
+  them as rules to obey blindly.
 - **What each phase did** — keep this terse. It is a handoff aid, not a second
   narrative report.
 - **Residual risk / open questions** — this section is mandatory even when
@@ -108,6 +114,8 @@ it, but the report should make that description easy to derive.
 - [ ] Project-specific context that mattered is stated clearly.
 - [ ] Evidence is listed per relevant lane, not implied.
 - [ ] Findings carry severity/confidence/action/trigger/status.
+- [ ] Learning notes explain the why, trade-off, when-not-to-apply, and
+      alternative for instructive advice.
 - [ ] Residual risk/open questions are explicit, even if empty.
 - [ ] Recommended next step matches the verdict.
 - [ ] Output is concise but reusable in a PR or review handoff.

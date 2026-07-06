@@ -24,6 +24,7 @@ Every lane that emits a finding into the shared `Finding Set` should provide:
 - violated invariant or spec point
 - current status
 - recommended action: `Fix` | `Investigate` | `Plan` | `Decide`
+- learning note, when the finding teaches a reusable lesson
 
 ## Lane contract
 
@@ -144,6 +145,30 @@ Attach these labels to every finding that reaches the report or verdict:
 Low-confidence items may still be surfaced, but they should not block on their
 own.
 
+## Learning notes
+
+Add a learning note for findings, fixes, and rejected recommendations that
+would help the user become a better developer. Keep it short and tied to this
+diff; do not turn the report into a tutorial.
+
+A useful learning note answers:
+
+- **Principle:** the review lens in play, such as project fit, information
+  hiding, deep interfaces, change amplification, reuse before reinvention,
+  rendering/performance patterns, or test quality.
+- **Why it matters:** the concrete complexity, correctness, maintenance, or
+  product risk this principle reduces here.
+- **Trade-off / drawback:** what the recommendation costs or could make worse.
+- **When not to apply:** the situation where this advice would become cargo
+  culting.
+- **Alternative:** the next-best option if the recommended change is not worth
+  its cost.
+
+Use source lenses as context, not authority. It is fine to cite Patterns.dev,
+language/framework guidance, project conventions, or ideas from John
+Ousterhout's *A Philosophy of Software Design*, but the note must still explain
+why the advice fits this codebase and this diff.
+
 ## Challenger behavior
 
 The challenger is selective:
@@ -178,6 +203,7 @@ Outputs:
 - non-blocking / deferred findings
 - verification coverage summary
 - residual risk and unknowns
+- learning notes for the most instructive findings or non-findings
 - recommended next step
 
 When relevant, note provenance such as:

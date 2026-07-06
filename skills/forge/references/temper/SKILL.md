@@ -467,6 +467,9 @@ Present a concise report:
 - Blocking: <none, or list with severity/confidence/action/trigger/report status>
 - Non-blocking: <deferred items, coverage gaps, low-confidence notes, planned follow-ups, decision points, with report status>
 
+## Learning notes
+- <for the most instructive findings, fixes, or rejected recommendations: principle/source lens, why it matters here, trade-off or drawback, when not to apply, and an alternative>
+
 ## Verification coverage
 - Directly verified: <what was run and observed>
 - Reasoned about: <what is supported indirectly by static checks, surrounding evidence, or code inspection>
