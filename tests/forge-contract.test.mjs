@@ -109,13 +109,21 @@ test('forge review teaches design quality without replacing the verdict', async 
     assertIncludesIgnoringCase(designQuality, phrase);
   }
 
-  assert.match(
-    findingsLifecycle,
-    /## Decision packet[\s\S]*Inputs:[\s\S]*design-quality notes with `report`, `finding`, or meaningful `defer`/,
+  const decisionPacket = findingsLifecycle.match(
+    /## Decision packet([\s\S]*?)## Reporting-term mapping/,
   );
-  assert.match(
-    findingsLifecycle,
-    /## Decision packet[\s\S]*Outputs:[\s\S]*report-facing design strengths and design-risk notes/,
+  assert.ok(decisionPacket, 'Expected a Decision packet section');
+  const decisionPacketInputs = decisionPacket[1].match(/Inputs:\n([\s\S]*?)\nOutputs:/);
+  assert.ok(decisionPacketInputs, 'Expected Decision packet inputs');
+  const decisionPacketOutputs = decisionPacket[1].match(/Outputs:\n([\s\S]*?)\nWhen relevant/);
+  assert.ok(decisionPacketOutputs, 'Expected Decision packet outputs');
+  assertIncludesIgnoringCase(
+    decisionPacketInputs[1],
+    'design-quality notes with `report`, `finding`, or meaningful `defer`',
+  );
+  assertIncludesIgnoringCase(
+    decisionPacketOutputs[1],
+    'report-facing design strengths and design-risk notes',
   );
 
   for (const phrase of [
