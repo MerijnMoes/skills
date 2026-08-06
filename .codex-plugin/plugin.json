@@ -1,0 +1,25 @@
+{
+  "name": "forge",
+  "version": "1.0.0",
+  "description": "Integrated development workflow for AI coding agents.",
+  "author": {
+    "name": "Merijn Moes",
+    "url": "https://github.com/merijnmoes"
+  },
+  "repository": "https://github.com/merijnmoes/skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Forge",
+    "shortDescription": "A structured software development workflow.",
+    "longDescription": "Guide changes from discovery and specification through planning, implementation, QA, and final review.",
+    "developerName": "Merijn Moes",
+    "category": "Development",
+    "capabilities": ["Plan", "Write", "Review"],
+    "defaultPrompt": [
+      "Use Forge to plan and implement this change.",
+      "Run a Forge review on the current diff.",
+      "Set up Forge for this repository."
+    ]
+  }
+}
