@@ -1,0 +1,21 @@
+{
+  "name": "merijn-skills",
+  "interface": {
+    "displayName": "Merijn's Skills"
+  },
+  "plugins": [
+    {
+      "name": "forge",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/MerijnMoes/skills.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    }
+  ]
+}
