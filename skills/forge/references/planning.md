@@ -45,6 +45,7 @@ Before writing a non-trivial plan, load
 Each task should name:
 
 - files to create, modify, or inspect
+- the spec acceptance criterion or criteria the task satisfies
 - the behavior being changed
 - the test or verification command
 - the expected result

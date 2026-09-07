@@ -8,7 +8,7 @@ The compact files in this directory route the workflow; the payloads under
 
 ## Default order
 
-`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA -> Review -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement -> Converge -> Design Quality (if needed) -> QA -> Review -> Report`
 
 ## Explicit lane requests
 
@@ -56,6 +56,12 @@ source payloads:
 - Optional visual plan review: `visual-plan.md`
 - Branch/workspace setup: `methodology/skills/using-git-worktrees/SKILL.md`
 - Implementation loop: `methodology/skills/test-driven-development/SKILL.md`
+- Implementation exit gate: `converge.md` — verify every spec acceptance
+  criterion and plan task maps to behavior plus evidence before downstream QA.
+- Phase entry/exit checklists: `checklists.md` — load and record the current
+  phase's checklist on demand.
+- Worker role templates: `worker-templates/` (research, review, implementer,
+  qa) — canonical delegation prompts, filled per `delegation.md`.
 - Debugging: `methodology/skills/systematic-debugging/SKILL.md`
 - Cross-agent execution: `methodology/skills/subagent-driven-development/SKILL.md`
 - Sequential execution fallback: `methodology/skills/executing-plans/SKILL.md`
@@ -86,6 +92,9 @@ hardening phase before reporting out.
 - If design quality review finds a high-confidence usability, accessibility, or
   responsiveness defect, return to `Implement` and rerun the relevant design
   and QA checks.
+- If converge finds a spec acceptance criterion or plan task without behavior
+  or evidence, return to the earliest phase needed (spec, plan, or implement)
+  and rerun converge before downstream QA.
 - If Playwright authoring or verification exposes an implementation defect,
   return to `Implement`.
 - If the QA intent draft exposes ambiguous product behavior, pause before

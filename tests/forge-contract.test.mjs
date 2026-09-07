@@ -23,6 +23,112 @@ function assertIncludesIgnoringCaseAndWhitespace(actual, expected) {
   );
 }
 
+test('forge delegation contract is bounded, non-recursive, and hang-resilient', async () => {
+  const delegation = await read('skills/forge/references/delegation.md');
+  const implementation = await read('skills/forge/references/implementation.md');
+  const temper = await read('skills/forge/references/temper/SKILL.md');
+
+  // Contract is referenced from implementation and temper.
+  assert.match(implementation, /delegation\.md/);
+  assert.match(temper, /delegation\.md/);
+
+  // Task parcel must be explicit (scope, forbidden actions, output).
+  for (const phrase of [
+    'Scope and relevant files',
+    'Allowed and forbidden actions',
+    'Expected output',
+    'Acceptance criteria',
+  ]) {
+    assertIncludesIgnoringCase(delegation, phrase);
+  }
+
+  // No recursive delegation by default.
+  assertIncludesIgnoringCaseAndWhitespace(delegation, 'must not spawn additional workers');
+  assertIncludesIgnoringCase(delegation, 'Do not delegate further');
+
+  // Parent recovery reflex: never wait indefinitely.
+  for (const phrase of [
+    'never wait indefinitely',
+    'Inline fallback',
+    'Continue degraded',
+    'Pause',
+  ]) {
+    assertIncludesIgnoringCase(delegation, phrase);
+  }
+
+  assert.match(temper, /never returns/);
+  assert.match(implementation, /never wait indefinitely/);
+});
+
+test('forge has an implementation converge gate and per-phase checklists', async () => {
+  const skill = await read('skills/forge/SKILL.md');
+  const routing = await read('skills/forge/references/workflow-routing.md');
+  const converge = await read('skills/forge/references/converge.md');
+  const checklists = await read('skills/forge/references/checklists.md');
+  const stateContract = await read('skills/forge/references/state-contract.md');
+  const planning = await read('skills/forge/references/planning.md');
+
+  // Converge is in the phase order and referenced from routing and state.
+  assert.match(skill, /Implement -> Converge -> Design Quality/);
+  assert.match(routing, /Implement -> Converge -> Design Quality/);
+  assert.match(routing, /converge\.md/i);
+  assert.match(routing, /checklists\.md/i);
+  assert.match(stateContract, /"converge"/);
+  assert.match(stateContract, /converge\.status/);
+  assert.match(stateContract, /checklists\.current_phase/);
+
+  // Converge gate: evidence-backed coverage, no silent gaps.
+  for (const phrase of [
+    'acceptance criterion',
+    'coverage',
+    'gaps-found',
+    'Loop back',
+    'converged',
+  ]) {
+    assertIncludesIgnoringCase(converge, phrase);
+  }
+
+  // Checklists: entry/exit per phase, load on demand, persisted.
+  for (const phrase of [
+    'entry',
+    'exit',
+    'load-on-demand',
+    'not-started',
+  ]) {
+    assertIncludesIgnoringCase(checklists, phrase);
+  }
+
+  // Planning tasks now name the acceptance criterion they satisfy.
+  assertIncludesIgnoringCase(planning, 'acceptance criterion');
+});
+
+test('forge delegation uses canonical worker role templates', async () => {
+  const delegation = await read('skills/forge/references/delegation.md');
+  const routing = await read('skills/forge/references/workflow-routing.md');
+
+  // Delegation and routing point at the worker-templates mechanism.
+  assert.match(delegation, /worker-templates\/<role>\.md/);
+  assert.match(delegation, /fill its\s*task-parcel block/i);
+  assertIncludesIgnoringCase(delegation, 'research, review, implementer, or qa');
+  assert.match(routing, /worker-templates\//);
+
+  // Every role template is self-contained: scope, forbidden, no recursion,
+  // evidence-backed output with an explicit output format.
+  for (const file of ['research', 'review', 'implementer', 'qa']) {
+    const tpl = await read(`skills/forge/references/worker-templates/${file}.md`);
+    for (const phrase of [
+      'Task parcel',
+      'Forbidden',
+      'delegate to any further worker',
+      'Output format',
+      'BLOCKED:',
+      'Acceptance criteria',
+    ]) {
+      assertIncludesIgnoringCaseAndWhitespace(tpl, phrase);
+    }
+  }
+});
+
 test('forge exposes a structured run-state contract', async () => {
   const skill = await read('skills/forge/SKILL.md');
   const pauseResume = await read('skills/forge/references/pause-resume.md');

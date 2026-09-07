@@ -57,6 +57,17 @@ database.
     "active": true,
     "artifacts": []
   },
+  "checklists": {
+    "current_phase": "implement",
+    "phases": {
+      "implement": { "entry": "done", "exit": "done" }
+    }
+  },
+  "converge": {
+    "status": "not-run",
+    "coverage": [],
+    "gaps": []
+  },
   "qa": {
     "playwright": "required",
     "intent_path": ".forge/qa-intent.md",
@@ -122,6 +133,17 @@ not omit top-level keys once the file exists.
   command and status when applicable.
 - `qa.evidence`: list commands, screenshots, traces, reports, logs, videos, or
   manual probes that support the final report.
+- `checklists.current_phase`: the phase whose entry/exit checklist is currently
+  tracked.
+- `checklists.phases`: per-phase `{ "entry", "exit" }` recorded as `done` or
+  `not-started` (`checklists.md`).
+- `converge.status`: one of `not-run`, `converged`, `gaps-found`, or
+  `not-applicable`.
+- `converge.coverage`: list mapping each spec acceptance criterion and plan task
+  to its implemented behavior and evidence, or `N/A` with a reason
+  (`converge.md`).
+- `converge.gaps`: uncovered criteria or tasks, the reason, and the earliest
+  resume phase.
 - `review.verdict`: review verdict, one of `not-run`, `ready`, `blocked`, or
   `needs-decision`.
 - `temper`: legacy internal mirror for the review payload while migration is in

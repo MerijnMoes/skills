@@ -6,6 +6,9 @@ Before substantial implementation, load `source-integration.md` and the
 applicable methodology source file. Use `test-driven-development/SKILL.md` for
 behavior changes, `systematic-debugging/SKILL.md` for failures, and
 `subagent-driven-development/SKILL.md` when cross-agent execution is available.
+When delegating any implementation work, follow the contract and recovery
+reflex in `delegation.md`; never wait indefinitely on a worker that does not
+return a result.
 
 ## Operating rules
 
@@ -17,7 +20,9 @@ behavior changes, `systematic-debugging/SKILL.md` for failures, and
 - Do not let implementation rewrite the approved product behavior without
   returning to spec or planning.
 - When a task can be split safely, keep work packages independent enough for
-  fresh-context review or parallel agent execution.
+  fresh-context review or parallel agent execution, bounded by
+  `delegation.md`: workers never spawn further workers, and a worker that does
+  not return is recovered inline rather than waited on.
 
 ## Test discipline
 

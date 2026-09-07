@@ -30,7 +30,7 @@ The public command surface is:
 
 `forge` runs this phase order:
 
-`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement -> Design Quality (if needed) -> QA -> Review -> Report`
+`Setup (if requested or blocking context is missing) -> Discover -> Spec -> Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement -> Converge -> Design Quality (if needed) -> QA -> Review -> Report`
 
 ## Operating rules
 
@@ -54,6 +54,11 @@ The public command surface is:
   visual hierarchy.
 - Use `references/implementation.md` to execute with test-first discipline,
   branch hygiene, and review checkpoints.
+- Use `references/converge.md` as the exit gate of implementation: prove every
+  spec acceptance criterion and plan task maps to behavior plus evidence before
+  design quality and QA.
+- Use `references/checklists.md` to load and record the current phase's
+  entry/exit checklist, and `references/state-contract.md` to persist it.
 - Use `references/design-quality.md` for UI critique, accessibility,
   responsiveness, hardening, and polish before QA.
 - Use `references/qa.md` for the QA umbrella after implementation and design
