@@ -45,3 +45,22 @@ test('moes shared-file references resolve inside this repo', async () => {
   assertIncludesIgnoringCase(delegation, 'wave');
   assertIncludesIgnoringCase(review, 'Covered:');
 });
+
+test('moes criticality counterweights hold', async () => {
+  const lifecycle = await read('skills/moes/references/findings-lifecycle.md');
+
+  for (const phrase of [
+    'mechanism gate',
+    'why-no-more-risks',
+    'surprise pass',
+    'belowBarReason',
+    'The low tier is exempt',
+    'dismissedLedger',
+    'executor of the surprise pass',
+    'gap-hunting mode',
+    'doubles as the gap-hunt',
+    'with a converged audit',
+  ]) {
+    assertIncludesIgnoringCase(lifecycle, phrase);
+  }
+});

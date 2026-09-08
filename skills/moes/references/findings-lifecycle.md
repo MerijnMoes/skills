@@ -98,6 +98,7 @@ A race condition needs the interleaving. A structural regression needs the
 concrete maintenance hazard it creates, not an aesthetic objection.
 
 The failure scenario is the trigger plus the wrong outcome (or concrete cost for quality findings); it is what satisfies this trigger test. Lanes drop scenario-less candidates at the source; verifiers downgrade uncertain survivors but never reject one as "too speculative".
+Architecture findings may block through the mechanism gate instead of a reachable trigger: the triple of harmed parties named, blast radius counted, and cheaper alternative stated replaces the trigger requirement, while `failureScenario` is still carried as the concrete cost.
 
 ## Known false-positive classes
 
@@ -166,6 +167,8 @@ incomplete — a fixer that silently shortens the list has failed verification.
 
 Ledger outcomes map onto lifecycle statuses: `fixed` stays `fixed`; `skipped` (with reason) maps to `deferred`; `no_change_needed` (with reason) maps to `dropped`.
 
+Dropped Finding Set members carry a dismissedLedger entry: title, reason, prior status, and priority rank. Only members dropped after challenge or verification qualify; scenario-less candidates dropped at the source and fixer `no_change_needed` outcomes are excluded unless explicitly notable.
+
 ## Label every surviving finding
 
 Attach these labels to every finding that reaches the report or verdict:
@@ -225,6 +228,16 @@ other. Stop after 2 consecutive dry rounds; caps are 10 rounds for a small
 diff, 5 for a chunked diff, and 3 for a huge diff with a deadline. A stop at
 the cap is reported as capped, never as converged.
 
+## Completeness check
+
+After the reverse audit and before the Decision Packet, name the 3 highest remaining risks even when they sit below the blocking bar.
+Record them in residual risk with a belowBarReason from this taxonomy: no reachable trigger, low confidence, Investigate-grade evidence, or Decide-grade trade-off.
+Fewer than 3 risks is allowed only with an explicit why-no-more-risks note.
+Zero findings on a yellow/red diff, or on any diff over 200 source lines counted with git diff --numstat on source files only, triggers a surprise pass: one more targeted hunt whose target is recorded in the Verification Ledger audit trail.
+The low tier is exempt from this check.
+At medium effort the surprise pass doubles as the gap-hunt; at high effort it follows the reverse audit.
+Skip only for green-lane diffs at or under 200 source lines with a converged audit, with a one-line note.
+
 ## Challenger behavior
 
 The challenger is selective and runs after the reverse audit:
@@ -232,9 +245,10 @@ The challenger is selective and runs after the reverse audit:
 - run it by default for red-lane diffs
 - run it for high-impact low-confidence findings
 - run it when lanes disagree materially
+- run it as executor of the surprise pass when a yellow-or-higher diff reports zero design findings (no Q/A Finding Set entries and no report- or finding-disposition Design Quality Notes)
 
 Its job is to disprove weak blockers and surface missed high-impact defects,
-not to create a second wall of findings.
+not to create a second wall of findings. The surprise-pass execution is an explicit gap-hunting mode, ordered after the reverse audit.
 
 ## Decision packet
 
@@ -261,6 +275,7 @@ Outputs:
 - non-blocking / deferred findings
 - report-facing design strengths and design-risk notes
 - verification coverage summary
+- dismissedLedger summary (Considered and dismissed projection)
 - residual risk and unknowns
 - learning notes for the most instructive findings or non-findings
 - recommended next step
@@ -284,7 +299,7 @@ Map the internal statuses into final-report terms like this:
   `needs user decision`
 - `candidate` is working state only and should not appear in the final report
   unless the review stopped before validation
-- `dropped` is omitted from the final report unless the audit trail matters
+- `dropped` reaches the final report only through the dismissedLedger list: title plus one-line reason each, ex-blockers first then by severity and confidence, maximum 5
 
 ## Quick checklist
 
