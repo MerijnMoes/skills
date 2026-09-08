@@ -13,6 +13,10 @@ required.
 - Feed compact outputs into the shared `Finding Set` and the Phase 7
   `Decision Packet`; do not redesign the architecture inside `moes`.
 
+## Why-not note
+
+On any trust-boundary change — auth/session paths, tenant separation, untrusted-input handling, money or authorization caching — either run this escalation or record a why-not note naming the boundary and why escalation adds nothing.
+
 ## Compact threat model
 
 Capture only the minimum set needed to justify escalation:

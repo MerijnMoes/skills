@@ -7,6 +7,7 @@ Independent security audit of the **diff only**, dispatched to a fresh-context s
 Use `security-cheat-sheets.md` as the canonical router for focused security
 references. Load only the references that match the diff surface; if a surface
 clearly does not apply, mark it `N/A` with a one-line reason and move on.
+Downgrades on framework protection or elsewhere-enforced auth must quote the guard per `findings-lifecycle.md`; memory is never evidence here.
 
 That router now covers specialty routes for:
 

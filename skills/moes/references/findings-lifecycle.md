@@ -115,6 +115,9 @@ is absent or bypassed here:
 This list downgrades; it never upgrades. A finding that escapes every
 exclusion still has to pass the trigger test.
 
+Security findings are exempt from memory-based downgrades: invoking "framework or ORM already provides the protection" or "auth is enforced elsewhere" requires quoting the guard — in-diff lines, or an immediately adjacent file:line verified by reading it.
+Without the quote the finding keeps a verdict-affecting status: `blocking` if its trigger holds, otherwise `contested`, or `Investigate` with the concrete check stated.
+
 ## Verify framework and library claims
 
 If the existence or dismissal of a finding depends on library or framework

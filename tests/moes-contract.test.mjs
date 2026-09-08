@@ -128,4 +128,18 @@ test('moes lane sharpness holds', async () => {
   const reporting = await read('skills/moes/references/final-reporting.md');
 
   assertIncludesIgnoringCase(reporting, 'Plan follow-up');
+
+  const security = await read('skills/moes/references/security-review.md');
+  const threat = await read('skills/moes/references/threat-model-escalation.md');
+
+  for (const phrase of [
+    'requires quoting the guard',
+    'keeps a verdict-affecting status',
+  ]) {
+    assertIncludesIgnoringCase(lifecycle, phrase);
+  }
+
+  assertIncludesIgnoringCase(security, 'memory is never evidence');
+  assertIncludesIgnoringCase(threat, 'why-not note');
+  assertIncludesIgnoringCase(gate, 'missing both');
 });

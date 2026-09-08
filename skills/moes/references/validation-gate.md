@@ -118,6 +118,7 @@ unfinished" is not enough.
 - Confirmed exploit-driven workflow vulnerabilities and unresolved red-lane
   threat-model findings are carried into the verdict explicitly rather than
   left as vague concerns.
+- Trust-boundary diffs carry either a threat-model escalation or a why-not note; a missing both is a gate finding.
 
 ### 6. Performance
 - No unnecessary performance regressions.
