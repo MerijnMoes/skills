@@ -52,5 +52,5 @@ This repository includes internal reference payloads adapted into `forge`.
 - Copyright: Matt Pocock, 2026
 - License: MIT
 - Adapted paths:
-  - `skills/forge/references/temper/references/refactoring.md`
-  - `skills/forge/references/temper/references/architecture-docs-review.md`
+  - `skills/moes/references/refactoring.md`
+  - `skills/moes/references/architecture-docs-review.md`
