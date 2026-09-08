@@ -472,3 +472,20 @@ test('forge review has an advisory architecture lane with a map', async () => {
   assertIncludesIgnoringCase(pack, 'Architecture Map');
   assertIncludesIgnoringCase(temper, 'architecture-review.md');
 });
+
+test('forge findings require scenarios and structured verification', async () => {
+  const lifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
+
+  for (const phrase of [
+    'failure scenario',
+    'sharded verification',
+    'reverse audit',
+    'dry rounds',
+    'shortSummary',
+    'locations',
+    'outcomes ledger',
+    'Too speculative',
+  ]) {
+    assertIncludesIgnoringCase(lifecycle, phrase);
+  }
+});

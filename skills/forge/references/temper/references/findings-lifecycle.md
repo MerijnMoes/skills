@@ -21,6 +21,10 @@ Every lane that emits a finding into the shared `Finding Set` should provide:
 - reachability
 - evidence type
 - concrete trigger
+- failure scenario: the concrete input, state, or timing that triggers the
+  finding and the wrong outcome that results (for quality findings, the
+  concrete cost instead). A candidate that cannot name its failure scenario is
+  dropped at the source.
 - violated invariant or spec point
 - current status
 - recommended action: `Fix` | `Investigate` | `Plan` | `Decide`
@@ -145,6 +149,19 @@ Decision flow:
 - `fixed`: resolved during the temper run
 - `dropped`: failed verification or duplicate of a stronger finding
 
+## Findings as data
+
+The consolidated `Finding Set` is persisted as canonical JSON under the
+repo-local `.forge/` state dir. Each finding carries a stable `id`, a
+`shortSummary` capped at 60 characters, its `failureScenario`, and one
+`locations` entry per occurrence so N-file patterns stay countable. Phases 6,
+7, and 8 read that artifact instead of re-typing the list.
+
+Every finding fixed inside `temper` is accounted for in an outcomes ledger:
+each id gets exactly one of `fixed`, `skipped` (with reason), or
+`no_change_needed`. A ledger that does not cover every finding id is
+incomplete — a fixer that silently shortens the list has failed verification.
+
 ## Label every surviving finding
 
 Attach these labels to every finding that reaches the report or verdict:
@@ -187,9 +204,26 @@ language/framework guidance, project conventions, or ideas from John
 Ousterhout's *A Philosophy of Software Design*, but the note must still explain
 why the advice fits this codebase and this diff.
 
+## Sharded verification
+
+After dedup, verify findings in sharded batches of at most 8 per verifier, all
+launched together. A verifier may reject a blocking finding only by quoting
+the code that contradicts it, proving the claimed state impossible from a
+type, constant, or invariant, citing the in-diff guard that covers the
+trigger, or matching a defined exclusion. Anything less certain is downgraded
+in confidence rather than deleted — a silently rejected blocker is invisible to every later stage, while a downgraded one still reaches a human. Too speculative is never a valid rejection ground.
+
+## Reverse audit
+
+After verification, run gap-hunters with the cumulative finding list, asking
+only what was missed. New candidates go through sharded verification like any
+other. Stop after 2 consecutive dry rounds; caps are 10 rounds for a small
+diff, 5 for a chunked diff, and 3 for a huge diff with a deadline. A stop at
+the cap is reported as capped, never as converged.
+
 ## Challenger behavior
 
-The challenger is selective:
+The challenger is selective and runs after the reverse audit:
 
 - run it by default for red-lane diffs
 - run it for high-impact low-confidence findings
