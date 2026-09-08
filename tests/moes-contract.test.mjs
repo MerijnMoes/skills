@@ -87,4 +87,15 @@ test('moes criticality counterweights hold', async () => {
   ]) {
     assertIncludesIgnoringCase(arch, phrase);
   }
+
+  const temper = await read('skills/moes/SKILL.md');
+
+  for (const phrase of [
+    'executor of the surprise pass',
+    'Considered and dismissed',
+    'blocking exception',
+    'covers steelmans',
+  ]) {
+    assertIncludesIgnoringCase(temper, phrase);
+  }
 });

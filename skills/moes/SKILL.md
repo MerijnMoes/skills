@@ -203,7 +203,7 @@ Fan-out roster (all read-only, fresh-context, depth 1):
 - **S security** (`references/security-review.md`): owns threat-model, infra, and exploit-path routes.
 - **P performance** and **T test-coverage** lanes.
 - **U personas**: attacker, 3am-oncall, and maintainer passes in parallel.
-- **A architecture** (`references/architecture-review.md`): advisory-only lane; builds the Architecture Map when registered (see conditional lane below); unregistered diffs get a minimal Map sketch (inventory plus touched edges only).
+- **A architecture** (`references/architecture-review.md`): advisory default with a blocking exception (see `references/architecture-review.md`); builds the Architecture Map when registered (see conditional lane below); unregistered diffs get a minimal Map sketch (inventory plus touched edges only).
 - **D specialized finders**: 0-2 per-review lanes synthesized from the risk map when the diff concentrates in a domain with known failure modes.
 - **B build & test probe**: shell only under the QA worker role; mutating probes run in a throwaway worktree so readers never see a dirty tree.
 Review workers follow `../forge/references/worker-templates/review.md`. Shared methodology skills (such as `dispatching-parallel-agents`) are referenced by skill name and ship with `forge` in this repo.
@@ -231,8 +231,8 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   `Finding Set`.
 - The challenger is selective, not universal. Run it for red-lane diffs,
   high-severity findings with medium/low confidence, disagreement between audit
-  lanes, thin pre-verification evidence in a high-impact area, or unusually
-  large or cross-cutting diffs.
+  lanes, thin pre-verification evidence in a high-impact area, unusually
+  large or cross-cutting diffs, or as executor of the surprise pass when a yellow-or-higher diff reports zero design findings.
 - Challenger scope: disprove weak blockers, look for missed high-impact bug
   classes, and test whether key findings are duplicated, overstated, or
   under-supported.
@@ -347,7 +347,7 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   competing pattern, and respects module boundaries. When project-context fit
   and codebase fit notice the same problem, keep one finding under the lane with
   the clearest ownership instead of duplicating it. Do the same when a finding
-  overlaps with structural regression. Give the A lane the same treatment: A owns cross-module shape plus the Map, Q1 owns local reuse, Q2 owns depth, and structural regression owns degradation this change caused — cross-point to one finding instead of duplicating it.
+  overlaps with structural regression. Give the A lane the same treatment: A owns cross-module shape plus the Map, Q1 owns local reuse, Q2 owns depth, and structural regression owns degradation this change caused — cross-point to one finding instead of duplicating it. The same single-report rule covers steelmans: one per unique mechanism.
 - **Spec conformance:** per `references/spec-conformance.md`, check the diff against the intent pinned in Phase 0 — missing or partial requirements, scope creep (behavior nobody asked for), and implemented-but-wrong. If no external spec was pinned, run the lighter internal-consistency check instead (half-built paths, dead branches, leftover scaffolding). A confirmed missing requirement or implemented-but-wrong result is blocking. Missing/partial requirements are flagged, not implemented, inside `moes`; implemented-but-wrong issues may still be fixed when they are localized `Fix` findings rather than new feature work.
 - **Structural regression:** per the diff-scoped lane in
   `references/refactoring.md`, check whether *this change* degraded structure —
@@ -502,6 +502,9 @@ Present a concise report:
 ## Findings
 - Blocking: <none, or list with severity/confidence/action/trigger/report status>
 - Non-blocking: <deferred items, coverage gaps, low-confidence notes, planned follow-ups, decision points, with report status>
+
+## Considered and dismissed
+- <title plus one-line reason for each Finding Set member dropped after challenge or verification, ex-blockers first then by severity and confidence, maximum 5; omit this entire section when empty>
 
 [Conditional: include only when meaningful design strengths exist]
 ## What went right
