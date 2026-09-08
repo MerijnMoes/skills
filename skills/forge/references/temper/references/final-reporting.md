@@ -53,6 +53,7 @@ contract.
   intent/spec source, and the project context that materially affected the
   review. Embed the Architecture Map overview (boundaries, touched edges,
   layering notes) so the reviewer sees the shape of the change on one page.
+  Omit the Map embed when the architecture lane was `N/A`.
   Avoid file-by-file churn unless the diff is tiny.
 - **Evidence** — treat this as the heart of the report. For every relevant
   lane, say what evidence exists: static gates, tests, behavioral verification,

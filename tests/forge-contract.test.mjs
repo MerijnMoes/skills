@@ -424,6 +424,7 @@ test('forge review splits correctness walks and quality ownership', async () => 
     'removed exports',
     'consumer direction',
     'producer direction',
+    'Finding Set',
   ]) {
     assertIncludesIgnoringCase(codeReview, phrase);
   }
@@ -506,4 +507,37 @@ test('forge verification ledger and report carry the audit trail', async () => {
 
   assertIncludesIgnoringCase(gate, 'audit rounds');
   assertIncludesIgnoringCase(reporting, 'Architecture Map');
+});
+
+test('forge dogfood fixes hold', async () => {
+  const temper = await read('skills/forge/references/temper/SKILL.md');
+  const lifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
+  const pack = await read('skills/forge/references/temper/references/evidence-pack.md');
+  const arch = await read('skills/forge/references/temper/references/architecture-review.md');
+  const reporting = await read('skills/forge/references/temper/references/final-reporting.md');
+
+  for (const phrase of [
+    'references/code-review.md',
+    'after the reverse audit',
+    'shared context packet',
+    'pre-screen',
+    'minimal Map sketch',
+    'cross-module shape',
+    'QA worker role',
+  ]) {
+    assertIncludesIgnoringCase(temper, phrase);
+  }
+
+  for (const phrase of [
+    'trigger plus the wrong outcome',
+    'maps to `deferred`',
+    'maps to `dropped`',
+    'Map digest',
+  ]) {
+    assertIncludesIgnoringCase(lifecycle, phrase);
+  }
+
+  assertIncludesIgnoringCase(pack, 'pending');
+  assertIncludesIgnoringCase(arch, 'not registered');
+  assertIncludesIgnoringCase(reporting, 'Omit the Map embed');
 });

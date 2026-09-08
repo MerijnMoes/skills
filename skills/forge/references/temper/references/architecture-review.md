@@ -44,6 +44,4 @@ the `Evidence Pack` and embed it in the final report overview.
 ## Output
 
 Emit normalized `Finding Set` entries per `findings-lifecycle.md`, plus the
-Architecture Map attached to the `Evidence Pack`. If the lane concludes no
-escalation and no findings, keep that as specialty-lane registry metadata only;
-do not emit a placeholder finding.
+Architecture Map attached to the `Evidence Pack`. If the lane is not registered (`N/A` in the specialty lane registry), there is no Map and the final report omits the Map embed. If the lane concludes no escalation and no findings, keep that as specialty-lane registry metadata only; do not emit a placeholder finding.

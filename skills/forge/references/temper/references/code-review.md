@@ -50,7 +50,7 @@ walk; do not re-walk another lane's territory:
 
 Consolidate into the Phase-4 punch list. Before anything blocks, run it through `findings-lifecycle.md`: it needs a concrete, reachable trigger (a real input or sequence that reaches the bug), known false-positive classes are downgraded, any framework/library claim is checked against docs, and the finding gets the right action/status. Label each surviving finding with **severity** and **confidence**, and order by business impact.
 
-Emit findings into the shared `finding set` artifact defined in
+Emit findings into the shared `Finding Set` artifact defined in
 `findings-lifecycle.md` rather than as loose prose.
 
 Keep the correctness-review-specific nuance here: every surviving finding still

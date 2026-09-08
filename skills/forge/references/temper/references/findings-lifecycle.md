@@ -97,6 +97,8 @@ This applies across lanes. A missing requirement needs the violated spec line.
 A race condition needs the interleaving. A structural regression needs the
 concrete maintenance hazard it creates, not an aesthetic objection.
 
+The failure scenario is the trigger plus the wrong outcome (or concrete cost for quality findings); it is what satisfies this trigger test. Lanes drop scenario-less candidates at the source; verifiers downgrade uncertain survivors but never reject one as "too speculative".
+
 ## Known false-positive classes
 
 Downgrade these from blocking unless you have specific evidence the protection
@@ -161,6 +163,8 @@ Every finding fixed inside `temper` is accounted for in an outcomes ledger:
 each id gets exactly one of `fixed`, `skipped` (with reason), or
 `no_change_needed`. A ledger that does not cover every finding id is
 incomplete — a fixer that silently shortens the list has failed verification.
+
+Ledger outcomes map onto lifecycle statuses: `fixed` stays `fixed`; `skipped` (with reason) maps to `deferred`; `no_change_needed` (with reason) maps to `dropped`.
 
 ## Label every surviving finding
 
@@ -241,6 +245,7 @@ projects from it.
 Inputs:
 
 - evidence-pack summary
+- Architecture Map digest (shape overview for the verdict)
 - surviving findings
 - design-quality notes with `report`, `finding`, or meaningful `defer`
 - verification-ledger summary

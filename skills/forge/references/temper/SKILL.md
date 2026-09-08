@@ -194,23 +194,23 @@ Independently review the now-polished diff. Phase 4 is a **maximal-audit lane re
 
 Fan-out roster (all read-only, fresh-context, depth 1):
 
-- **C1 line-walk** (`code-review.md`): every hunk plus enclosing function.
-- **C2 removed-behavior** (`code-review.md`): every deleted line names its invariant.
-- **C3 cross-file tracer** (`code-review.md`): callers and field read-sites.
+- **C1 line-walk** (`references/code-review.md`): every hunk plus enclosing function.
+- **C2 removed-behavior** (`references/code-review.md`): every deleted line names its invariant.
+- **C3 cross-file tracer** (`references/code-review.md`): callers and field read-sites.
 - **C4 language-pitfall**: checklist pattern-match for the diff's language.
-- **Q1 reuse** (`codebase-fit.md`): existing helper to call, dead code, duplicates.
-- **Q2 altitude** (`design-quality.md`): bandaid vs right depth.
-- **Q3 consistency** (`codebase-fit.md`, `universal-quality.md`): sibling guards, convention drift, naming.
-- **S security** (`security-review.md`): owns threat-model, infra, and exploit-path routes.
+- **Q1 reuse** (`references/codebase-fit.md`): existing helper to call, dead code, duplicates.
+- **Q2 altitude** (`references/design-quality.md`): bandaid vs right depth.
+- **Q3 consistency** (`references/codebase-fit.md`, `references/universal-quality.md`): sibling guards, convention drift, naming.
+- **S security** (`references/security-review.md`): owns threat-model, infra, and exploit-path routes.
 - **P performance** and **T test-coverage** lanes.
 - **U personas**: attacker, 3am-oncall, and maintainer passes in parallel.
-- **A architecture** (`architecture-review.md`): builds the Architecture Map.
+- **A architecture** (`references/architecture-review.md`): builds the Architecture Map when registered (see conditional lane below); unregistered diffs get a minimal Map sketch (inventory plus touched edges only).
 - **D specialized finders**: 0-2 per-review lanes synthesized from the risk map when the diff concentrates in a domain with known failure modes.
-- **B build & test probe**: shell only; mutating probes run in a throwaway worktree so readers never see a dirty tree.
+- **B build & test probe**: shell only under the QA worker role; mutating probes run in a throwaway worktree so readers never see a dirty tree.
 
 Large-diff rule: when the diff exceeds 500 source lines or 3200 total lines, switch the C and Q groups to territory agents of roughly 400 lines each, split on hunk boundaries and never inside a function. Whole-diff lanes (S, A, U, D, the cross-chunk half of C2, C3) keep whole-diff scope.
 
-Effort tiers change depth, never diff/base mechanics: `low` is an inline sweep only with no verdict; `medium` runs a reduced fan-out plus build/test and a single verification pass with no reverse audit; `high` runs the full fan-out plus sharded verification plus reverse audit. Default to `high` for `/forge:review`; a green-lane diff may drop to `medium` with an explicit note.
+Effort tiers change depth, never diff/base mechanics: `low` is a pre-screen outside `temper` (inline sweep only: no Ledger, no Decision Packet, no verdict, no ship-readiness claim); `medium` runs a reduced fan-out plus build/test and a single verification pass with no reverse audit; `high` runs the full fan-out plus sharded verification plus reverse audit. Default to `high` for `/forge:review`; a green-lane diff may drop to `medium` with an explicit note.
 
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `temper` should not pretend every diff has the same risk profile.
 
@@ -241,7 +241,7 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
 - Challenger execution: on hosts with subagents, run it as a fresh-context
   adversarial pass using the same diff and the relevant slices of the
   `Evidence Pack`. On hosts without subagents, run the same challenger criteria
-  inline as a separate pass after the initial audit consolidation.
+  inline as a separate pass after the reverse audit (order for the whole back half: consolidate, then sharded verification, then reverse audit, then challenger).
 - Auto-fix contract: only apply findings whose fix is safe, localized,
   low-blast-radius, and realistically verifiable in Phase 6. Do not auto-fix
   architecture boundary changes, rollout-plan changes, legal/policy wording,
@@ -261,8 +261,8 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   produced QA intent, Playwright/API tests, exploratory browser evidence, or a
   QA capability matrix.
 
-- **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Pass the diff plus the relevant slices of the `Evidence Pack` it needs to judge the change: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass using the same context packet.
-- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the relevant slices of the `Evidence Pack`: risk map, project context capsule, pinned intent, and any runtime sketch/hotspots that matter. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings. Infra, GitHub Actions exploit-path, threat-model-escalation, and security-requirements routes stay under security-lane ownership: keep them visible in the specialty lane registry, but normalize their findings under the shared security lane rather than as standalone Phase-4 lanes. Use the threat-model route when a red-lane trust boundary changes or a high-impact security finding needs abuse-path framing before it can block.
+- **Code review:** dispatch a fresh-context subagent (per the `dispatching-parallel-agents` skill) to review the diff following `references/code-review.md`. Pass the diff plus the shared context packet defined above. Start with the fast sweep from `references/common-bugs-checklist.md` and `references/universal-quality.md`, then do the deeper correctness pass. On a host without subagents, follow those references as an inline adversarial pass using the same context packet.
+- **Security review:** dispatch a fresh-context subagent to audit the diff following `references/security-review.md`, using `references/security-cheat-sheets.md` as the canonical router for the conditional security surfaces. Pass the diff plus the shared context packet defined above. Inline-adversarial fallback as above. When migration, observability, or configuration surfaces are in play, this lane owns the security-specific findings for them; the separate operational lanes below own the non-security rollout/operability/behavior findings. Infra, GitHub Actions exploit-path, threat-model-escalation, and security-requirements routes stay under security-lane ownership: keep them visible in the specialty lane registry, but normalize their findings under the shared security lane rather than as standalone Phase-4 lanes. Use the threat-model route when a red-lane trust boundary changes or a high-impact security finding needs abuse-path framing before it can block.
 - **Delegation recovery:** dispatched audit subagents must behave per `delegation.md`. If a review subagent fails, times out, is cancelled, or never returns, do not wait on it — run the same lane inline as an adversarial pass, or continue degraded with the partial result recorded. Never block the pipeline on a worker that does not deliver.
 - **Secret scan:** scan the diff for committed secrets, credentials, tokens,
   private keys, or `.env` values. Verify hits with the same false-positive
@@ -347,7 +347,7 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   competing pattern, and respects module boundaries. When project-context fit
   and codebase fit notice the same problem, keep one finding under the lane with
   the clearest ownership instead of duplicating it. Do the same when a finding
-  overlaps with structural regression.
+  overlaps with structural regression. Give the A lane the same treatment: A owns cross-module shape plus the Map, Q1 owns local reuse, Q2 owns depth, and structural regression owns degradation this change caused — cross-point to one finding instead of duplicating it.
 - **Spec conformance:** per `references/spec-conformance.md`, check the diff against the intent pinned in Phase 0 — missing or partial requirements, scope creep (behavior nobody asked for), and implemented-but-wrong. If no external spec was pinned, run the lighter internal-consistency check instead (half-built paths, dead branches, leftover scaffolding). A confirmed missing requirement or implemented-but-wrong result is blocking. Missing/partial requirements are flagged, not implemented, inside `temper`; implemented-but-wrong issues may still be fixed when they are localized `Fix` findings rather than new feature work.
 - **Structural regression:** per the diff-scoped lane in
   `references/refactoring.md`, check whether *this change* degraded structure —
