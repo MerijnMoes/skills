@@ -192,6 +192,8 @@ After the checklist, you must also:
 - Treat surviving architectural blockers as pushing the verdict to NEEDS REVISION at most; BLOCKED stays reserved for data loss, security breaches, and broken core flows.
 - Revisit the Phase-0 project context capsule and state whether any project-specific boundary, convention, domain rule, tooling norm, docs/release convention, or unknown materially affects the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
+- Re-check the lane registry: any `N/A` without a why-not, or with a contradicted why-not, is a gate finding.
+- An unconverted, unaccepted environment deferral on yellow/red is a gate finding.
 - **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `moes` does not implement the gap itself). Unrequested scope creep is at least a flagged item.
 - State the verdict explicitly, with a short justification:
 

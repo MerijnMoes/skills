@@ -219,6 +219,9 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
   why it was considered, state (`run`, `N/A`, or `deferred by environment`),
   mutability mode (`read-only`, `report-first`, or `small-fix-allowed`), and
   any escalation target.
+- Every `N/A` or `deferred by environment` state carries a one-line why-not naming the checked signal.
+- Spot-check N/A claims on yellow/red diffs: re-verify the 2-3 highest-risk skipped lanes by grepping the diff for trigger signals; a trigger signal present despite `N/A` is a process finding plus the lane runs.
+- On yellow/red diffs, `deferred by environment` converts to a `Plan` finding naming the concrete follow-up check, or an explicit user-accepted gap (`Decide`); green diffs keep the one-line note.
 - Every audit lane emits candidate findings into the shared `Finding Set`,
   normalized according to `references/findings-lifecycle.md`.
 - Candidate findings must include a provisional recommended action so the

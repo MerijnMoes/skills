@@ -108,3 +108,20 @@ test('moes criticality counterweights hold', async () => {
   assertIncludesIgnoringCase(ledger, 'surprise-pass target');
   assertIncludesIgnoringCase(reporting, 'Considered and dismissed');
 });
+
+test('moes lane sharpness holds', async () => {
+  const lifecycle = await read('skills/moes/references/findings-lifecycle.md');
+  const gate = await read('skills/moes/references/validation-gate.md');
+  const skillna = await read('skills/moes/SKILL.md');
+
+  for (const phrase of [
+    'why-not',
+    'Spot-check N/A claims',
+    'converts to a `Plan` finding',
+  ]) {
+    assertIncludesIgnoringCase(skillna, phrase);
+  }
+
+  assertIncludesIgnoringCase(gate, 'contradicted why-not');
+  assertIncludesIgnoringCase(gate, 'unconverted, unaccepted');
+});
