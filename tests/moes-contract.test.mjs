@@ -98,4 +98,13 @@ test('moes criticality counterweights hold', async () => {
   ]) {
     assertIncludesIgnoringCase(temper, phrase);
   }
+
+  const gate = await read('skills/moes/references/validation-gate.md');
+  const ledger = await read('skills/moes/references/verification-ledger.md');
+  const reporting = await read('skills/moes/references/final-reporting.md');
+
+  assertIncludesIgnoringCase(gate, 'why-no-more-risks');
+  assertIncludesIgnoringCase(gate, 'stays reserved');
+  assertIncludesIgnoringCase(ledger, 'surprise-pass target');
+  assertIncludesIgnoringCase(reporting, 'Considered and dismissed');
 });

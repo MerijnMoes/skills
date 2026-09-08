@@ -187,6 +187,9 @@ After the checklist, you must also:
   exercised or remain open.
 - Revisit the Phase-0 risk map and state which top risks were actually disproven, which remain open, and whether any of those open risks materially affect the verdict.
 - State the audit rounds run and whether the reverse audit stopped converged or capped, and carry any capped-but-unsearched areas as residual risk.
+- Name the 3 highest remaining risks even when below the blocking bar, with belowBarReason values, in residual risk (fewer than 3 only with an explicit why-no-more-risks note).
+- If the surprise rule fired, state what the extra hunt targeted and what it found.
+- Treat surviving architectural blockers as pushing the verdict to NEEDS REVISION at most; BLOCKED stays reserved for data loss, security breaches, and broken core flows.
 - Revisit the Phase-0 project context capsule and state whether any project-specific boundary, convention, domain rule, tooling norm, docs/release convention, or unknown materially affects the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
 - **Incorporate the Phase 4 spec-conformance result.** The change must be not just correct but the *right* change: a confirmed missing or partial requirement is a `NEEDS REVISION` regardless of how clean the code is (and `moes` does not implement the gap itself). Unrequested scope creep is at least a flagged item.

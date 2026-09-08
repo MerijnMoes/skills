@@ -68,6 +68,7 @@ contract.
   include severity, confidence, action type, concrete trigger or violated spec
   line, and current status. Order findings by business impact, not by phase or
   file order.
+- **Considered and dismissed** — list Finding Set members dropped after challenge or verification: title plus one-line reason each, ex-blockers first then by severity and confidence, maximum 5. Omit when empty.
 - **What went right** — include this only for meaningful examples from `Design
   Quality Notes`. Tie each note to a changed surface and explain the mechanism:
   what knowledge became hidden, which interface became deeper, what coupling or

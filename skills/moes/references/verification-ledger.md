@@ -24,6 +24,7 @@ The ledger must explicitly record:
 - accessibility or performance checks when relevant
 - every top risk from the risk map as either exercised or unexercised
 - the audit trail: how many verify shards ran, how many reverse-audit rounds ran, and whether the audit stopped converged (2 consecutive dry rounds) or capped at the round limit
+- surprise-pass target and outcome when the surprise rule fired
 
 ## Rule
 
