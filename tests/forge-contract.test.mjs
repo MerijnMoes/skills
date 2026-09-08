@@ -410,3 +410,30 @@ test('forge phase 4 runs a parallel fan-out with coverage receipts', async () =>
     assertIncludesIgnoringCase(temper, phrase);
   }
 });
+
+test('forge review splits correctness walks and quality ownership', async () => {
+  const codeReview = await read('skills/forge/references/temper/references/code-review.md');
+  const codebaseFit = await read('skills/forge/references/temper/references/codebase-fit.md');
+  const designQuality = await read('skills/forge/references/temper/references/design-quality.md');
+
+  for (const phrase of [
+    'C1 line-walk',
+    'C2 removed-behavior',
+    'C3 cross-file tracer',
+    'C4 language-pitfall',
+    'removed exports',
+    'consumer direction',
+    'producer direction',
+  ]) {
+    assertIncludesIgnoringCase(codeReview, phrase);
+  }
+
+  for (const phrase of [
+    'Q1 reuse',
+    'Q3 consistency',
+  ]) {
+    assertIncludesIgnoringCase(codebaseFit, phrase);
+  }
+
+  assertIncludesIgnoringCase(designQuality, 'Q2 altitude');
+});

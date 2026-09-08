@@ -8,6 +8,22 @@ structure (`refactoring.md` owns that). Start with a fast sweep from
 below. Read surrounding code only to understand the change; never review
 untouched neighbors.
 
+The correctness review is split into four procedural walks that are
+complementary by how they walk the diff, not by bug taxonomy. A lane owns its
+walk; do not re-walk another lane's territory:
+
+- **C1 line-walk**: walk every hunk plus its enclosing function. Wrong
+  conditions, off-by-one, missing `await`, edge cases, race conditions.
+- **C2 removed-behavior**: walk every deleted or replaced line. Name the
+  invariant it enforced and hunt for where the new code re-establishes it —
+  including removed exports, whose replacement often lives in another file
+  and quietly changed a default.
+- **C3 cross-file tracer**: walk every changed symbol's callers (consumer direction) and every added field's read sites (producer direction), plus same-PR callee changes.
+- **C4 language-pitfall**: pattern-match every hunk against the classic-footgun
+  checklist for the diff's language (`==` coercion, falsy-value traps,
+  loop-variable capture, mutable defaults, nil-map writes, SQL concatenation,
+  DST arithmetic).
+
 ## Rationalizations to reject
 - **"This pattern looks dangerous, so it must be a bug."** Pattern recognition
   is only a starting point. Findings need a concrete, reachable trigger.

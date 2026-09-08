@@ -176,3 +176,13 @@ Each `Design Quality Notes` item should carry:
 Phase 7 should carry `report`, `finding`, and meaningful `defer` items into the
 `Decision Packet`. Phase 8 should summarize them under Learning notes, Findings,
 or an optional "What went right" section depending on disposition and kind.
+
+## Q2 altitude (Phase 4 fan-out)
+
+In the parallel fan-out, this file owns the **Q2 altitude** lane: is the fix
+at the right depth, or a bandaid on shared infrastructure, a downstream
+compensation for an upstream bug, or an abstraction serving one call site.
+Reuse/duplication (Q1) and consistency/clarity (Q3) belong to
+`codebase-fit.md` — do not re-walk them. Altitude findings need the same
+mechanism-level evidence as any design risk: what the right layer would be,
+why this depth is wrong for it, and the trade-off of moving it.

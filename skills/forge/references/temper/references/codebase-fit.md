@@ -28,6 +28,15 @@ problems, also see `universal-quality.md`.
 ## Consistency review (Phase 4)
 This lane is about *fit* — does the change match how the repo already does things. Its sibling lane, **structural regression** (`refactoring.md`), is about *degradation* — did the change make the structure worse. They're complementary: duplication and boundary leaks show up in both, so flag such an issue once in whichever lane it fits most naturally rather than reporting it twice.
 
+In the parallel fan-out this file serves two quality lanes with split
+ownership. **Q1 reuse** owns duplication and prior art: existing helper to
+call instead, dead code the diff leaves behind, merged-vs-duplicated
+knowledge. **Q3 consistency** owns sibling-family guards, convention drift
+against a cited local example, misleading names and comments, and needless
+complexity. Altitude and abstraction-fit questions (bandaid vs right depth,
+downstream compensation, single-use abstraction) belong to **Q2 altitude** in
+`design-quality.md`, not here — do not re-walk them.
+
 Assess and flag as findings:
 - Does it read like it belongs — same conventions, structure, naming, and error handling as its neighbors?
 - Does it introduce a second pattern for something the codebase already solves one way?
