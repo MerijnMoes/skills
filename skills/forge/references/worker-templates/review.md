@@ -46,6 +46,12 @@ Return a findings list. Each finding:
 Then list confirmed strengths and any residual risks you could not fully
 verify. Do not inflate minor noise into blockers.
 
+End with a coverage receipt: a `Covered:` line naming the files, hunks, or
+territory you actually read. If you could not read part of your assignment,
+name the unread part plainly instead of omitting it. You must not mutate
+anything; if your check needs a mutation to measure something, say so and stop
+rather than editing.
+
 ## Acceptance criteria
 
 - Every Critical/Important finding has a concrete failure scenario and

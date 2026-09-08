@@ -55,6 +55,21 @@ spawn additional workers.** Recursive delegation (depth 2+) is prohibited unless
 a specific phase explicitly opts in. A worker that needs help must return its
 partial result to the parent instead of delegating onward.
 
+## Wave pattern for parallel review
+
+When a phase fans out to several workers at once, the parent runs one wave:
+build a single shared context packet (scope, diff, and the evidence slices
+every worker needs), dispatch all workers with that packet, then consolidate.
+Workers in a wave never see each other's output. Every worker returns a
+coverage receipt — a `Covered:` line naming what it read — so the parent can
+prove every assigned area was actually reviewed. A worker with no receipt is
+re-run or recorded as unexercised; it is never silently counted as covered.
+
+Workers that must mutate code to measure something (mutants, repro edits) run
+in their own throwaway worktree or scratch dir beside the main tree, and the
+parent is told which paths differ while they run, so one worker's experiment is
+never visible to the others reading the shared tree.
+
 ## Failure states and the parent's recovery reflex
 
 Never assume that a delegated result will arrive. Treat a worker's outcome as

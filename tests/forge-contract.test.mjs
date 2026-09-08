@@ -437,3 +437,20 @@ test('forge review splits correctness walks and quality ownership', async () => 
 
   assertIncludesIgnoringCase(designQuality, 'Q2 altitude');
 });
+
+test('forge delegation runs review waves with coverage receipts', async () => {
+  const delegation = await read('skills/forge/references/delegation.md');
+  const review = await read('skills/forge/references/worker-templates/review.md');
+
+  for (const phrase of [
+    'wave',
+    'shared context packet',
+    'coverage receipt',
+    'throwaway worktree',
+  ]) {
+    assertIncludesIgnoringCase(delegation, phrase);
+  }
+
+  assertIncludesIgnoringCase(review, 'Covered:');
+  assertIncludesIgnoringCase(review, 'must not mutate');
+});
