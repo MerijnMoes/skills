@@ -7,7 +7,7 @@ workflow from Merijn Moes for AI coding agents, installable across
 agents](https://github.com/vercel-labs/skills) with a single `npx skills`
 command.
 
-The repo exposes one public skill with three command forms:
+The repo exposes two public skills:
 
 ## `forge`
 
@@ -18,9 +18,8 @@ hardening review.
 The public command surface is:
 
 - `/forge:setup`: prepare Forge for a new or existing repo.
-- `/forge:build`: run the full change workflow.
-- `/forge:review`: run the final hardening and readiness review on the current
-  diff, optionally against a chosen base.
+- `/forge:build`: run the full change workflow, with the Review phase executed
+  by loading the `moes` skill.
 
 ### What `forge` covers
 
@@ -30,16 +29,20 @@ Plan -> Visual Plan Review (optional) -> Shape (if needed) -> Implement ->
 Design Quality (if needed) -> QA -> Review -> Report
 ```
 
-`temper` remains part of the system, but it is an internal hardening subsystem
-behind `/forge:review`, not a separate public command.
-
 Examples:
 
 - `/forge:setup`
 - `/forge:build`
-- `/forge:review`
-- `/forge:review against base`
-- `/forge:review against develop`
+- `/moes`
+- `/moes against base`
+- `/moes against develop`
+
+## `moes`
+
+`moes` is the standalone final hardening review skill in this repository. It
+reviews the current diff against the base branch (`/moes against <branch>`
+overrides the base) using parallel audit lanes, an advisory architecture
+lane, and verified findings. `/forge:build` runs it as its Review phase.
 
 Internally, `forge` vendors the full methodology and frontend design-quality
 payloads it routes through, so a single install carries the workflow guidance,
@@ -53,7 +56,7 @@ design references, detector scripts, and final hardening gate.
   `CONTEXT-MAP.md`, and ADRs as durable project memory when those files exist.
 - `/forge:setup` initializes that project memory selectively, including
   `docs/agents/` setup docs when they are useful for later runs.
-- `/forge:review` runs only the final hardening lane against the current branch
+- `/moes` runs only the final hardening lane against the current branch
   diff. `against base` means auto-detect the repository default branch;
   `against <branch>` overrides the comparison base.
 - QA is the top-level quality phase. Playwright remains the durable browser and
@@ -89,9 +92,12 @@ Then invoke it:
 ```text
 .
 └── skills/
-    └── forge/
+    ├── forge/
+    │   ├── SKILL.md
+    │   └── references/   # progressive-disclosure guidance loaded on demand
+    └── moes/
         ├── SKILL.md
-        └── references/   # progressive-disclosure guidance loaded on demand
+        └── references/   # review pipeline: audit lanes, verification, reporting
 ```
 
 ## License

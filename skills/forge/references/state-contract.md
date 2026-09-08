@@ -91,12 +91,6 @@ database.
     "blockers": [],
     "residual_risks": []
   },
-  "temper": {
-    "base": "main",
-    "verdict": "ready",
-    "blockers": [],
-    "residual_risks": []
-  },
   "blocker": null,
   "pause_required": false,
   "next_recommended_step": "report"
@@ -146,9 +140,7 @@ not omit top-level keys once the file exists.
   resume phase.
 - `review.verdict`: review verdict, one of `not-run`, `ready`, `blocked`, or
   `needs-decision`.
-- `temper`: legacy internal mirror for the review payload while migration is in
-  progress. Keep it aligned with `review` when present; do not use it in public
-  reports.
+- `review`: written by the `moes` skill when it runs the Review phase; read by reporting and resume. There is no separate mirror field.
 - `blocker`: `null` when clear; otherwise include `phase`, `summary`, `needs`,
   and `earliest_resume_phase`.
 - `next_recommended_step`: one short action the next Forge invocation should

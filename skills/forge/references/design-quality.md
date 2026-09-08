@@ -68,8 +68,7 @@ Source: `design-studio/reference/polish.md`.
 ## Live review
 
 Use browser inspection when a design issue is easier to evaluate visually than
-in code. Capture screenshots or notes when they will help downstream QA and
-`temper`.
+in code. Capture screenshots or notes when they will help downstream QA and review (`moes`).
 
 Review these states when relevant:
 

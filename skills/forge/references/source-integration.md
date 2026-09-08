@@ -89,7 +89,7 @@ Useful practices for Forge QA:
 - Storybook: component interaction checks only when the target repo already
   uses Storybook.
 
-Useful practices for `temper`:
+Useful practices for review (`moes`):
 
 - CI/CD pipeline guidance: fast feedback, fail fast, reproducible builds,
   parallelism where safe, and artifact preservation.
@@ -118,7 +118,7 @@ for the default Forge flow.
 
 ## Naming boundary
 
-Public user flow uses `/forge:setup`, `/forge:build`, and `/forge:review`.
+Public user flow uses `/forge:setup` and `/forge:build` for the workflow, plus `/moes` for the final hardening review.
 Internal files may retain upstream naming, license text, command examples, and
 comments where preserving source fidelity is more valuable than cosmetic
 renaming.

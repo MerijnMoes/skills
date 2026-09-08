@@ -13,8 +13,7 @@ Run this before any deeper phase work.
    missing project context blocks confident work.
 4. If the user explicitly asks for `/moes`, hand the request to the `moes`
    skill after preflight instead of running the full
-   discovery-to-implementation workflow. Treat phrases such as `against
-   base`, `against main`, `against develop`, or `against <branch>` as a
+   discovery-to-implementation workflow. Treat phrases such as `against base`, `against main`, `against develop`, or `against <branch>` as a
    requested comparison base for the review run. For example,
    `/moes against <branch>` carries `<branch>` as that base.
 5. If the user explicitly asks for `/forge:setup`, route to `setup.md`.

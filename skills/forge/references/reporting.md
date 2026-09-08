@@ -5,7 +5,7 @@ tool outputs.
 
 When `.forge/state.json` exists, use `state-contract.md` as the evidence index
 for the final report. Do not rely only on chat memory for paths, QA status, or
-the `/forge:review` verdict stored in internal state.
+the review (`moes`) verdict stored in internal state.
 
 ## Required sections
 
@@ -30,8 +30,7 @@ the `/forge:review` verdict stored in internal state.
 - review verdict or blockers
 - next recommended step from `.forge/state.json` when available
 
-Use `/forge:review` in public reports. Treat legacy `temper verdict` and state
-language as internal migration terminology only.
+Use `/moes` in public reports. Treat legacy `temper verdict` and `/forge:review` language as internal migration terminology only.
 
 ## Tone
 

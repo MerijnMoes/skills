@@ -57,4 +57,4 @@ recreate trustworthy evidence.
   target is ambiguous
 - after visual plan review when approval or feedback is needed
 - after QA when judgment is needed
-- after `/forge:review` when the verdict is not clean
+- after `/moes` when the verdict is not clean

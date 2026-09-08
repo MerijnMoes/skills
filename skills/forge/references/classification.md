@@ -28,8 +28,7 @@ Apply overlays in addition to the primary class when needed.
 - `mixed-feature`: treat as both implementation and flow work; activate
   Playwright by default.
 - `high-risk`: this is not a primary class. Add it on top of the chosen
-  primary class, strengthen verification expectations, and route cleanly into
-  `temper`.
+  primary class, strengthen verification expectations, and route cleanly into review (`moes`).
 
 ## Output
 

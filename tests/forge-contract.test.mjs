@@ -26,7 +26,7 @@ function assertIncludesIgnoringCaseAndWhitespace(actual, expected) {
 test('forge delegation contract is bounded, non-recursive, and hang-resilient', async () => {
   const delegation = await read('skills/forge/references/delegation.md');
   const implementation = await read('skills/forge/references/implementation.md');
-  const temper = await read('skills/forge/references/temper/SKILL.md');
+  const temper = await read('skills/moes/SKILL.md');
 
   // Contract is referenced from implementation and temper.
   assert.match(implementation, /delegation\.md/);
@@ -147,7 +147,6 @@ test('forge exposes a structured run-state contract', async () => {
     'visual_plan',
     'qa',
     'review',
-    'temper',
     'blocker',
     'next_recommended_step',
   ]) {
@@ -193,10 +192,10 @@ test('forge final reporting is backed by structured evidence', async () => {
 });
 
 test('forge review teaches design quality without replacing the verdict', async () => {
-  const temper = await read('skills/forge/references/temper/SKILL.md');
-  const finalReporting = await read('skills/forge/references/temper/references/final-reporting.md');
-  const findingsLifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
-  const designQuality = await read('skills/forge/references/temper/references/design-quality.md');
+  const temper = await read('skills/moes/SKILL.md');
+  const finalReporting = await read('skills/moes/references/final-reporting.md');
+  const findingsLifecycle = await read('skills/moes/references/findings-lifecycle.md');
+  const designQuality = await read('skills/moes/references/design-quality.md');
 
   assert.match(temper, /references\/design-quality\.md/);
   assert.match(
@@ -301,10 +300,9 @@ test('forge exposes the simplified public command surface and workflow overview'
     assert.match(readme, new RegExp(command.replace('/', '\\/')));
   }
 
-  for (const doc of [skill, routing]) {
+  for (const doc of [skill, routing, readme]) {
     assert.doesNotMatch(doc, /\/forge:review/);
   }
-  // readme joins this assertion in Task 3, which owns the README edit.
 
   assertIncludesIgnoringCase(routing, 'moes');
 
@@ -398,7 +396,7 @@ test('forge qa is one umbrella with durable watched and ci-equivalent playwright
 });
 
 test('forge phase 4 runs a parallel fan-out with coverage receipts', async () => {
-  const temper = await read('skills/forge/references/temper/SKILL.md');
+  const temper = await read('skills/moes/SKILL.md');
 
   for (const phrase of [
     'line-walk',
@@ -419,9 +417,9 @@ test('forge phase 4 runs a parallel fan-out with coverage receipts', async () =>
 });
 
 test('forge review splits correctness walks and quality ownership', async () => {
-  const codeReview = await read('skills/forge/references/temper/references/code-review.md');
-  const codebaseFit = await read('skills/forge/references/temper/references/codebase-fit.md');
-  const designQuality = await read('skills/forge/references/temper/references/design-quality.md');
+  const codeReview = await read('skills/moes/references/code-review.md');
+  const codebaseFit = await read('skills/moes/references/codebase-fit.md');
+  const designQuality = await read('skills/moes/references/design-quality.md');
 
   for (const phrase of [
     'C1 line-walk',
@@ -464,9 +462,9 @@ test('forge delegation runs review waves with coverage receipts', async () => {
 });
 
 test('forge review has an advisory architecture lane with a map', async () => {
-  const arch = await read('skills/forge/references/temper/references/architecture-review.md');
-  const pack = await read('skills/forge/references/temper/references/evidence-pack.md');
-  const temper = await read('skills/forge/references/temper/SKILL.md');
+  const arch = await read('skills/moes/references/architecture-review.md');
+  const pack = await read('skills/moes/references/evidence-pack.md');
+  const temper = await read('skills/moes/SKILL.md');
 
   for (const phrase of [
     'Architecture Map',
@@ -482,7 +480,7 @@ test('forge review has an advisory architecture lane with a map', async () => {
 });
 
 test('forge findings require scenarios and structured verification', async () => {
-  const lifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
+  const lifecycle = await read('skills/moes/references/findings-lifecycle.md');
 
   for (const phrase of [
     'failure scenario',
@@ -499,9 +497,9 @@ test('forge findings require scenarios and structured verification', async () =>
 });
 
 test('forge verification ledger and report carry the audit trail', async () => {
-  const ledger = await read('skills/forge/references/temper/references/verification-ledger.md');
-  const gate = await read('skills/forge/references/temper/references/validation-gate.md');
-  const reporting = await read('skills/forge/references/temper/references/final-reporting.md');
+  const ledger = await read('skills/moes/references/verification-ledger.md');
+  const gate = await read('skills/moes/references/validation-gate.md');
+  const reporting = await read('skills/moes/references/final-reporting.md');
 
   for (const phrase of [
     'verify shards',
@@ -517,11 +515,11 @@ test('forge verification ledger and report carry the audit trail', async () => {
 });
 
 test('forge dogfood fixes hold', async () => {
-  const temper = await read('skills/forge/references/temper/SKILL.md');
-  const lifecycle = await read('skills/forge/references/temper/references/findings-lifecycle.md');
-  const pack = await read('skills/forge/references/temper/references/evidence-pack.md');
-  const arch = await read('skills/forge/references/temper/references/architecture-review.md');
-  const reporting = await read('skills/forge/references/temper/references/final-reporting.md');
+  const temper = await read('skills/moes/SKILL.md');
+  const lifecycle = await read('skills/moes/references/findings-lifecycle.md');
+  const pack = await read('skills/moes/references/evidence-pack.md');
+  const arch = await read('skills/moes/references/architecture-review.md');
+  const reporting = await read('skills/moes/references/final-reporting.md');
 
   for (const phrase of [
     'references/code-review.md',

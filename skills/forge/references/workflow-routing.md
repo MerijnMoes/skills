@@ -12,7 +12,7 @@ The compact files in this directory route the workflow; the payloads under
 
 ## Explicit lane requests
 
-When the user explicitly asks for a public `/forge:*` command, honor that
+When the user explicitly asks for a public command, honor that
 command route instead of forcing the full default order.
 
 - `/forge:setup`: route to `setup.md`.

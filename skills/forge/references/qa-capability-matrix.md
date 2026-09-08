@@ -34,7 +34,7 @@ model subscriptions, or vendor dashboards for pass/fail evidence.
   explicit user decision.
 
 `not configured` and `deferred` are not failures by themselves, but they are
-residual-risk inputs for `/forge:review`.
+residual-risk inputs for `/moes`.
 
 ## Capability guidance
 
