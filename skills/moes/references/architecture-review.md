@@ -2,9 +2,9 @@
 
 Phase 4 lane in `moes`. This lane improves the change's architecture without
 rewriting it: it builds the **Architecture Map** overview and emits
-mechanism-level findings. It is advisory — structural moves beyond localized
-safe fixes leave `moes` as `Plan` / `Decide` / `Investigate`, never as silent
-auto-fix.
+mechanism-level findings. It is advisory by default — structural moves beyond
+localized safe fixes leave `moes` as non-blocking `Plan` / `Decide` /
+`Investigate`, unless the mechanism triple below is present.
 
 ## Architecture Map
 
@@ -26,10 +26,10 @@ the `Evidence Pack` and embed it in the final report overview.
 
 ## Lane rules
 
-- Advisory power only. `Fix` action exclusively for localized, safe, verifiable
-  findings that satisfy the Phase 4 auto-fix contract. All structural moves
-  (extract, move, deepen an interface, split a module) are emitted as `Plan`,
-  `Decide`, or `Investigate` with mechanism plus trade-off.
+- Advisory default with a blocking exception. `Fix` action exclusively for localized, safe, verifiable findings that satisfy the Phase 4 auto-fix contract.
+- `Plan`, `Decide`, or `Investigate` findings may carry status `blocking` if and only if the mechanism triple is present: harmed parties named (concrete callers, or a named future variant with a concrete change example), blast radius counted (enumerated files or sites that must change together; estimates marked as estimates), and cheaper alternative stated (right depth or shape, with trade-off and when-not-to-apply).
+- Canonical qualifiers — boundary leaks, cross-module knowledge duplication, shallowed interfaces that burden callers — are non-exhaustive examples; each still requires the full triple.
+- All other structural moves are emitted as non-blocking `Plan`, `Decide`, or `Investigate` with mechanism plus trade-off.
 - No finding without mechanism: state what knowledge moved, what callers must
   now know, whether the interface became deeper or shallower, and whether
   cognitive load moved or was removed.

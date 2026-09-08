@@ -77,4 +77,14 @@ test('moes criticality counterweights hold', async () => {
   }
 
   assertIncludesIgnoringCase(codebaseFit, 'Red-team presumption');
+
+  const arch = await read('skills/moes/references/architecture-review.md');
+
+  for (const phrase of [
+    'blocking exception',
+    'if and only if the mechanism triple is present',
+    'non-exhaustive examples',
+  ]) {
+    assertIncludesIgnoringCase(arch, phrase);
+  }
 });
