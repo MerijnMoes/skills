@@ -1,7 +1,7 @@
 # Focused bug hunting
 
 Used primarily in `moes` Phase 4, then carried into Phases 6 and 7. The
-goal is to find **real bugs the checklists may miss** without turning moes
+goal is to find **real bugs the checklists may miss** without turning `moes`
 into an open-ended research project. Start from the actual diff and generate a
 **small number of high-value bug hypotheses** plus the cheapest probes that
 could falsify them. This is a risk-led complement to `code-review.md`,

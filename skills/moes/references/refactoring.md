@@ -98,9 +98,9 @@ Separate from "is there a pre-existing smell worth fixing" (above), ask the shar
 - **Magic obscuring simple structure** — clever indirection, reflection, or over-generalization the change introduced where a direct, plain implementation would read clearer.
 - **Type-boundary cleanliness regression** — the change adds a cast, `any`/`unknown`, unnecessary optionality, or a silent fallback (`?? default`, a swallowed branch) that papers over an unclear invariant instead of making the boundary explicit. Flag when the obscured contract makes the code harder to reason about — the language idioms in `best-practices/typescript.md`/`python.md` catch the lint-level cases; this lane is for the *design* smell where the fallback hides what the real invariant should be (ties to `best-practices/general-oop.md`).
 
-**The tempering — read this so the lane doesn't overreach.** This is the *restrained* version of an aggressive structural review, deliberately scoped to fit `moes`:
+**Scope restraint — read this so the lane doesn't overreach.** This is the *restrained* version of an aggressive structural review, deliberately scoped to fit `moes`:
 - It is **diff-scoped**. Judge the structure the change touched or added. Do **not** flag (or rewrite) untouched code that merely happens to be near the diff — that is scope creep and a common way to introduce regressions.
-- **Behavior preservation and minimality still govern.** The point is to catch *degradation the change caused*, not to mandate ambitious rewrites or treat "I can imagine a cleaner architecture" as a blocker. "Design over working code" is explicitly **not** moes's posture.
+- **Behavior preservation and minimality still govern.** The point is to catch *degradation the change caused*, not to mandate ambitious rewrites or treat "I can imagine a cleaner architecture" as a blocker. "Design over working code" is explicitly **not** the `moes` posture.
 - A structural-regression finding **blocks only if it survives `findings-lifecycle.md`** — name the concrete maintenance hazard (the future bug, the path that's now hard to change safely), not an aesthetic preference. Clear, low-risk regressions can be fixed in Phase 3; the rest are flagged with severity and confidence and left for the user.
 
 ## Assessment output

@@ -44,7 +44,7 @@ Each: what it is → the fix. Act only when the result is plainly equivalent and
 - **"This feels equivalent."** If equivalence is not obvious on inspection, it
   does not belong in the no-test-gate phase.
 
-## When NOT to simplify (the tempering)
+## When NOT to simplify (scope restraint)
 - **Equivalence not obvious? It's not Phase 2.** Anything you can't verify by reading is a Phase 3 refactor or out of scope — don't risk a silent behavior change under the no-test-gate phase.
 - **Don't over-compress.** If a "simplification" makes the next reader pause, you've gone backwards. Stop at clear.
 - **Stay in the diff.** Don't rename or rework untouched code that merely sits near the change — that's scope creep and a classic regression source.

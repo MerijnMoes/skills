@@ -110,7 +110,7 @@ Establish exactly what `moes` is hardening and confirm it starts from a known-go
 **Precondition — checkpoint before you enter `moes`.** The modifying phases (best-practices, simplify, refactor) edit the working tree in place, but this pipeline makes no git writes of its own. So the user's completed feature work should be committed (or stashed) *before* `moes` runs — that checkpoint is the clean rollback point if a phase has to be backed out (`git restore` / `git checkout`). If there is uncommitted feature work, say so and recommend a checkpoint commit first; proceed without one only with the user's go-ahead, and warn that auto-applied fixes won't be individually reversible.
 
 1. **Determine the base branch.** If the user explicitly requested a base
-   override through `forge` (`against <branch>`), use that first. Otherwise try
+   override through `/moes` (`against <branch>`), use that first (`/forge:build` reaches this skill only when run as its Review phase). Otherwise try
    `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`; fall back
    to `main`, then `master`, then `develop`. Identify the current branch with
    `git rev-parse --abbrev-ref HEAD`.
@@ -477,7 +477,7 @@ Follow `references/final-reporting.md` so the output is **decision-ready** for t
 Present a concise report:
 
 ```
-# Temper report
+# Moes report
 
 **Verdict:** READY TO SHIP | NEEDS REVISION | BLOCKED
 
