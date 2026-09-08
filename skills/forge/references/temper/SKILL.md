@@ -190,7 +190,27 @@ Gate: structural issues are either fixed (with tests still green) or consciously
 
 ### Phase 4 — Audit *(limited-mutation audit; maximal lane registry; fixes applied after consolidation)*
 
-Independently review the now-polished diff. Phase 4 is a **maximal-audit lane registry**: enumerate the full lane set the diff could plausibly need, then mark each lane `run`, `N/A`, or `deferred by environment` before consolidating findings. The default contract is audit-first, with mutation allowed only after consolidation and only for safe localized fixes that satisfy the auto-fix contract below. Run the lane work in parallel where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill) and consolidate their findings into one punch list before any fix is applied.
+Independently review the now-polished diff. Phase 4 is a **maximal-audit lane registry**: enumerate the full lane set the diff could plausibly need, then mark each lane `run`, `N/A`, or `deferred by environment` before consolidating findings. The default contract is audit-first, with mutation allowed only after consolidation and only for safe localized fixes that satisfy the auto-fix contract below. Run the lane work as one parallel wave where possible (dispatch parallel subagents — see the `dispatching-parallel-agents` skill and the wave pattern in `delegation.md`) and consolidate their findings into one punch list before any fix is applied. Build one shared context packet once (diff plus Evidence Pack slices: risk map, project context capsule, pinned intent, runtime sketch, hotspots) and hand the same packet to every worker. Every worker returns normalized candidate findings plus a `Covered:` receipt naming what it read; any lane without a receipt is re-run or marked honestly as unexercised.
+
+Fan-out roster (all read-only, fresh-context, depth 1):
+
+- **C1 line-walk** (`code-review.md`): every hunk plus enclosing function.
+- **C2 removed-behavior** (`code-review.md`): every deleted line names its invariant.
+- **C3 cross-file tracer** (`code-review.md`): callers and field read-sites.
+- **C4 language-pitfall**: checklist pattern-match for the diff's language.
+- **Q1 reuse** (`codebase-fit.md`): existing helper to call, dead code, duplicates.
+- **Q2 altitude** (`design-quality.md`): bandaid vs right depth.
+- **Q3 consistency** (`codebase-fit.md`, `universal-quality.md`): sibling guards, convention drift, naming.
+- **S security** (`security-review.md`): owns threat-model, infra, and exploit-path routes.
+- **P performance** and **T test-coverage** lanes.
+- **U personas**: attacker, 3am-oncall, and maintainer passes in parallel.
+- **A architecture** (`architecture-review.md`): builds the Architecture Map.
+- **D specialized finders**: 0-2 per-review lanes synthesized from the risk map when the diff concentrates in a domain with known failure modes.
+- **B build & test probe**: shell only; mutating probes run in a throwaway worktree so readers never see a dirty tree.
+
+Large-diff rule: when the diff exceeds 500 source lines or 3200 total lines, switch the C and Q groups to territory agents of roughly 400 lines each, split on hunk boundaries and never inside a function. Whole-diff lanes (S, A, U, D, the cross-chunk half of C2, C3) keep whole-diff scope.
+
+Effort tiers change depth, never diff/base mechanics: `low` is an inline sweep only with no verdict; `medium` runs a reduced fan-out plus build/test and a single verification pass with no reverse audit; `high` runs the full fan-out plus sharded verification plus reverse audit. Default to `high` for `/forge:review`; a green-lane diff may drop to `medium` with an explicit note.
 
 Use the Phase-0 risk map and project context capsule to decide which conditional lanes deserve real attention. `temper` should not pretend every diff has the same risk profile.
 

@@ -389,3 +389,24 @@ test('forge qa is one umbrella with durable watched and ci-equivalent playwright
   assert.match(reporting, /watched local E2E/i);
   assert.match(reporting, /CI-equivalent E2E/i);
 });
+
+test('forge phase 4 runs a parallel fan-out with coverage receipts', async () => {
+  const temper = await read('skills/forge/references/temper/SKILL.md');
+
+  for (const phrase of [
+    'line-walk',
+    'removed-behavior',
+    'cross-file tracer',
+    'language-pitfall',
+    'reuse',
+    'altitude',
+    'consistency',
+    'personas',
+    'specialized finders',
+    'Covered:',
+    'territory',
+    'effort',
+  ]) {
+    assertIncludesIgnoringCase(temper, phrase);
+  }
+});
