@@ -87,7 +87,7 @@ contract.
 - **Residual risk / open questions** — this section is mandatory even when
   empty. Include environment limits, probes you still want, deferred refactors
   with risk implications, ambiguous product/spec questions, and rollout or
-  operational assumptions that were not exercised. If there is truly no
+  operational assumptions that were not exercised. For each environment deferral, state whether it became a Plan follow-up or an accepted gap. If there is truly no
   residual risk worth naming, say that explicitly.
 - **Recommended next step** — tailor it to the verdict. For `READY TO SHIP`,
   suggest commit/PR framing, reviewer attention points, and any rollout note

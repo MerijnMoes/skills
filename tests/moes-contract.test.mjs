@@ -124,4 +124,8 @@ test('moes lane sharpness holds', async () => {
 
   assertIncludesIgnoringCase(gate, 'contradicted why-not');
   assertIncludesIgnoringCase(gate, 'unconverted, unaccepted');
+
+  const reporting = await read('skills/moes/references/final-reporting.md');
+
+  assertIncludesIgnoringCase(reporting, 'Plan follow-up');
 });
