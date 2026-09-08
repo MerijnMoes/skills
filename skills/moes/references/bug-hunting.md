@@ -163,6 +163,9 @@ Keep the bug-hunting-specific nuance here: name the violated invariant, the
 concrete trigger or probe, the likely surface and impact, and how the
 hypothesis currently lands in the shared set: still `candidate`, verified and
 open, or `dropped`.
+A concurrency hazard — race, TOCTOU, double-run or non-idempotent retry, tenant leak — may carry blocking status without a demonstrated trigger when it names the interleaving or double-run scenario sketched, the shared state or operation involved, and the cheaper safeguard (lock, transaction, idempotency key, ownership check).
+Purely theoretical hazards with no reachable shape still drop.
+Such findings keep `Plan` or `Investigate` action; only the status may block.
 
 ## 7. Turn discoveries into durable safety
 

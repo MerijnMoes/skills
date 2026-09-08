@@ -191,6 +191,7 @@ After the checklist, you must also:
 - Name the 3 highest remaining risks even when below the blocking bar, with belowBarReason values, in residual risk (fewer than 3 only with an explicit why-no-more-risks note).
 - If the surprise rule fired, state what the extra hunt targeted and what it found.
 - Treat surviving architectural blockers as pushing the verdict to NEEDS REVISION at most; BLOCKED stays reserved for data loss, security breaches, and broken core flows.
+- Treat surviving race-mechanism blockers the same way: NEEDS REVISION at most, never BLOCKED on mechanism alone.
 - Revisit the Phase-0 project context capsule and state whether any project-specific boundary, convention, domain rule, tooling norm, docs/release convention, or unknown materially affects the verdict.
 - Consider architecture-level issues, edge cases, or domain-specific concerns.
 - Re-check the lane registry: any `N/A` without a why-not, or with a contradicted why-not, is a gate finding.

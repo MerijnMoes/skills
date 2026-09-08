@@ -99,6 +99,7 @@ concrete maintenance hazard it creates, not an aesthetic objection.
 
 The failure scenario is the trigger plus the wrong outcome (or concrete cost for quality findings); it is what satisfies this trigger test. Lanes drop scenario-less candidates at the source; verifiers downgrade uncertain survivors but never reject one as "too speculative".
 Architecture findings may block through the mechanism gate instead of a reachable trigger: the triple of harmed parties named, blast radius counted, and cheaper alternative stated replaces the trigger requirement, while `failureScenario` is still carried as the concrete cost.
+Concurrency hazards use the same gate with the race-mechanism triple defined in `bug-hunting.md`.
 
 ## Known false-positive classes
 

@@ -142,4 +142,16 @@ test('moes lane sharpness holds', async () => {
   assertIncludesIgnoringCase(security, 'memory is never evidence');
   assertIncludesIgnoringCase(threat, 'why-not note');
   assertIncludesIgnoringCase(gate, 'missing both');
+
+  const hunt = await read('skills/moes/references/bug-hunting.md');
+
+  for (const phrase of [
+    'double-run scenario sketched',
+    'cheaper safeguard',
+  ]) {
+    assertIncludesIgnoringCase(hunt, phrase);
+  }
+
+  assertIncludesIgnoringCase(lifecycle, 'race-mechanism triple');
+  assertIncludesIgnoringCase(gate, 'race-mechanism blockers');
 });
