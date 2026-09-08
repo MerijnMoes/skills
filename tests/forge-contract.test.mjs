@@ -489,3 +489,21 @@ test('forge findings require scenarios and structured verification', async () =>
     assertIncludesIgnoringCase(lifecycle, phrase);
   }
 });
+
+test('forge verification ledger and report carry the audit trail', async () => {
+  const ledger = await read('skills/forge/references/temper/references/verification-ledger.md');
+  const gate = await read('skills/forge/references/temper/references/validation-gate.md');
+  const reporting = await read('skills/forge/references/temper/references/final-reporting.md');
+
+  for (const phrase of [
+    'verify shards',
+    'audit rounds',
+    'capped',
+    'converged',
+  ]) {
+    assertIncludesIgnoringCase(ledger, phrase);
+  }
+
+  assertIncludesIgnoringCase(gate, 'audit rounds');
+  assertIncludesIgnoringCase(reporting, 'Architecture Map');
+});

@@ -51,7 +51,9 @@ contract.
   of a strong PR description.
 - **What changed** — summarize scope, major files or surfaces touched,
   intent/spec source, and the project context that materially affected the
-  review. Avoid file-by-file churn unless the diff is tiny.
+  review. Embed the Architecture Map overview (boundaries, touched edges,
+  layering notes) so the reviewer sees the shape of the change on one page.
+  Avoid file-by-file churn unless the diff is tiny.
 - **Evidence** — treat this as the heart of the report. For every relevant
   lane, say what evidence exists: static gates, tests, behavioral verification,
   project fit, docs/config, and only the relevant perf/a11y/rollout/security
