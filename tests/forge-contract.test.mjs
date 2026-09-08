@@ -454,3 +454,21 @@ test('forge delegation runs review waves with coverage receipts', async () => {
   assertIncludesIgnoringCase(review, 'Covered:');
   assertIncludesIgnoringCase(review, 'must not mutate');
 });
+
+test('forge review has an advisory architecture lane with a map', async () => {
+  const arch = await read('skills/forge/references/temper/references/architecture-review.md');
+  const pack = await read('skills/forge/references/temper/references/evidence-pack.md');
+  const temper = await read('skills/forge/references/temper/SKILL.md');
+
+  for (const phrase of [
+    'Architecture Map',
+    'advisory',
+    'change amplification',
+    'pattern shopping',
+  ]) {
+    assertIncludesIgnoringCase(arch, phrase);
+  }
+
+  assertIncludesIgnoringCase(pack, 'Architecture Map');
+  assertIncludesIgnoringCase(temper, 'architecture-review.md');
+});

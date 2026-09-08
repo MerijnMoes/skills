@@ -19,6 +19,7 @@ risk is, and what evidence exists before deeper review begins.
 - specialty lane candidates
 - environment availability notes
 - architecture-doc implications
+- Architecture Map (built by the architecture lane in Phase 4: module/boundary inventory, dependency edges touched, layering check, duplication and change amplification, pattern-fit note)
 - App Store / submission implications
 - verifier inventory and initial results
 - missing artifacts / unknowns

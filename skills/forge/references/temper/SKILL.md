@@ -326,9 +326,10 @@ Use the Phase-0 risk map and project context capsule to decide which conditional
 - **App Store / reviewer-facing review** *(only when the risk map flags iOS
   metadata, purchase, privacy, or reviewer-facing submission surfaces)*:
   register the lane and route it through `appstore-review.md`.
-- **Architecture docs review** *(only when the diff changes a public API or an
-  architecture boundary)*: register the lane and route it through
-  `architecture-docs-review.md`.
+- **Architecture review** *(only when the diff changes a public API, an
+  architecture boundary, or module responsibilities)*: register the lane and
+  route it through `architecture-review.md`, which builds the Architecture Map
+  and calls `architecture-docs-review.md` as its docs-staleness checklist.
 - **Post-deploy monitoring** *(only when the diff changes deployed web
   behavior, rollout-sensitive config, or release-critical journeys and a
   target environment is available)*: follow
