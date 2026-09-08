@@ -63,4 +63,18 @@ test('moes criticality counterweights hold', async () => {
   ]) {
     assertIncludesIgnoringCase(lifecycle, phrase);
   }
+
+  const designQuality = await read('skills/moes/references/design-quality.md');
+  const codebaseFit = await read('skills/moes/references/codebase-fit.md');
+
+  for (const phrase of [
+    'Red-team presumption',
+    'one steelman per unique mechanism',
+    'never go through sharded verification',
+    'steelmanOf',
+  ]) {
+    assertIncludesIgnoringCase(designQuality, phrase);
+  }
+
+  assertIncludesIgnoringCase(codebaseFit, 'Red-team presumption');
 });

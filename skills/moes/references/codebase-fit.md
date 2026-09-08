@@ -36,6 +36,7 @@ against a cited local example, misleading names and comments, and needless
 complexity. Altitude and abstraction-fit questions (bandaid vs right depth,
 downstream compensation, single-use abstraction) belong to **Q2 altitude** in
 `design-quality.md`, not here — do not re-walk them.
+Q1 and Q3 run under the Red-team presumption in `design-quality.md`.
 
 Assess and flag as findings:
 - Does it read like it belongs — same conventions, structure, naming, and error handling as its neighbors?

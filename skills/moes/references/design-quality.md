@@ -159,6 +159,13 @@ Do not block on aesthetics. A design-quality blocker needs the concrete
 maintenance hazard it creates for this change, not a preferred architecture
 style.
 
+## Red-team presumption (quality lanes)
+
+Assume the change degrades the design and attempt to prove it, staying within diff scope and the mechanism bar above: no taste-hunting, no broad audits, no scope expansion.
+When the case cannot be sustained, record the strongest unsustained critique as a Design Quality Note with disposition drop, with cross-pointers instead of duplicates (one steelman per unique mechanism).
+Steelmans never go through sharded verification; mechanism-complete ones project into the dismissed ledger behind ex-blocking dropped items.
+Link each steelman to its mechanism with a steelmanOf pointer.
+
 ## Artifact schema
 
 Each `Design Quality Notes` item should carry:
