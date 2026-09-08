@@ -17,16 +17,9 @@ command route instead of forcing the full default order.
 
 - `/forge:setup`: route to `setup.md`.
 - `/forge:build`: run the full default workflow.
-- `/forge:review`: run preflight, then enter the internal review payload
-  (`references/temper/SKILL.md`) directly on the current branch diff.
-- `/forge:review against base`: same as above, with base branch auto-detected.
-- `/forge:review against <branch>`: same as above, but carry `<branch>` as the
-  requested comparison base.
-
-Direct `/forge:review` routing skips discovery/spec/plan/implementation lanes because
-the user is asking for the final hardening pass only, not a fresh build cycle.
-If the internal review later finds blockers, report them and recommend the earliest phase
-that should be re-entered afterward.
+- `/moes`, `/moes against base`, or `/moes against <branch>`: not forge
+  commands; hand them to the `moes` skill, which reviews the current branch
+  diff with `<branch>` as the requested comparison base when supplied.
 
 Use `classification.md` to decide whether Playwright is skipped, optional, or
 required for the run.
@@ -79,9 +72,7 @@ source payloads:
 - UI hardening: `design-studio/reference/harden.md`
 - Live browser design iteration: `design-studio/reference/live.md`
 
-After the QA umbrella completes, move into Review. Until the internal payload
-is renamed, Review is backed by `references/temper/SKILL.md` as the final
-hardening phase before reporting out.
+After the QA umbrella completes, move into Review. Review is backed by the `moes` skill as the final hardening phase before reporting out.
 
 ## Loopbacks
 

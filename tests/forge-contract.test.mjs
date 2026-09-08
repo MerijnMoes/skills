@@ -295,15 +295,22 @@ test('forge exposes the simplified public command surface and workflow overview'
   const preflight = await read('skills/forge/references/preflight.md');
   const readme = await read('README.md');
 
-  for (const command of ['/forge:setup', '/forge:build', '/forge:review']) {
+  for (const command of ['/forge:setup', '/forge:build']) {
     assert.match(skill, new RegExp(command.replace('/', '\\/')));
     assert.match(routing, new RegExp(command.replace('/', '\\/')));
     assert.match(readme, new RegExp(command.replace('/', '\\/')));
   }
 
+  for (const doc of [skill, routing]) {
+    assert.doesNotMatch(doc, /\/forge:review/);
+  }
+  // readme joins this assertion in Task 3, which owns the README edit.
+
+  assertIncludesIgnoringCase(routing, 'moes');
+
   assert.match(skill, /Design Quality \(if needed\) -> QA -> Review -> Report/);
   assert.doesNotMatch(skill, /Playwright Author -> Playwright Verify -> Playwright Explore/);
-  assert.match(preflight, /\/forge:review against <branch>/);
+  assert.match(preflight, /\/moes against <branch>/);
   assert.match(preflight, /comparison base/i);
   assert.doesNotMatch(readme, /forge temper/);
   assert.doesNotMatch(readme, /forge setup/);

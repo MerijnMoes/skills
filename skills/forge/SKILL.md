@@ -1,6 +1,6 @@
 ---
 name: forge
-description: The public command family for this repo's integrated development workflow. Use it to set up project memory for a repo, take a change from discovery and specification through implementation and QA, or run the public final hardening review. Invoke when the user explicitly asks to use forge or clearly wants the repo's full development workflow.
+description: The public command family for this repo's integrated development workflow. Use it to set up project memory for a repo, or take a change from discovery and specification through implementation and QA, with final hardening review via the moes skill. Invoke when the user explicitly asks to use forge or clearly wants the repo's full development workflow.
 ---
 
 # Forge
@@ -13,9 +13,8 @@ hardening review.
 The public command surface is:
 
 - `/forge:setup`: prepare Forge for a new or existing repo.
-- `/forge:build`: run the full change workflow.
-- `/forge:review`: run the final hardening and readiness review on the current
-  diff, optionally against a chosen base.
+- `/forge:build`: run the full change workflow, with the Review phase executed
+  by loading the `moes` skill.
 
 ## When to use
 
@@ -66,9 +65,7 @@ The public command surface is:
 - Use `references/pause-resume.md` and `references/state-contract.md` to manage
   `.forge/` state, evidence, and resume points.
 - Use `references/reporting.md` to produce the final handoff.
-- Use `/forge:review` language for the public final hardening lane. Route its
-  internals through `references/temper/SKILL.md` until the internal migration is
-  complete.
+- Use the `moes` skill for the final hardening lane: when the run reaches Review, load `moes`.
 - When the compact `forge` adapters are too thin for the situation, load the
   matching source payload file before acting.
 
@@ -100,9 +97,7 @@ The public command surface is:
 - Users may ask for `/forge:setup` when they want to prepare Forge for a new or
   existing repo.
 - Users may ask for `/forge:build` when they want the full change workflow.
-- Users may ask for `/forge:review`, `/forge:review against base`, or
-  `/forge:review against <branch>` when they want only the final hardening pass.
-- `temper` remains the internal reference payload behind review during
-  migration; do not present it as a separate public skill.
+- Users may ask for `/moes`, `/moes against base`, or
+  `/moes against <branch>` when they want only the final hardening pass; route them to the `moes` skill.
 - The workflow should pause at explicit approval or judgment points rather than
   pretending the whole system is fire-and-forget.
