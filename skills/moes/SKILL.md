@@ -90,7 +90,7 @@ Read these before starting. They explain *why* the pipeline is shaped the way it
   phases consume it. The pipeline's core internal artifacts are the `Evidence
   Pack`, `Finding Set`, `Design Quality Notes`, `Verification Ledger`, and
   `Decision Packet`; later phases should enrich them, not start from scratch.
-- **Check current library docs when unsure.** Training data drifts and APIs change. When the change uses a library or framework and you're not certain an API is current, non-deprecated, and used the way maintainers now recommend, consult docs rather than memory — if a documentation MCP such as **Context7** is available, resolve the library and query the specific topic. If none is available, say so and lower your confidence instead of guessing. Most relevant in Phases 1, 4, and 7.
+- **Run a freshness probe on triggered surfaces.** Training data drifts and APIs change. Run a docs/advisory lookup when the diff (a) adds or bumps a dependency, (b) uses a library/framework API not already verified in this repo, or (c) touches auth/crypto/payment/sanitization through a library call. Use a documentation MCP such as **Context7** if available (resolve the library, query the specific topic); otherwise web-search official docs + release notes + advisories. Cite source and date in the finding's evidence; if offline or no tool is available, say so and cap confidence at Medium — never assert "current best practice" from memory. Bound to 2-3 lookups per review on triggered surfaces only; keep queries generic (library + API, no internal paths) and never put secrets or tokens in a query. Most relevant in Phases 1, 4, and 7.
 
 ## Setup
 
@@ -429,7 +429,7 @@ Gather hard evidence that the change works after all the modifications above. Th
 5. **Performance profiling** *(only if the change touches a hot path / performance-sensitive code)*: follow `references/performance-profiling.md` — measure against realistic data, find the real bottleneck, confirm any optimization with a before/after. Skip with a note for cold-path changes.
 6. **Deployment/runtime checks** *(only when the diff changes containerized runtime or rollout-sensitive deployment behavior)*: use `references/docker-deployment.md` for non-security container/build/runtime assumptions and health-check verification; keep exploit-path or infra-exposure concerns under the security lane.
 
-Gate: lint/format/type-check clean, tests green, the feature observably works, and any a11y/perf concerns are resolved or explicitly recorded.
+Gate: lint/format/type-check clean, tests green, the feature observably works, and any a11y/perf concerns are resolved or explicitly recorded. Phase 6 allows max 2 fix attempts (3 runs total) per `references/verify.md`. `flaky`/`infra` never satisfy the gate. An exhausted loop goes to Phase 7 with NEEDS REVISION plus the ledger trail, not silent green.
 
 ### Phase 7 — Validation gate *(gate)*
 

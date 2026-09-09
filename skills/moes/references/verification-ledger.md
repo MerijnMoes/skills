@@ -10,8 +10,16 @@ record of what was exercised and what remained unproven.
 - observed result
 - risk or invariant exercised
 - coverage type: `direct` | `indirect`
-- status: `pass` | `fail` | `not-run`
+- status: `pass` | `fail` | `flaky` | `infra` | `not-run`
+- attempt: `1` for initial run, `2`/`3` for retries, plus `prior` id when retrying
 - notes on environment gaps or unexercised risks
+
+## Status definitions
+
+- `fail` = code defect with reproducible trigger quoted (command + input + wrong output). Only state that can carry a blocking finding.
+- `flaky` = same code + same command gives both pass and fail with no code change. Never counts as `pass`. Quote both runs.
+- `infra` = tool/env failure, not code (OOM, missing service, no display, timeout, rate limit). Quote the tool error. Never counts as `pass`.
+- `pass-after-retry` is not a status — record as `pass` with `attempt: 2`/`3` plus a note on what was fixed. A `flaky` that eventually passes stays `flaky` with a note, not `pass`.
 
 ## Minimum coverage
 
@@ -29,4 +37,5 @@ The ledger must explicitly record:
 ## Rule
 
 If a risk was not exercised, write that plainly. Absence of evidence must never
-read like positive evidence.
+read like positive evidence. `flaky` or `infra` is not evidence — only `pass` on
+the same code state counts toward the gate.

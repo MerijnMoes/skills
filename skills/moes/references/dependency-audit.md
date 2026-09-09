@@ -18,6 +18,9 @@ If the diff changes none of these, this phase is **N/A** — say so explicitly a
 ### Known vulnerabilities
 Run the ecosystem's audit tool (table below) and focus on the deps that changed. Treat known **critical/high** CVEs in added/bumped deps as a **blocker**, not a warning. The vulnerable package is often a *transitive* dep, so inspect the lockfile, not just the manifest — a one-line manifest bump can pull in a whole subtree.
 
+### Advisories & breaking-change notes (freshness probe)
+For each added/bumped dep, check the last ~12 months of advisories plus the release notes for the pinned major: withdrawn/deprecated versions, breaking API changes, or insecure defaults introduced since the project's current pin. Use Context7 if available, otherwise web-search official changelog/advisory feeds. Record `audit-tool clean + advisory search <source, date>` per dep; if no tool is available, say so and cap confidence at Medium for the "safe to bump" judgment.
+
 ### License compatibility
 Identify each new dep's license. Flag any license incompatible with the project's own license — e.g. GPL/AGPL **copyleft** pulled into proprietary or permissively-licensed (MIT/Apache) code that is distributed. That is a **legal blocker**, not a style nit. Also flag **missing/unknown** licenses: an unlicensed dep is unsafe to ship by default. AGPL is especially aggressive (network use counts as distribution).
 
@@ -54,6 +57,7 @@ Run audits against the lockfile state that includes the new deps.
 ## Quick checklist
 - [ ] If no dependency files changed, phase is **N/A** — stop here.
 - [ ] Audit tool run; no new critical/high CVEs (direct or transitive).
+- [ ] Advisory + breaking-change notes checked per changed dep (source + date recorded, or unverified-at-Medium noted).
 - [ ] Each new/bumped dep's license identified and compatible with the project license.
 - [ ] No missing/unknown licenses among the changed deps.
 - [ ] Each new dep is justified (not duplicate / not inline-able) and from a trusted, maintained source.

@@ -123,8 +123,15 @@ Without the quote the finding keeps a verdict-affecting status: `blocking` if it
 
 If the existence or dismissal of a finding depends on library or framework
 behavior, verify that behavior against current docs rather than memory. If a
-documentation MCP such as Context7 is available, query the specific behavior.
-Otherwise say you could not verify it and lower confidence accordingly.
+documentation MCP such as Context7 is available, query the specific behavior;
+otherwise web-search official docs + release notes + advisories. Freshness
+never creates a blocker by itself — it only upgrades confidence or prevents
+false "use X" advice; the trigger test above remains the gate.
+
+When a finding's violated invariant is "maintainer-recommended usage", carry a
+`docs-checked: <library@version, source URL, date>` field in its evidence (or
+`docs-checked: unverified, confidence capped at Medium` when offline or no tool
+is available). Keep queries generic and never put secrets or tokens in them.
 
 ## Action types
 

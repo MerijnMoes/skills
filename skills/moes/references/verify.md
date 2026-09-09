@@ -119,7 +119,8 @@ not-run or environment-blocked evidence.
 - observed result
 - risk or invariant exercised
 - coverage type: `direct` | `indirect`
-- status: `pass` | `fail` | `not-run`
+- status: `pass` | `fail` | `flaky` | `infra` | `not-run` (per `verification-ledger.md`; `flaky`/`infra` never count as proof)
+- attempt: `1` initial, `2`/`3` retries
 - notes on environment gaps or unexercised risks
 
 If a top risk from the Phase-0 risk map was not exercised, carry that gap
@@ -131,14 +132,39 @@ verified**, which are only **indirectly supported**, and which remain
 
 When post-deploy monitoring was relevant, record whether it was `run and healthy`, `run with warnings`, or `not run because no environment` rather than collapsing those cases into generic verification success.
 
-## When a bug appears during verification
+## Fix-to-green loop (bounded, max 2 fixes)
 
-Don't just note "saw a failure." Capture it in a replayable way:
+Initial run is attempt 1. You get at most 2 fix attempts (attempts 2 and 3 total).
 
-- record the exact command, route, fixture, input, or seed that triggered it;
-- minimize the reproducer if you can;
-- add or improve a regression test when practical;
-- rerun the focused probe after the fix, then the broader suite.
+Don't just note "saw a failure." Capture it in a replayable way: record the
+exact command, route, fixture, input, or seed that triggered it; minimize the
+reproducer if you can; add or improve a regression test when practical.
+
+Per attempt:
+1. Classify the failure first: `fail` vs `flaky` vs `infra` per
+   `verification-ledger.md`. Do not fix `infra` with code changes. Do not mark
+   `flaky`/`infra` as proof.
+2. Fix only if it meets the `Fix` contract from `findings-lifecycle.md`
+   (localized, safe, verifiable). `Plan`/`Decide` issues stop the loop and go
+   to the gate as-is.
+3. Re-run in order: focused probe that caught it first. Only if focused passes,
+   re-run the broader suite. Only if suite passes, re-run static gates touched
+   by the fix. Don't re-run everything on every try.
+4. Log each attempt in the ledger with `attempt` + trigger + what changed.
+
+Stop, do not loop, when any holds:
+- all required checks `pass` on the same code state — green, exit loop
+- 2 fix attempts used — stop, carry to gate as NEEDS REVISION (BLOCKED only
+  if `validation-gate.md` calibration says so)
+- same trigger reproduces identically twice — deterministic defect needing
+  design, not polish, stop after 2nd
+- `infra` blocks twice with no code fix possible — stop, mark
+  `not-run`/`environment-blocked`, carry gap to gate
+- fix would exceed localized `Fix` scope — stop, mark
+  `Investigate`/`Plan`/`Decide`
+
+An exhausted loop never reports green. The ledger must show attempts, triggers,
+and what remains unexercised.
 
 ## When you cannot run it
 
